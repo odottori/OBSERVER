@@ -1,0 +1,17 @@
+# Mapping exchange_code -> internal market label (used in metadata.market)
+#
+# Default (PHASE1): keep backward compatibility with the current coarse market labels.
+# - NYSE -> US
+# - all other exchanges in the provided CSV -> EU
+#
+# You can refine this later (e.g., XMIL->ITALY) if your `metadata.market` uses those.
+NYSE: US
+LSE: EU
+XSWX: EU
+XMIL: EU
+XPAR: EU
+XMAD: EU
+XTKS: EU
+XHKG: EU
+XETR: EU
+EUREX: EU

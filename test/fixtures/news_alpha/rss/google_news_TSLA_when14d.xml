@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Google News - Search</title>
+
+    <!-- Allowed domain + in-range date -->
+    <item>
+      <title>Tesla annuncia risultati trimestrali migliori del previsto</title>
+      <link>https://news.google.com/rss/articles/TEST1?oc=5</link>
+      <pubDate>Mon, 13 Jan 2026 10:00:00 GMT</pubDate>
+      <description><![CDATA[<a href="https://news.google.com/rss/articles/TEST1?oc=5">Dettagli</a>]]></description>
+      <source url="https://www.ilsole24ore.com">Il Sole 24 ORE</source>
+    </item>
+
+    <!-- Disallowed domain (should be rejected) -->
+    <item>
+      <title>Tesla: articolo su dominio non autorizzato</title>
+      <link>https://news.google.com/rss/articles/TEST2?oc=5</link>
+      <pubDate>Mon, 13 Jan 2026 11:00:00 GMT</pubDate>
+      <description><![CDATA[<p>Test</p>]]></description>
+      <source url="https://www.example.com">Example</source>
+    </item>
+
+    <!-- Old date (should be rejected) -->
+    <item>
+      <title>Tesla: notizia vecchia fuori range</title>
+      <link>https://news.google.com/rss/articles/TEST3?oc=5</link>
+      <pubDate>Mon, 11 Dec 2023 14:00:14 GMT</pubDate>
+      <description><![CDATA[<p>Vecchia</p>]]></description>
+      <source url="https://www.ilsole24ore.com">Il Sole 24 ORE</source>
+    </item>
+
+  </channel>
+</rss>

@@ -1,0 +1,3 @@
+# 009 GAP REGISTER
+
+--8<-- "docs/009_GAP_REGISTER.md"

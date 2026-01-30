@@ -1,0 +1,29 @@
+{
+  "version": "v1",
+  "provider": "gdelt1",
+  "streams": ["events", "gkg"],
+  "notes": "Template. Populate after running profiling/census on 30–60 days.",
+  "events": {
+    "include_event_codes": [],
+    "include_root_event_codes": [],
+    "exclude_event_codes": [],
+    "include_actor_names": [],
+    "exclude_actor_names": [],
+    "include_domains": [],
+    "exclude_domains": [],
+    "tone": {
+      "min_abs_tone": 0.0
+    }
+  },
+  "gkg": {
+    "include_themes": [],
+    "exclude_themes": [],
+    "include_organizations": [],
+    "include_persons": [],
+    "include_locations": []
+  },
+  "normalization": {
+    "lowercase": true,
+    "strip_punctuation": true
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "docset_id": "OBSERVER_DOCSET_1.2.5_2026-01-26",
+  "doc_version": "1.2.5",
+  "build_date": "2026-01-26",
+  "includes": {
+    "canonical_docs": [
+      "docs/001_PROJECT_OVERVIEW.md",
+      "docs/002_PDR_OBSERVER.md",
+      "docs/003_PDD_OBSERVER.md",
+      "docs/004_DDT_DATADICTIONARY.md",
+      "docs/OBSERVER_v1.2.5.pdf"
+    ],
+    "support_docs": [
+      "docs/000_README_DOCSET.md",
+      "docs/005_TRACEABILITY_MATRIX.md",
+      "docs/006_REPO_BOM.md",
+      "docs/007_PARAMETER_SNAPSHOT.md",
+      "docs/008_EVIDENCE_PACK.md",
+      "docs/009_GAP_REGISTER.md",
+      "docs/use_cases/SCENARI_APPLICATIVI_v1.2.5.md"
+    ],
+    "specs": [
+      "docs/specs/WAVE6_FORECAST_STARS_RANKING_SPEC.md",
+      "docs/specs/SENTINEL_RUNNER_SPEC.md",
+      "docs/specs/NEWS_ALPHA_SPEC.md",
+      "docs/specs/AUDIT_LIFECYCLE_SPEC.md"
+    ],
+    "latex_sources": [
+      "docs/LATEX_zip/OBSERVER_LATEX_CLEAN_v1.2.5_PROJECT.zip"
+    ]
+  }
+}

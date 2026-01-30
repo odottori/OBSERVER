@@ -1,0 +1,4 @@
+# One date per line (YYYY-MM-DD).
+# Use only for known upstream gaps or planned exclusions.
+# Example:
+# 2014-03-19

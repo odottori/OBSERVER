@@ -1,0 +1,23 @@
+# Normalize line endings repository-wide to avoid churn across OSes.
+# Default: let Git detect text and store normalized LF in the repository.
+* text=auto
+
+# Source + docs + configs: always LF (even on Windows)
+*.py    text eol=lf
+*.md    text eol=lf
+*.json  text eol=lf
+*.jsonl text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+*.toml  text eol=lf
+*.ini   text eol=lf
+*.cfg   text eol=lf
+*.xml   text eol=lf
+*.txt   text eol=lf
+*.csv   text eol=lf
+.env    text eol=lf
+*.env   text eol=lf
+
+# Windows shell scripts: CRLF
+*.bat   text eol=crlf
+*.ps1   text eol=crlf

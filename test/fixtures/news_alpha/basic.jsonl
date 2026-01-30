@@ -1,0 +1,6 @@
+{"published_at":"2026-01-12T10:00:00Z","source":"Reuters","url":"https://example.com/brk1","headline":"BRK-B beats expectations","tickers":["BRK-B"]}
+{"published_at":"2026-01-12T10:00:00Z","source":"Reuters","url":"https://example.com/brk1","headline":"BRK-B beats expectations again","body":"Second write-up of the same article.","tickers":["BRK-B"]}
+{"published_at":"2026-01-12T12:30:00Z","source":"Bloomberg","headline":"AAPL misses earnings","tickers":["AAPL"]}
+{"published_at":"2026-01-12T12:30:00Z","source":"Bloomberg","headline":"AAPL misses earnings","body":"Duplicate without URL; should be deduped by fallback key.","tickers":["AAPL"]}
+{"published_at":"2026-01-12T15:00:00Z","source":"Reuters","url":"https://example.com/aapl-upgrade","headline":"AAPL gains on upgrade","tickers":["AAPL"]}
+{"published_at":"2026-01-11T09:00:00Z","source":"Reuters","url":"https://example.com/out-of-range","headline":"AAPL gains on upgrade","tickers":["AAPL"]}
