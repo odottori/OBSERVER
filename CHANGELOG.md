@@ -89,3 +89,15 @@ Constraints respected:
 
 Constraints respected:
 - No changes to `src/**` and `tests/**` (planning-only).
+
+## Rollback plan (WI-0113 — virtual)
+
+- `reports/WI-0113_rollback.md`
+  - Added rollback protocol per tranche (tag naming, reset vs revert decision matrix, post-rollback gates).
+- `docs/012_REFACTOR_PLAN_VIRTUAL.md`
+  - Added WI-0113 snapshot block referencing the rollback report.
+- `.doc/TODO.md`, `.doc/LOGBOOK.md`, `.doc/CURRENT_STATE.md`
+  - Added WI-0113 as READY (apply patchpack, run gates).
+
+Constraints respected:
+- No changes to `src/**` and `tests/**` (planning-only).

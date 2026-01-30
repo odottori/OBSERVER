@@ -11,6 +11,9 @@ Repo canonico operativo: `OBSERVER_v1.2.5_PHASE1_FINAL`
 - WI-0110 (Inventory & boundary map, virtual): **DONE**.
 - WI-0111 (Move Map final, virtual): **DONE** (gates PASS; logs in `reports/*_WI-0111.log`).
 - WI-0112 (Import shims plan + deprecation policy): **DONE** (gates PASS; evidence in `reports/WI-0112_shims_policy.md`).
+- WI-0113 (Rollback plan, virtual): **DONE** (gates PASS; logs in `reports/*_WI-0113.log`).
+- WI-0114 (Gate protocol + expected logs, virtual): **DONE** (gates PASS; logs in `reports/*_WI-0114.log`).
+- WI-0115 (Skeleton tranche fisiche, TODO-only): **DONE** (gates PASS; logs in `reports/*_WI-0115.log`).
 
 ## Governance attiva
 - Refactor fisico consentito **solo tranche-by-tranche** (1 tranche = 1 WI) con `pytest` sempre PASS.
@@ -18,10 +21,11 @@ Repo canonico operativo: `OBSERVER_v1.2.5_PHASE1_FINAL`
 - Evidenze e log in `reports/` per ogni WI.
 
 ## Workstream corrente
-### WI-0113 — Rollback plan
-- Evidence attesa: `reports/WI-0113_rollback.md`
-- Canonico: `docs/012_REFACTOR_PLAN_VIRTUAL.md`
-- Gates attesi: `pytest` + `guardian lint`
+### WI-0115 — Skeleton tranche fisiche (TODO-only)
+- Status: DONE
+- Evidence: `.doc/TODO.md` (sezione WI-0115 + tranche WI-0120..0160)
+- Gates: PASS (pytest/guardian) — logs: `reports/pytest_WI-0115.log`, `reports/guardian_lint_WI-0115.log`
+
 
 
 ### WI-0107 — Refactor Plan (virtual)
@@ -29,10 +33,7 @@ Repo canonico operativo: `OBSERVER_v1.2.5_PHASE1_FINAL`
 - Evidenza: `reports/2026-01-30_WI-0107_planning.md`
 
 ### Prossimi WI (sequenza consigliata)
-1. WI-0112 — Import shims plan + deprecation policy
-2. WI-0113 — Rollback plan (finalizzazione)
-3. WI-0114 — Gate protocol + expected logs (finalizzazione)
-4. WI-0115 — Skeleton tranche fisiche (TODO-only)
+1. WI-0120..0160 — Tranche fisiche (esecuzione tranche-by-tranche)
 
 ### Tranche fisiche (DOPO WI-0107)
 - WI-0120 — Refactor tranche: `db` (physical)

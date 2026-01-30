@@ -177,37 +177,62 @@ Creare una fase intermedia prima del refactor fisico:
 
 ## WI-0113 — Rollback plan
 
+**Status:** DONE (2026-01-30)
+
 ### Output
 - Protocollo di rollback per tranche (tag pre/post, reset vs revert).
 
 ### DoD
 - Step “happy path” + “failure path” documentati.
+- Matrice decisionale (reset vs revert) e naming tag per tranche.
+- Evidenza presente in `reports/`.
 
 ### Gate
 - G0
 
 ### Evidence
 - `reports/WI-0113_rollback.md`
+- `reports/pytest_WI-0113.log`
+- `reports/guardian_lint_WI-0113.log`
+### Allowlist
+- `docs/012_REFACTOR_PLAN_VIRTUAL.md`, `reports/**`, `.doc/TODO.md`, `.doc/LOGBOOK.md`, `.doc/CURRENT_STATE.md`
+
+### Blocklist
+- `src/**`, `tests/**` (no change)
 
 ---
 
 ## WI-0114 — Gate protocol + expected logs
+
+**Status:** DONE (2026-01-30)
 
 ### Output
 - Gate suite standardizzata (G0..G3) + naming log.
 
 ### DoD
 - Sezione “Gate toolkit” + “Expected logs” in `docs/012_REFACTOR_PLAN_VIRTUAL.md` completa.
+- Report di evidenza in `reports/`.
 
 ### Gate
-- G0
+- G0 — PASS (pytest/guardian)
 
 ### Evidence
 - `reports/WI-0114_gates.md`
+- `reports/pytest_WI-0114.log`
+- `reports/guardian_lint_WI-0114.log`
+
+### Allowlist
+- `docs/012_REFACTOR_PLAN_VIRTUAL.md`, `reports/**`, `.doc/TODO.md`, `.doc/LOGBOOK.md`, `.doc/CURRENT_STATE.md`
+
+### Blocklist
+- `src/**`, `tests/**` (no change)
 
 ---
 
 ## WI-0115 — Skeleton tranche fisiche (TODO-only)
+
+**Status:** DONE (2026-01-30)
+
 
 ### Output
 - Definizione WI-0120..0160 con DoD/Gate/Evidence/Allowlist/Blocklist.
@@ -217,10 +242,18 @@ Creare una fase intermedia prima del refactor fisico:
 - Ogni tranche ha gate `pytest -q` e log in `reports/`.
 
 ### Gate
-- N/A (planning-only)
+- G0 — PASS (pytest/guardian)
 
 ### Evidence
-- Questa sezione nel TODO.
+- `.doc/TODO.md` (sezione WI-0115 + tranche WI-0120..0160)
+- `reports/pytest_WI-0115.log`
+- `reports/guardian_lint_WI-0115.log`
+
+### Allowlist
+- `.doc/TODO.md`, `.doc/LOGBOOK.md`, `.doc/CURRENT_STATE.md`
+
+### Blocklist
+- `src/**`, `tests/**`, `docs/**` (no change)
 
 ---
 
@@ -245,6 +278,8 @@ Creare una fase intermedia prima del refactor fisico:
 - `src/**/db/**` (solo area db) + `src/**/compat/**` (shims)
 - `tests/**` (solo se serve aggiornare import test)
 - docs canonici consentiti: `docs/010_MODULE_REGISTRY.md`, `docs/005_TRACEABILITY_MATRIX.md` (solo se in allowlist tranche)
+- `.doc/TODO.md`, `.doc/LOGBOOK.md`, `.doc/CURRENT_STATE.md`
+- `reports/**`
 
 ### Blocklist
 - Move fuori area db

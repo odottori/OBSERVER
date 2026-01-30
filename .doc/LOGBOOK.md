@@ -69,3 +69,47 @@
 
 ### Blocklist respected
 - Nessun move/modifica in `src/**` e `tests/**` (plan-only).
+
+## 2026-01-30 — WI-0113 (Rollback plan, virtual) — DONE
+- Gates executed: PASS (pytest/guardian) — logs: `reports/pytest_WI-0113.log`, `reports/guardian_lint_WI-0113.log`
+
+### Outcome
+- Protocollo di rollback per tranche fisiche (tag pre/post, reset vs revert) a supporto dei WI-0120..0160.
+
+### Evidence
+- `reports/WI-0113_rollback.md`
+- `reports/pytest_WI-0113.log`
+- `reports/guardian_lint_WI-0113.log`
+
+### Blocklist
+- `src/**`, `tests/**` (no change)
+
+
+## 2026-01-30 — WI-0114 (Gate protocol + expected logs, virtual) — DONE
+- Gates executed: PASS (pytest/guardian) — logs: `reports/pytest_WI-0114.log`, `reports/guardian_lint_WI-0114.log`
+
+### Outcome
+- Standardizzata la gate suite (G0..G3) e il naming log per allineare doc canonici + pratica operativa.
+
+### Evidence
+- `reports/WI-0114_gates.md`
+- `reports/pytest_WI-0114.log`
+- `reports/guardian_lint_WI-0114.log`
+
+### Blocklist
+- `src/**`, `tests/**` (no change)
+
+## 2026-01-30 — WI-0115 (Skeleton tranche fisiche, TODO-only) — DONE
+- Gates executed: PASS (pytest/guardian) — logs: `reports/pytest_WI-0115.log`, `reports/guardian_lint_WI-0115.log`
+
+### Outcome
+- Inserite tranche fisiche WI-0120..0160 come skeleton coerenti (DoD/Gate/Evidence/Allowlist/Blocklist) in `.doc/TODO.md`.
+- Nessuna modifica a `src/**`, `tests/**`, `docs/**` (plan-only).
+
+### Evidence
+- `.doc/TODO.md` — sezione WI-0115 + tranche WI-0120..0160
+- `reports/pytest_WI-0115.log`
+- `reports/guardian_lint_WI-0115.log`
+
+### Blocklist
+- `src/**`, `tests/**`, `docs/**` (no change)

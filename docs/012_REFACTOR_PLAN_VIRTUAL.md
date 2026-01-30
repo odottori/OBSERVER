@@ -67,7 +67,7 @@ Obiettivo: confermare che il repo è in stato pulito e riproducibile prima di un
 - `py scripts/guardian.py lint` (strutturale)
 
 Output atteso (per tranche):
-- `reports/pytest_tranche_<WI>.log`
+- `reports/pytest_<WI>.log`
 - `reports/guardian_lint_<WI>.log`
 
 ### Gate G1 — Import smoke
@@ -86,7 +86,7 @@ Obiettivo: regressione funzionale.
 - `py -m pytest -q`
 
 Output atteso:
-- `reports/pytest_tranche_<WI>.log`
+- `reports/pytest_<WI>.log`
 
 ### Gate G3 — Docset/derived sync
 Obiettivo: evitare drift tra canonici e derivati.
@@ -208,23 +208,22 @@ La Move Map è espressa come pattern *as-is → to-be* e definisce le tranche fi
 
 ## Expected logs (naming convention)
 
-Per ogni WI/tranche, questi file sono attesi (minimo):
+Per ogni WI, questi file sono attesi (minimo):
 
-- `reports/pytest_tranche_<WI>.log`
-- `reports/import_smoke_<WI>.log` (o nota se non applicabile)
+- `reports/pytest_<WI>.log`
 - `reports/guardian_lint_<WI>.log`
-- `reports/build_master_md_<WI>.log`
 
-## Open points (da chiudere in WI-0110)
+Se applicabile (raccomandati):
 
-- Identificare `pkg_root` reale (es. `observer`) e path effettivi delle aree.
-- Confermare quali tools appartengono a PHASE1 (batch) vs PHASE2 (UI/dev).
-- Verificare dove vivono le pages Streamlit (root `pages/` vs package) per minimizzare churn.
+- `reports/build_master_md_<WI>.log` (solo se il WI aggiorna derivati/canonici)
+- `reports/import_smoke_<WI>.log`
+- `reports/compileall_<WI>.log`
+- `reports/guardian_sync_<WI>.log`
+- `reports/guardian_derive_<WI>.log`
 
-<!-- WI-0112:BEGIN -->
-### Import shims plan (WI-0112) — auto
-- Report: `reports/WI-0112_shims_policy.md`
-- Default shim: module stub + `DeprecationWarning` (`stacklevel=2`) + re-export.
-- Deprecation stages: T0 introduce shims; T1 warnings enforced; T2 removal gate (`-W error::DeprecationWarning`).
-- Planning-only: no changes to `src/**` or `tests/**` in WI-0112.
-<!-- WI-0112:END -->
+<!-- WI-0114:BEGIN -->
+### Gate protocol + expected logs snapshot (WI-0114) — auto
+- Report: `reports/WI-0114_gates.md`
+- Naming: `reports/pytest_<WI>.log`, `reports/guardian_lint_<WI>.log`, `reports/build_master_md_<WI>.log` (if used)
+- Planning-only in WI-0114: no changes to `src/**` or `tests/**`.
+<!-- WI-0114:END -->
