@@ -77,15 +77,3 @@ Constraints respected:
 
 Constraints respected:
 - No changes to `src/**` and `tests/**` (planning-only).
-
-## Import shims plan (WI-0112 — virtual)
-
-- `reports/WI-0112_shims_policy.md`
-  - Added deterministic shim patterns (module/package), deprecation stages (T0/T1/T2), and test gates per tranche.
-- `docs/012_REFACTOR_PLAN_VIRTUAL.md`
-  - Added WI-0112 snapshot block referencing the shims/deprecation report.
-- `.doc/TODO.md`, `.doc/LOGBOOK.md`, `.doc/CURRENT_STATE.md`
-  - Marked WI-0112 DONE and recorded evidence/log pointers.
-
-Constraints respected:
-- No changes to `src/**` and `tests/**` (planning-only).

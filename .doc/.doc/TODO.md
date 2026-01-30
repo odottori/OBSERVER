@@ -152,8 +152,6 @@ Creare una fase intermedia prima del refactor fisico:
 
 ## WI-0112 — Import shims plan + deprecation policy
 
-**Status:** DONE (2026-01-30)
-
 ### Output
 - Pattern shims (module/package) + criteri di rimozione + naming.
 - Policy deprecazione (finestra + gate `-W error::DeprecationWarning`).
@@ -167,8 +165,6 @@ Creare una fase intermedia prima del refactor fisico:
 
 ### Evidence
 - `reports/WI-0112_shims_policy.md`
-- `reports/pytest_WI-0112.log`
-- `reports/guardian_lint_WI-0112.log`
 
 ### Allowlist
 - `docs/012_REFACTOR_PLAN_VIRTUAL.md`, `reports/**`, `.doc/TODO.md`, `.doc/LOGBOOK.md`, `.doc/CURRENT_STATE.md`

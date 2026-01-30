@@ -10,7 +10,6 @@ Repo canonico operativo: `OBSERVER_v1.2.5_PHASE1_FINAL`
 - WI-0107 (Refactor Plan, virtual): **DELIVERED (planning milestone)** — nessun move in `src/`.
 - WI-0110 (Inventory & boundary map, virtual): **DONE**.
 - WI-0111 (Move Map final, virtual): **DONE** (gates PASS; logs in `reports/*_WI-0111.log`).
-- WI-0112 (Import shims plan + deprecation policy): **DONE** (gates PASS; evidence in `reports/WI-0112_shims_policy.md`).
 
 ## Governance attiva
 - Refactor fisico consentito **solo tranche-by-tranche** (1 tranche = 1 WI) con `pytest` sempre PASS.
@@ -18,8 +17,8 @@ Repo canonico operativo: `OBSERVER_v1.2.5_PHASE1_FINAL`
 - Evidenze e log in `reports/` per ogni WI.
 
 ## Workstream corrente
-### WI-0113 — Rollback plan
-- Evidence attesa: `reports/WI-0113_rollback.md`
+### WI-0112 — Import shims plan + deprecation policy
+- Evidence attesa: `reports/WI-0112_shims_policy.md`
 - Canonico: `docs/012_REFACTOR_PLAN_VIRTUAL.md`
 - Gates attesi: `pytest` + `guardian lint`
 

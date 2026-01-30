@@ -36,15 +36,6 @@ Questo documento definisce **la fase intermedia obbligatoria** prima del refacto
 
 ## Assunzioni e rischio
 
-<!-- WI-0110:BEGIN -->
-### Inventory (WI-0110) ? as-built snapshot (auto)
-- Detected `pkg_root` candidate: `tools` (heuristic: max python files under root)
-- `src/` top-level dirs (by .py count): {'tools': 16, 'news_alpha': 8, 'core': 7, 'dataops': 7, 'db': 4, 'monitoring': 3, 'data': 2, 'execution': 2, 'forecast': 2, 'risk': 2}
-- Area counts (path heuristic): {'other': 26, 'core': 7, 'dataops': 7, 'db': 4, 'tools': 16}
-- Report: `reports/WI-0110_inventory.md`
-<!-- WI-0110:END -->
-
-
 - Questo piano assume l’esistenza (logica) delle aree `db/`, `core/`, `dataops/`, `tools/`, `pages/` nel codice (come da backlog).
 - I path esatti possono differire (es. `src/observer/...` vs `src/app/...`). La Move Map usa quindi **pattern** e non path assoluti.
 - Il rischio primario non è tecnico ma di **drift**: per mitigarlo, le tranche sono piccole e con gates ripetibili.
@@ -186,6 +177,25 @@ Per ogni tranche (WI fisico):
 4. **Aggiornamento canonici** (solo allowlist): TODO, module registry, traceability, eventuali docs di fase.
 5. **Evidence pack**: depositare log in `reports/` e aggiornare `.doc/LOGBOOK.md`.
 
+
+## WI-0111 — Move Map final (virtual)
+
+**Evidence:** `reports/WI-0111_move_map.md`
+
+La Move Map è espressa come pattern *as-is → to-be* e definisce le tranche fisiche WI-0120..0160 (db/core/dataops/tools/pages) senza eseguire move in `src/`.
+
+### Tranche map (fisico) — WI-0120..0160
+
+| Tranche (WI) | Area | As-is pattern | To-be target | Fase |
+|---|---|---|---|---|
+| WI-0120 | db | `src/**/db/**` | `src/<pkg_root>/phase0/db/**` | PHASE0 |
+| WI-0130 | core | `src/**/core/**` | `src/<pkg_root>/phase0/core/**` | PHASE0 |
+| WI-0140 | dataops | `src/**/dataops/**` (+ `src/**/ingest/**` se presente) | `src/<pkg_root>/phase1/dataops/**` (+ `phase1/ingest/**`) | PHASE1 |
+| WI-0150 | tools | `src/**/tools/**` | `src/<pkg_root>/phase0/tools/**` | PHASE0 |
+| WI-0160 | pages | `src/**/pages/**` e/o `pages/**` | `src/<pkg_root>/phase2/pages/**` (oppure `pages/` resta root) | PHASE2/UI |
+
+**Note:** i dettagli operativi shims/deprecation sono finalizzati in WI-0112.
+
 ## Rollback plan
 
 - Ogni tranche crea un checkpoint git:
@@ -210,3 +220,11 @@ Per ogni WI/tranche, questi file sono attesi (minimo):
 - Identificare `pkg_root` reale (es. `observer`) e path effettivi delle aree.
 - Confermare quali tools appartengono a PHASE1 (batch) vs PHASE2 (UI/dev).
 - Verificare dove vivono le pages Streamlit (root `pages/` vs package) per minimizzare churn.
+
+<!-- WI-0112:BEGIN -->
+### Import shims plan (WI-0112) — auto
+- Report: `reports/WI-0112_shims_policy.md`
+- Default shim: module stub + `DeprecationWarning` (`stacklevel=2`) + re-export.
+- Deprecation stages: T0 introduce shims; T1 warnings enforced; T2 removal gate (`-W error::DeprecationWarning`).
+- Planning-only: no changes to `src/**` or `tests/**` in WI-0112.
+<!-- WI-0112:END -->
