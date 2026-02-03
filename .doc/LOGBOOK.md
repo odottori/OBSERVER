@@ -113,3 +113,282 @@
 
 ### Blocklist
 - `src/**`, `tests/**`, `docs/**` (no change)
+
+## 2026-01-31 — WI-0120 (Refactor fisico tranche 1: db) — CLOSED (gates PASS)
+
+### Outcome
+- Eseguito move fisico area `db` secondo Move Map:
+  - `src/db/**` → `src/phase0/db/**`
+- Introdotti import shims per preservare compatibilità:
+  - `src/db/*` reindirizza a `src/phase0/db/*` con `DeprecationWarning`
+  - entrypoint preservato: `py -m src.db.migrate`
+- Introdotto compat layer:
+  - `src/compat/shims.py`
+
+### Canonici aggiornati (allowlist tranche)
+- `docs/010_MODULE_REGISTRY.md`
+- `docs/005_TRACEABILITY_MATRIX.md`
+- `.doc/TODO.md`, `.doc/CURRENT_STATE.md`
+
+### Evidence
+- `reports/2026-01-31_WI-0120_db_move.md`
+- `reports/2026-01-31_WI-0120_CLOSE.md`
+
+### Gates (esito su target machine)
+
+- `guardian lint`: PASS
+- `compileall -q`: PASS (nessun output, atteso)
+- import smoke: PASS (`OK`)
+- `pytest -q`: PASS — `57 passed, 3 warnings` (DeprecationWarning atteso: shims `src.db.*` → `src.phase0.db.*`)
+- `guardian sync --clean`: PASS (sync completato, direct mode)
+- `guardian derive`: PASS
+- `build_master_md`: PASS
+
+
+
+## 2026-01-31 — WI-0130 (Refactor fisico tranche 2: core) — CLOSED (gates PASS)
+
+### Outcome
+- Eseguito move fisico area `core` secondo Move Map:
+  - `src/core/**` → `src/phase0/core/**`
+- Introdotti import shims per preservare compatibilità:
+  - `src/core/*` reindirizza a `src/phase0/core/*` con `DeprecationWarning`
+- Migliorata igiene import interni core (relative imports) per evitare dipendenza dai legacy shims.
+
+### Canonici aggiornati (allowlist tranche)
+- `docs/010_MODULE_REGISTRY.md`
+- `docs/005_TRACEABILITY_MATRIX.md`
+- `.doc/TODO.md`, `.doc/CURRENT_STATE.md`
+
+### Evidence
+- `reports/2026-01-31_WI-0130_core_move.md`
+- `reports/2026-01-31_WI-0130_CLOSE.md`
+
+### Gates (esito su target machine)
+- `guardian lint`: PASS
+- `compileall -q`: PASS (nessun output, atteso)
+- import smoke: PASS (`OK`)
+- `pytest -q`: PASS — `57 passed, 9 warnings` (DeprecationWarning atteso: shims `src.core.*` → `src.phase0.core.*`)
+- `guardian sync --clean`: PASS (sync completato, direct mode; fingerprint `aa566c3a4d5a83c4`)
+- `guardian derive`: PASS
+- `build_master_md`: PASS
+
+
+## 2026-02-01 — WI-0140 (Refactor fisico tranche 3: dataops) — CLOSED (gates PASS)
+
+### Outcome
+- Eseguito move fisico area `dataops` secondo Move Map:
+  - `src/dataops/**` → `src/phase0/dataops/**`
+- Introdotti import shims per preservare compatibilità:
+  - `src/dataops/*` reindirizza a `src/phase0/dataops/*` con `DeprecationWarning`
+
+### Canonici aggiornati (allowlist tranche)
+- `docs/010_MODULE_REGISTRY.md`
+- `docs/005_TRACEABILITY_MATRIX.md`
+- `.doc/TODO.md`, `.doc/CURRENT_STATE.md`
+
+### Evidence
+- `reports/2026-02-01_WI-0140_dataops_move.md`
+- `reports/2026-02-01_WI-0140_CLOSE.md`
+
+### Gates (esito su target machine)
+- `guardian lint`: PASS
+- `compileall -q`: PASS (nessun output, atteso)
+- import smoke: PASS (`OK`)
+- `pytest -q`: PASS (DeprecationWarning atteso: shims `src.dataops.*` → `src.phase0.dataops.*`)
+- `guardian sync --clean`: PASS (sync completato, direct mode; fingerprint: vedi log `reports/guardian_sync_WI-0140.log`)
+- `guardian derive`: PASS
+- `build_master_md`: PASS
+
+## 2026-02-01 — WI-0150 (Refactor fisico tranche 4: tools) — CLOSED (gates PASS)
+
+### Outcome
+- Eseguito move fisico area `tools` secondo Move Map:
+  - `src/tools/**` → `src/phase0/tools/**`
+- Introdotti import shims per preservare compatibilità:
+  - `src/tools/*` reindirizza a `src/phase0/tools/*` con `DeprecationWarning`
+
+### Canonici aggiornati (allowlist tranche)
+- `docs/010_MODULE_REGISTRY.md`
+- `docs/005_TRACEABILITY_MATRIX.md`
+- `.doc/TODO.md`, `.doc/CURRENT_STATE.md`
+
+### Evidence
+- `reports/2026-02-01_WI-0150_tools_move.md`
+- `reports/2026-02-01_WI-0150_CLOSE.md`
+
+### Gates (esito su target machine)
+- `guardian lint`: PASS
+- `compileall -q`: PASS (nessun output, atteso)
+- import smoke: PASS (`OK`)
+- `pytest -q`: PASS (DeprecationWarning atteso: shims `src.tools.*` → `src.phase0.tools.*`)
+- `guardian sync --clean`: PASS (sync completato, direct mode; fingerprint: vedi log `reports/guardian_sync_WI-0150.log`)
+- `guardian derive`: PASS
+- `build_master_md`: PASS
+
+## 2026-02-02 — WI-0160 (Refactor fisico tranche 5: pages) — CLOSED (gates PASS)
+
+### Outcome
+- Eseguito move fisico area `pages` secondo Move Map:
+  - `pages/**` → `src/phase2/pages/**` (implementazione reale)
+- Introdotti shims legacy per preservare compatibilità:
+  - wrapper in `pages/*.py` verso `src/phase2/pages/*` con `DeprecationWarning`
+
+### Evidence
+- `reports/2026-02-02_WI-0160_pages_move.md`
+- `reports/2026-02-02_WI-0160_CLOSE.md`
+
+### Gates (esito su target machine)
+- `guardian lint`: PASS
+- `compileall -q`: PASS (nessun output, atteso)
+- import smoke: PASS (`OK`)
+- `pytest -q`: PASS (DeprecationWarning atteso: import legacy `pages.*` / `src.pages.*`)
+- `guardian sync --clean`: PASS (sync completato, direct mode; fingerprint: vedi log `reports/guardian_sync_WI-0160.log`)
+- `guardian derive`: PASS
+- `build_master_md`: PASS
+
+
+
+## 2026-02-02 — WI-0170 (Tooling: WI Log Collector B) — CLOSED (gates PASS)
+
+### Outcome (intended)
+- Introdotto comando `guardian collect` (collector B, Python) per verificare la presenza/coerenza dei log di un WI in `reports/`.
+- Modalità:
+  - `normal`: 7 log attesi
+  - `close`: 4 log attesi
+- Output per file: `OK` / `MISSING` / `EMPTY` + `HITS(n)` con linee (e numero riga).
+
+### Allowlist
+- `scripts/guardian.py`
+- `scripts/wi_log_collector.py`
+- `tests/test_wi_log_collector.py`
+- `.doc/TODO.md`, `.doc/CURRENT_STATE.md`, `.doc/LOGBOOK.md`
+- `reports/2026-02-02_WI-0170_COLLECTOR.md`
+
+### Evidence (da produrre su target machine)
+- `reports/2026-02-02_WI-0170_COLLECTOR.md`
+
+## 2026-02-02 — WI-0180 (Deprecation cleanup tranche A: src.core callers) — OPEN
+
+### Outcome (intended)
+- Migrazione import nei call sites: `src.core.*` → `src.phase0.core.*`.
+- Aggiunto test regressione: vieta import legacy `src.core` fuori da `src/core/**`.
+- Aggiornato mkdocs API (audit) su modulo canonical.
+
+### Evidence (da produrre su target machine)
+- `reports/2026-02-02_WI-0180_DEPREC_CORE_CALLERS.md`
+
+### Gates (da eseguire su target machine)
+- `guardian lint`
+- `compileall -q`
+- import smoke
+- `pytest -q`
+- `guardian sync --clean`
+- `guardian derive`
+- `build_master_md`
+- `guardian collect --wi WI-0180 --mode normal --write-log --pattern DeprecationWarning --pattern \"\[DEPRECATED\]\"`
+
+
+## 2026-02-02 — WI-0190 (Deprecation cleanup tranche B: test imports + pages import) — CLOSED (gates PASS)
+
+### Outcome (intended)
+- Aggiornare gli import nei test che passano dagli shim legacy:
+  - `src.db.*` → `src.phase0.db.*`
+  - `src.tools.*` → `src.phase0.tools.*`
+  - `src.dataops.*` → `src.phase0.dataops.*`
+- Aggiornare test import pagina Streamlit: `pages.06_Forecasts_Ranking` → `src.phase2.pages.06_Forecasts_Ranking`.
+
+### Evidence (da produrre su target machine)
+- `reports/2026-02-02_WI-0190_DEPREC_TEST_IMPORTS.md`
+
+### Gates (da eseguire su target machine)
+- `guardian lint`
+- `compileall -q`
+- import smoke
+- `pytest -q`
+- `guardian sync --clean`
+- `guardian derive`
+- `build_master_md`
+- `guardian collect --wi WI-0190 --mode normal --write-log --pattern DeprecationWarning --pattern "\[DEPRECATED\]"`
+
+
+## 2026-02-02 — WI-0200 (Deprecation cleanup tranche C: internal src.db imports) — CLOSED (scope met; residual warnings moved to WI-0210)
+
+### Outcome (intended)
+- Eliminare le ultime DeprecationWarning provenienti dai call sites runtime aggiornando gli import:
+  - `src/phase0/core/audit_engine.py`: `src.db.migrate` → `src.phase0.db.migrate`
+  - `src/intelligence_engine.py`: `src.db.audit_store` → `src.phase0.db.audit_store`
+
+### Evidence (da produrre su target machine)
+- `reports/2026-02-02_WI-0200_DEPREC_PHASE0_DB_IMPORTS.md`
+
+### Gates (da eseguire su target machine)
+- `guardian lint`
+- `compileall -q`
+- import smoke
+- `pytest -q`
+- `guardian sync --clean`
+- `guardian derive`
+- `build_master_md`
+- `guardian collect --wi WI-0200 --mode normal --write-log --pattern DeprecationWarning --pattern "\[DEPRECATED\]"`
+
+## 2026-02-02 — WI-0210 (Deprecation cleanup tranche D: runtime imports ranking+sentinel) — CLOSED (gates PASS; residual warnings moved to WI-0220)
+
+### Outcome (intended)
+- Eliminare le DeprecationWarning residue emerse in `pytest -q` aggiornando import runtime:
+  - `src/forecast/ranking.py`: `src.db.audit_store` → `src.phase0.db.audit_store`
+  - `src/sentinel_alpha.py`: `src.db.migrate` → `src.phase0.db.migrate`
+
+### Evidence (da produrre su target machine)
+- `reports/2026-02-02_WI-0210_DEPREC_RUNTIME_IMPORTS_D.md`
+
+### Gates (da eseguire su target machine)
+- `guardian lint`
+- `compileall -q`
+- import smoke
+- `pytest -q`
+- `guardian sync --clean`
+- `guardian derive`
+- `build_master_md`
+- `guardian collect --wi WI-0210 --mode normal --write-log --pattern DeprecationWarning --pattern "\[DEPRECATED\]"`
+
+
+## 2026-02-02 — WI-0220 (Deprecation cleanup tranche E: verify_ticker_mappings imports) — CLOSED (gates PASS)
+
+### Outcome (intended)
+- Rimuovere le DeprecationWarning residue provenienti da `src/phase0/tools/verify_ticker_mappings.py` aggiornando l'import legacy:
+  - `src.db.migrate` → `src.phase0.db.migrate`
+
+### Evidence (da produrre su target machine)
+- `reports/2026-02-02_WI-0220_DEPREC_VERIFY_TICKER_MAPPINGS.md`
+
+### Gates (da eseguire su target machine)
+- `guardian lint`
+- `compileall -q`
+- import smoke
+- `pytest -q`
+- `guardian sync --clean`
+- `guardian derive`
+- `build_master_md`
+- `guardian collect --wi WI-0220 --mode normal --write-log --pattern DeprecationWarning --pattern "\[DEPRECATED\]"`
+
+
+## 2026-02-02 — WI-0230 (Deprecation cleanup tranche F: UI + entrypoints imports) — OPEN
+
+### Outcome (intended)
+- Eliminare import legacy che passano dagli shim (evitare `DeprecationWarning`) in:
+  - entrypoints/runtime: `app.py`, `main.py`, `scripts/execute.py`, `src/morning_bulletin.py`, `src/monitoring/__main__.py`, `src/intelligence_engine.py`
+  - UI pages: `src/phase2/pages/*` (gates/audit/trades/datagaps/execution/tca/dataops)
+
+### Evidence (da produrre su target machine)
+- `reports/2026-02-02_WI-0230_DEPREC_UI_ENTRYPOINTS.md`
+
+### Gates (da eseguire su target machine)
+- `guardian lint`
+- `compileall -q`
+- import smoke
+- `pytest -q`
+- `guardian sync --clean`
+- `guardian derive`
+- `build_master_md`
+- `guardian collect --wi WI-0230 --mode normal --write-log --pattern DeprecationWarning --pattern "\[DEPRECATED\]"`

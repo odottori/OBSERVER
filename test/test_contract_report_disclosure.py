@@ -6,8 +6,8 @@ from datetime import datetime, timezone
 import duckdb
 import pandas as pd
 
-from src.db.migrate import ensure_schema
-from src.db.audit_store import compute_code_fingerprint
+from src.phase0.db.migrate import ensure_schema
+from src.phase0.db.audit_store import compute_code_fingerprint
 from src.intelligence_engine import IntelligenceEngine
 
 

@@ -6,7 +6,7 @@ import duckdb
 
 import src.data.price_backfill as pb
 from src.data.price_backfill import PriceBackfiller
-from src.db.migrate import ensure_schema
+from src.phase0.db.migrate import ensure_schema
 
 
 class _FailRequests:

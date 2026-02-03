@@ -23,8 +23,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--threshold-bp", type=float, default=10.0)
     args = ap.parse_args(argv)
 
-    from src.db.connection import DbConfig, connect
-    from src.db.migrate import ensure_schema
+    from src.phase0.db.connection import DbConfig, connect
+    from src.phase0.db.migrate import ensure_schema
     from src.monitoring.tca_report import build_tca_report_text
 
     con = connect(DbConfig(db_path=args.db_path))

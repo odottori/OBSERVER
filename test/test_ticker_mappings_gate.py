@@ -1,7 +1,7 @@
 import duckdb
 
-from src.db.migrate import ensure_schema
-from src.tools.verify_ticker_mappings import check_ticker_mappings
+from src.phase0.db.migrate import ensure_schema
+from src.phase0.tools.verify_ticker_mappings import check_ticker_mappings
 
 
 def test_verify_ticker_mappings_passes_on_non_overlapping_rows():

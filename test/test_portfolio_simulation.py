@@ -1,8 +1,8 @@
 import duckdb
 import pandas as pd
 
-from src.db.migrate import ensure_schema
-from src.core.audit_engine import AuditEngine, BacktestConfig
+from src.phase0.db.migrate import ensure_schema
+from src.phase0.core.audit_engine import AuditEngine, BacktestConfig
 
 
 def test_portfolio_simulation_marks_to_market_and_enforces_one_position_per_ticker():

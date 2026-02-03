@@ -9,8 +9,8 @@ from typing import Any
 import duckdb
 import pandas as pd
 
-from src.core.ticker_normalize import normalize_ticker_sql
-from src.db.audit_store import compute_code_fingerprint
+from src.phase0.core.ticker_normalize import normalize_ticker_sql
+from src.phase0.db.audit_store import compute_code_fingerprint
 
 
 # --- Spec constants (WAVE6_FORECAST_STARS_RANKING_SPEC.md v0.1) ---

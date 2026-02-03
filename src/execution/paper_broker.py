@@ -6,7 +6,7 @@ from uuid import uuid4
 
 import duckdb
 
-from src.core.cost_model import CostModel
+from src.phase0.core.cost_model import CostModel
 from src.risk.risk_engine import ProposedOrder, RiskConfig, apply_risk_gate
 
 

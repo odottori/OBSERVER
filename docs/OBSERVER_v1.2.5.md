@@ -1121,7 +1121,7 @@ Equity curve giornaliera per run: equity, cash, investito, numero posizioni e ta
 
 # Traceability Matrix (Repo -> Docset) — v1.2.5
 
-Build date: 2026-01-30
+Build date: 2026-02-02
 
 ## Scopo
 
@@ -1178,16 +1178,16 @@ La matrice sottostante organizza i componenti “as-built” in una vista **per 
 
 | Componente (path) | Classe | Stato | Documentazione (ref) | Verifica rapida |
 |---|---|---|---|---|
-| pages/11_DataOps_Control_Room.py | Pagina Streamlit (Control Room DataOps) | IMPLEMENTATO | 001§8; 003§6; 002 FR-09 | (UI) |
-| src/dataops/prices_ingest.py | DataOps: ingest incrementale prezzi + data_gaps | IMPLEMENTATO | 003§4 (Data layer); 008 | `py -m src.tools.dataops_prices_ingest --help` |
-| src/dataops/halts_sync.py | DataOps: sync overlay halts YAML -> DB | IMPLEMENTATO | 003§4 (Data layer); 008 | `py -m src.tools.dataops_sync_halts --help` |
-| src/dataops/closures_seed.py | DataOps: seed closure storiche -> market_halts | IMPLEMENTATO | 003§4 (Data layer); 008 | `py -m src.tools.dataops_import_closures --help` |
-| src/dataops/dq_prices.py | DataOps: DQ prezzi halt-aware (missing/stale/invalid) | IMPLEMENTATO | 002 FR-09; 004 | `py -m src.tools.dataops_dq_prices --help` |
-| src/tools/dataops_status.py | Tool: stato DataOps (tabella counts + quick checks) | IMPLEMENTATO | 003§7 (Ops); 008 | `py -m src.tools.dataops_status --help` |
-| src/tools/dataops_prices_ingest.py | Tool: runner ingest prezzi (offline-by-default) | IMPLEMENTATO | 003§7 (Ops); 008 | `py -m src.tools.dataops_prices_ingest --help` |
-| src/tools/dataops_sync_halts.py | Tool: runner sync halts (halts.yml) | IMPLEMENTATO | 003§7 (Ops); 008 | `py -m src.tools.dataops_sync_halts --help` |
-| src/tools/dataops_import_closures.py | Tool: seed closures CSV -> market_halts | IMPLEMENTATO | 003§7 (Ops); 008 | `py -m src.tools.dataops_import_closures --help` |
-| src/tools/dataops_dq_prices.py | Tool: runner DQ prezzi (halt-aware) | IMPLEMENTATO | 002 FR-09; 004 | `py -m src.tools.dataops_dq_prices --help` |
+| src/phase2/pages/11_DataOps_Control_Room.py (shim: pages/11_DataOps_Control_Room.py) | Pagina Streamlit (Control Room DataOps) | IMPLEMENTATO | 001§8; 003§6; 002 FR-09 | (UI) |
+| src/phase0/dataops/prices_ingest.py (shim: src/dataops/prices_ingest.py) | DataOps: ingest incrementale prezzi + data_gaps | IMPLEMENTATO | 003§4 (Data layer); 008 | `py -m src.tools.dataops_prices_ingest --help` |
+| src/phase0/dataops/halts_sync.py (shim: src/dataops/halts_sync.py) | DataOps: sync overlay halts YAML -> DB | IMPLEMENTATO | 003§4 (Data layer); 008 | `py -m src.tools.dataops_sync_halts --help` |
+| src/phase0/dataops/closures_seed.py (shim: src/dataops/closures_seed.py) | DataOps: seed closure storiche -> market_halts | IMPLEMENTATO | 003§4 (Data layer); 008 | `py -m src.tools.dataops_import_closures --help` |
+| src/phase0/dataops/dq_prices.py (shim: src/dataops/dq_prices.py) | DataOps: DQ prezzi halt-aware (missing/stale/invalid) | IMPLEMENTATO | 002 FR-09; 004 | `py -m src.tools.dataops_dq_prices --help` |
+| src/phase0/tools/dataops_status.py (shim: src/tools/dataops_status.py) | Tool: stato DataOps (tabella counts + quick checks) | IMPLEMENTATO | 003§7 (Ops); 008 | `py -m src.tools.dataops_status --help` |
+| src/phase0/tools/dataops_prices_ingest.py (shim: src/tools/dataops_prices_ingest.py) | Tool: runner ingest prezzi (offline-by-default) | IMPLEMENTATO | 003§7 (Ops); 008 | `py -m src.tools.dataops_prices_ingest --help` |
+| src/phase0/tools/dataops_sync_halts.py (shim: src/tools/dataops_sync_halts.py) | Tool: runner sync halts (halts.yml) | IMPLEMENTATO | 003§7 (Ops); 008 | `py -m src.tools.dataops_sync_halts --help` |
+| src/phase0/tools/dataops_import_closures.py (shim: src/tools/dataops_import_closures.py) | Tool: seed closures CSV -> market_halts | IMPLEMENTATO | 003§7 (Ops); 008 | `py -m src.tools.dataops_import_closures --help` |
+| src/phase0/tools/dataops_dq_prices.py (shim: src/tools/dataops_dq_prices.py) | Tool: runner DQ prezzi (halt-aware) | IMPLEMENTATO | 002 FR-09; 004 | `py -m src.tools.dataops_dq_prices --help` |
 | config/dataops/* | Config DataOps (closures seed, mapping, halts overlay) | IMPLEMENTATO | 003§7 (Ops); 008 | (usato dai runner) |
 
 
@@ -1195,9 +1195,9 @@ La matrice sottostante organizza i componenti “as-built” in una vista **per 
 
 | Componente (path) | Classe | Stato | Documentazione (ref) | Verifica rapida |
 |---|---|---|---|---|
-| src/db/migrate.py | Schema owner + migrations DuckDB | IMPLEMENTATO | 004; 003§4 (Data layer) | `py -m src.db.migrate --db data/sentinel_alpha.db` |
-| src/db/connection.py | Connection helper (DbConfig/connect) | IMPLEMENTATO | 003§4 | (usato dai runner) |
-| src/db/audit_store.py | Persistence layer per audit artifacts | IMPLEMENTATO | 003§4-5; 008 | (invocato dai runner) |
+| src/phase0/db/migrate.py (shim: src/db/migrate.py) | Schema owner + migrations DuckDB | IMPLEMENTATO | 004; 003§4 (Data layer) | `py -m src.db.migrate --db data/sentinel_alpha.db` |
+| src/phase0/db/connection.py (shim: src/db/connection.py) | Connection helper (DbConfig/connect) | IMPLEMENTATO | 003§4 | (usato dai runner) |
+| src/phase0/db/audit_store.py (shim: src/db/audit_store.py) | Persistence layer per audit artifacts | IMPLEMENTATO | 003§4-5; 008 | (invocato dai runner) |
 | data/sentinel_alpha.db | DuckDB local store (schema v2.1.0) | IMPLEMENTATO | 004; 008 | `py scripts/sentinel.py status` |
 | test/test_db_migrate.py | Test: idempotenza schema + seed + tabelle execution_* | IMPLEMENTATO | 004 | `py -m pytest test/test_db_migrate.py` |
 
@@ -1232,12 +1232,12 @@ Questo cluster rappresenta la fase “delivery” Phase2:
 
 | Componente (path) | Classe | Stato | Documentazione (ref) | Verifica rapida |
 |---|---|---|---|---|
-| src/core/audit_engine.py | Audit engine (no future leak, trades, equity) | IMPLEMENTATO | 001§6; specs/AUDIT_LIFECYCLE_SPEC; 003§5 | `py scripts/sentinel.py run --help` |
-| src/core/alert_lifecycle.py | Lifecycle monitor (TRADABLE/WAITLIST/EXPIRED + traded states) | IMPLEMENTATO | 001§6; specs/AUDIT_LIFECYCLE_SPEC | `py -m src.tools.alert_lifecycle --help` |
-| src/core/cost_model.py | Retail cost model (round-trip cost) | IMPLEMENTATO | 003§8 (Costi) ; 007 | (usato in audit_engine) |
-| src/core/tax_model.py | Modello fiscale IT (CGT + loss carry) | IMPLEMENTATO | 003§8 (Tasse) ; 007 | (usato in audit_engine) |
-| src/core/sentiment.py | Sentiment helper (offline/deterministico) | IMPLEMENTATO | 003 | (usato da NEWS-ALPHA/forecast) |
-| src/core/ticker_normalize.py | Ticker normalize helpers | IMPLEMENTATO | 003 | (usato da audit/forecast/tools) |
+| src/phase0/core/audit_engine.py (shim: src/core/audit_engine.py) | Audit engine (no future leak, trades, equity) | IMPLEMENTATO | 001§6; specs/AUDIT_LIFECYCLE_SPEC; 003§5 | `py scripts/sentinel.py run --help` |
+| src/phase0/core/alert_lifecycle.py (shim: src/core/alert_lifecycle.py) | Lifecycle monitor (TRADABLE/WAITLIST/EXPIRED + traded states) | IMPLEMENTATO | 001§6; specs/AUDIT_LIFECYCLE_SPEC | `py -m src.tools.alert_lifecycle --help` |
+| src/phase0/core/cost_model.py (shim: src/core/cost_model.py) | Retail cost model (round-trip cost) | IMPLEMENTATO | 003§8 (Costi) ; 007 | (usato in audit_engine) |
+| src/phase0/core/tax_model.py (shim: src/core/tax_model.py) | Modello fiscale IT (CGT + loss carry) | IMPLEMENTATO | 003§8 (Tasse) ; 007 | (usato in audit_engine) |
+| src/phase0/core/sentiment.py (shim: src/core/sentiment.py) | Sentiment helper (offline/deterministico) | IMPLEMENTATO | 003 | (usato da NEWS-ALPHA/forecast) |
+| src/phase0/core/ticker_normalize.py (shim: src/core/ticker_normalize.py) | Ticker normalize helpers | IMPLEMENTATO | 003 | (usato da audit/forecast/tools) |
 
 ## F) Forecast
 
@@ -1268,18 +1268,18 @@ Questo cluster rappresenta la fase “delivery” Phase2:
 
 | Componente (path) | Classe | Stato | Documentazione (ref) | Verifica rapida |
 |---|---|---|---|---|
-| pages/00_Decision_Briefing.py | Pagina Streamlit | IMPLEMENTATO | 001§8; 003§6 | (UI) |
-| pages/01_Pipeline_Control.py | Pagina Streamlit | IMPLEMENTATO | 001§8; 003§6 | (UI) |
-| pages/02_Gates_Data_Quality.py | Pagina Streamlit | IMPLEMENTATO | 001§8; 003§6 | (UI) |
-| pages/03_Audit_Runs.py | Pagina Streamlit | IMPLEMENTATO | 001§8; 003§6 | (UI) |
-| pages/04_Trades_Equity.py | Pagina Streamlit | IMPLEMENTATO | 001§8; 003§6 | (UI) |
-| pages/05_Data_Gaps_Backfill.py | Pagina Streamlit | IMPLEMENTATO | 001§8; 003§6 | (UI) |
-| pages/06_Forecasts_Ranking.py | Pagina Streamlit | IMPLEMENTATO | 001§8; 003§6 | (UI) |
-| pages/07_NEWS_ALPHA.py | Pagina Streamlit | IMPLEMENTATO | 001§8; 003§6 | (UI) |
-| pages/08_Lifecycle_Monitor.py | Pagina Streamlit | IMPLEMENTATO | 001§8; 003§6 | (UI) |
-| pages/09_Execution_Log.py | Pagina Streamlit (execution_orders/execution_fills + risk flags) | IMPLEMENTATO | 001§8; 003§6 | (UI) |
-| pages/10_Monitoring_TCA.py | Pagina Streamlit (TCA report) | IMPLEMENTATO | 001§8; 003§6 | (UI) |
-| pages/11_DataOps_Control_Room.py | Pagina Streamlit (Control Room DataOps) | IMPLEMENTATO | 001§8; 003§6; 002 FR-09 | (UI) |
+| src/phase2/pages/00_Decision_Briefing.py (shim: pages/00_Decision_Briefing.py) | Pagina Streamlit | IMPLEMENTATO | 001§8; 003§6 | (UI) |
+| src/phase2/pages/01_Pipeline_Control.py (shim: pages/01_Pipeline_Control.py) | Pagina Streamlit | IMPLEMENTATO | 001§8; 003§6 | (UI) |
+| src/phase2/pages/02_Gates_Data_Quality.py (shim: pages/02_Gates_Data_Quality.py) | Pagina Streamlit | IMPLEMENTATO | 001§8; 003§6 | (UI) |
+| src/phase2/pages/03_Audit_Runs.py (shim: pages/03_Audit_Runs.py) | Pagina Streamlit | IMPLEMENTATO | 001§8; 003§6 | (UI) |
+| src/phase2/pages/04_Trades_Equity.py (shim: pages/04_Trades_Equity.py) | Pagina Streamlit | IMPLEMENTATO | 001§8; 003§6 | (UI) |
+| src/phase2/pages/05_Data_Gaps_Backfill.py (shim: pages/05_Data_Gaps_Backfill.py) | Pagina Streamlit | IMPLEMENTATO | 001§8; 003§6 | (UI) |
+| src/phase2/pages/06_Forecasts_Ranking.py (shim: pages/06_Forecasts_Ranking.py) | Pagina Streamlit | IMPLEMENTATO | 001§8; 003§6 | (UI) |
+| src/phase2/pages/07_NEWS_ALPHA.py (shim: pages/07_NEWS_ALPHA.py) | Pagina Streamlit | IMPLEMENTATO | 001§8; 003§6 | (UI) |
+| src/phase2/pages/08_Lifecycle_Monitor.py (shim: pages/08_Lifecycle_Monitor.py) | Pagina Streamlit | IMPLEMENTATO | 001§8; 003§6 | (UI) |
+| src/phase2/pages/09_Execution_Log.py (shim: pages/09_Execution_Log.py) | Pagina Streamlit (execution_orders/execution_fills + risk flags) | IMPLEMENTATO | 001§8; 003§6 | (UI) |
+| src/phase2/pages/10_Monitoring_TCA.py (shim: pages/10_Monitoring_TCA.py) | Pagina Streamlit (TCA report) | IMPLEMENTATO | 001§8; 003§6 | (UI) |
+| src/phase2/pages/11_DataOps_Control_Room.py (shim: pages/11_DataOps_Control_Room.py) | Pagina Streamlit (Control Room DataOps) | IMPLEMENTATO | 001§8; 003§6; 002 FR-09 | (UI) |
 
 ## J) GUARDIAN tooling (operativo)
 
@@ -1293,19 +1293,19 @@ Questo cluster rappresenta la fase “delivery” Phase2:
 | .doc/CURRENT_STATE.md | Stato corrente + p0 | IMPLEMENTATO | (Ops) | `type .doc/CURRENT_STATE.md` |
 | .doc/LOGBOOK.md | Diario transizioni (audit) | IMPLEMENTATO | (Ops) | `type .doc/LOGBOOK.md` |
 
-## K) Tooling verifiche (src/tools)
+## K) Tooling verifiche (src/phase0/tools)
 
 | Componente (path) | Classe | Stato | Documentazione (ref) | Verifica rapida |
 |---|---|---|---|---|
-| src/tools/db_status.py | Tool: DB status / introspection | IMPLEMENTATO | 003§7 (Ops); 008 | `py -m src.tools.db_status --help` |
-| src/tools/verify_run.py | Tool: verify run artifacts | IMPLEMENTATO | 003§7 (Ops); 008 | `py -m src.tools.verify_run --help` |
-| src/tools/verify_inputs.py | Tool: verify inputs | IMPLEMENTATO | 003§7 (Ops); 008 | `py -m src.tools.verify_inputs --help` |
-| src/tools/verify_ticker_mappings.py | Tool: verify ticker mappings | IMPLEMENTATO | 003§7 (Ops); 008 | `py -m src.tools.verify_ticker_mappings --help` |
-| src/tools/verify_provenance.py | Tool: verify provenance | IMPLEMENTATO | 003§7 (Ops); 008 | `py -m src.tools.verify_provenance --help` |
-| src/tools/forecast_rankings.py | Tool: forecast rankings | IMPLEMENTATO | 003§7 (Ops); 008 | `py -m src.tools.forecast_rankings --help` |
-| src/tools/forced_exits.py | Tool: forced exits analysis | IMPLEMENTATO | 003§7 (Ops); 008 | `py -m src.tools.forced_exits --help` |
-| src/tools/ticker_mappings.py | Tool: ticker mappings ops | IMPLEMENTATO | 003§7 (Ops); 008 | `py -m src.tools.ticker_mappings --help` |
-| src/tools/universe_membership.py | Tool: universe membership ops | IMPLEMENTATO | 003§7 (Ops); 008 | `py -m src.tools.universe_membership --help` |
+| src/phase0/tools/db_status.py (shim: src/tools/db_status.py) | Tool: DB status / introspection | IMPLEMENTATO | 003§7 (Ops); 008 | `py -m src.tools.db_status --help` |
+| src/phase0/tools/verify_run.py (shim: src/tools/verify_run.py) | Tool: verify run artifacts | IMPLEMENTATO | 003§7 (Ops); 008 | `py -m src.tools.verify_run --help` |
+| src/phase0/tools/verify_inputs.py (shim: src/tools/verify_inputs.py) | Tool: verify inputs | IMPLEMENTATO | 003§7 (Ops); 008 | `py -m src.tools.verify_inputs --help` |
+| src/phase0/tools/verify_ticker_mappings.py (shim: src/tools/verify_ticker_mappings.py) | Tool: verify ticker mappings | IMPLEMENTATO | 003§7 (Ops); 008 | `py -m src.tools.verify_ticker_mappings --help` |
+| src/phase0/tools/verify_provenance.py (shim: src/tools/verify_provenance.py) | Tool: verify provenance | IMPLEMENTATO | 003§7 (Ops); 008 | `py -m src.tools.verify_provenance --help` |
+| src/phase0/tools/forecast_rankings.py (shim: src/tools/forecast_rankings.py) | Tool: forecast rankings | IMPLEMENTATO | 003§7 (Ops); 008 | `py -m src.tools.forecast_rankings --help` |
+| src/phase0/tools/forced_exits.py (shim: src/tools/forced_exits.py) | Tool: forced exits analysis | IMPLEMENTATO | 003§7 (Ops); 008 | `py -m src.tools.forced_exits --help` |
+| src/phase0/tools/ticker_mappings.py (shim: src/tools/ticker_mappings.py) | Tool: ticker mappings ops | IMPLEMENTATO | 003§7 (Ops); 008 | `py -m src.tools.ticker_mappings --help` |
+| src/phase0/tools/universe_membership.py (shim: src/tools/universe_membership.py) | Tool: universe membership ops | IMPLEMENTATO | 003§7 (Ops); 008 | `py -m src.tools.universe_membership --help` |
 
 ## Regola di accettazione (operativa)
 
@@ -1686,7 +1686,7 @@ Riferimento scenari: `docs/use_cases/SCENARI_APPLICATIVI_v1.2.5.md`
 
 ---
 docset_version: 1.2.5
-last_updated: 2026-01-30
+last_updated: 2026-02-02
 status: support
 ---
 
@@ -1753,7 +1753,7 @@ Questo registro fa da ponte tra:
 - **Phase**: PHASE0_FOUNDATION
 - **Livello**: RUN-GRADE
 - **Entrypoint**: `py scripts/sentinel.py migrate`
-- **Codice**: `src/db/migrate.py`
+- **Codice**: `src/phase0/db/migrate.py` (shim: `src/db/migrate.py`)
 - **Output**: schema tabelle core
 - **Gate minimi**: migrate + schema checks
 - **Gap derivati**: blocca ingestione/segnali/esecuzione se schema non stabile
@@ -1769,7 +1769,7 @@ Questo registro fa da ponte tra:
   - `py -m src.tools.dataops_sync_halts`
   - `py -m src.tools.dataops_import_closures`
   - `py -m src.tools.dataops_dq_prices`
-- **Codice**: `src/dataops/*`, `src/tools/dataops_*.py`, `config/dataops/*`, `pages/11_DataOps_Control_Room.py`
+- **Codice**: `src/phase0/dataops/*` (shim: `src/dataops/*`), `src/phase0/tools/dataops_*.py` (shim: `src/tools/dataops_*.py`), `config/dataops/*`, `src/phase2/pages/11_DataOps_Control_Room.py` (shim: `pages/11_DataOps_Control_Room.py`)
 - **Output**: `market_halts`, `ticker_halts`, `data_gaps`, `dq_runs`, `dq_findings`, `dq_metrics_daily`
 - **Gate minimi**: schema migrate + ingest offline + DQ halt-aware + test minimi
 - **Gap derivati**: blocca esecuzione/monitoring se dati prezzi instabili (dipende da `GAP-DATAOPS-HARDEN` se introdotto)
@@ -1819,7 +1819,7 @@ Questo registro fa da ponte tra:
 - **Phase**: PHASE0_FOUNDATION
 - **Livello**: RUN-GRADE
 - **Entrypoint**: (invocato da pipeline)
-- **Codice**: `src/core/audit_engine.py`, `src/db/audit_store.py`, `src/analyst_auditor.py`
+- **Codice**: `src/phase0/core/audit_engine.py` (shim: `src/core/audit_engine.py`), `src/phase0/db/audit_store.py` (shim: `src/db/audit_store.py`), `src/analyst_auditor.py`
 - **Output**: `audit_*`
 - **Gate minimi**: provenance/verify_run
 - **Gap derivati**: post-mortem/monitoring meno affidabili
@@ -1889,7 +1889,7 @@ Questo registro fa da ponte tra:
 - **Phase**: PHASE2_EXECUTION
 - **Livello**: TARGET (P1)
 - **Entrypoint**: (da creare)
-- **Codice**: `src/core/alert_lifecycle.py` (base)
+- **Codice**: `src/phase0/core/alert_lifecycle.py` (shim: `src/core/alert_lifecycle.py`) (base)
 - **Output**: notifiche
 - **Gate minimi**: alert rules
 - **Gap derivati**: `GAP-ALERTING`
@@ -1909,7 +1909,7 @@ Questo registro fa da ponte tra:
 - **Phase**: PHASE_UI
 - **Livello**: RUN-GRADE
 - **Entrypoint**: (streamlit)
-- **Codice**: `pages/*.py`
+- **Codice**: `src/phase2/pages/*.py` (shim: `pages/*.py`)
 - **Output**: —
 - **Gate minimi**: smoke manuale
 - **Gap derivati**: non bloccante, ma riduce costi operativi
@@ -1957,15 +1957,6 @@ Questo documento definisce **la fase intermedia obbligatoria** prima del refacto
 
 ## Assunzioni e rischio
 
-<!-- WI-0110:BEGIN -->
-### Inventory (WI-0110) ? as-built snapshot (auto)
-- Detected `pkg_root` candidate: `tools` (heuristic: max python files under root)
-- `src/` top-level dirs (by .py count): {'tools': 16, 'news_alpha': 8, 'core': 7, 'dataops': 7, 'db': 4, 'monitoring': 3, 'data': 2, 'execution': 2, 'forecast': 2, 'risk': 2}
-- Area counts (path heuristic): {'other': 26, 'core': 7, 'dataops': 7, 'db': 4, 'tools': 16}
-- Report: `reports/WI-0110_inventory.md`
-<!-- WI-0110:END -->
-
-
 - Questo piano assume l’esistenza (logica) delle aree `db/`, `core/`, `dataops/`, `tools/`, `pages/` nel codice (come da backlog).
 - I path esatti possono differire (es. `src/observer/...` vs `src/app/...`). La Move Map usa quindi **pattern** e non path assoluti.
 - Il rischio primario non è tecnico ma di **drift**: per mitigarlo, le tranche sono piccole e con gates ripetibili.
@@ -1997,7 +1988,7 @@ Obiettivo: confermare che il repo è in stato pulito e riproducibile prima di un
 - `py scripts/guardian.py lint` (strutturale)
 
 Output atteso (per tranche):
-- `reports/pytest_tranche_<WI>.log`
+- `reports/pytest_<WI>.log`
 - `reports/guardian_lint_<WI>.log`
 
 ### Gate G1 — Import smoke
@@ -2016,7 +2007,7 @@ Obiettivo: regressione funzionale.
 - `py -m pytest -q`
 
 Output atteso:
-- `reports/pytest_tranche_<WI>.log`
+- `reports/pytest_<WI>.log`
 
 ### Gate G3 — Docset/derived sync
 Obiettivo: evitare drift tra canonici e derivati.
@@ -2107,6 +2098,25 @@ Per ogni tranche (WI fisico):
 4. **Aggiornamento canonici** (solo allowlist): TODO, module registry, traceability, eventuali docs di fase.
 5. **Evidence pack**: depositare log in `reports/` e aggiornare `.doc/LOGBOOK.md`.
 
+
+## WI-0111 — Move Map final (virtual)
+
+**Evidence:** `reports/WI-0111_move_map.md`
+
+La Move Map è espressa come pattern *as-is → to-be* e definisce le tranche fisiche WI-0120..0160 (db/core/dataops/tools/pages) senza eseguire move in `src/`.
+
+### Tranche map (fisico) — WI-0120..0160
+
+| Tranche (WI) | Area | As-is pattern | To-be target | Fase |
+|---|---|---|---|---|
+| WI-0120 | db | `src/**/db/**` | `src/<pkg_root>/phase0/db/**` | PHASE0 |
+| WI-0130 | core | `src/**/core/**` | `src/<pkg_root>/phase0/core/**` | PHASE0 |
+| WI-0140 | dataops | `src/**/dataops/**` (+ `src/**/ingest/**` se presente) | `src/<pkg_root>/phase1/dataops/**` (+ `phase1/ingest/**`) | PHASE1 |
+| WI-0150 | tools | `src/**/tools/**` | `src/<pkg_root>/phase0/tools/**` | PHASE0 |
+| WI-0160 | pages | `src/**/pages/**` e/o `pages/**` | `src/<pkg_root>/phase2/pages/**` (oppure `pages/` resta root) | PHASE2/UI |
+
+**Note:** i dettagli operativi shims/deprecation sono finalizzati in WI-0112.
+
 ## Rollback plan
 
 - Ogni tranche crea un checkpoint git:
@@ -2119,18 +2129,25 @@ Per ogni tranche (WI fisico):
 
 ## Expected logs (naming convention)
 
-Per ogni WI/tranche, questi file sono attesi (minimo):
+Per ogni WI, questi file sono attesi (minimo):
 
-- `reports/pytest_tranche_<WI>.log`
-- `reports/import_smoke_<WI>.log` (o nota se non applicabile)
+- `reports/pytest_<WI>.log`
 - `reports/guardian_lint_<WI>.log`
-- `reports/build_master_md_<WI>.log`
 
-## Open points (da chiudere in WI-0110)
+Se applicabile (raccomandati):
 
-- Identificare `pkg_root` reale (es. `observer`) e path effettivi delle aree.
-- Confermare quali tools appartengono a PHASE1 (batch) vs PHASE2 (UI/dev).
-- Verificare dove vivono le pages Streamlit (root `pages/` vs package) per minimizzare churn.
+- `reports/build_master_md_<WI>.log` (solo se il WI aggiorna derivati/canonici)
+- `reports/import_smoke_<WI>.log`
+- `reports/compileall_<WI>.log`
+- `reports/guardian_sync_<WI>.log`
+- `reports/guardian_derive_<WI>.log`
+
+<!-- WI-0114:BEGIN -->
+### Gate protocol + expected logs snapshot (WI-0114) — auto
+- Report: `reports/WI-0114_gates.md`
+- Naming: `reports/pytest_<WI>.log`, `reports/guardian_lint_<WI>.log`, `reports/build_master_md_<WI>.log` (if used)
+- Planning-only in WI-0114: no changes to `src/**` or `tests/**`.
+<!-- WI-0114:END -->
 
 
 ---

@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 
 import duckdb
 
-from src.db.migrate import ensure_schema
+from src.phase0.db.migrate import ensure_schema
 from src.monitoring.tca_report import build_tca_report_text
 
 

@@ -2,7 +2,7 @@
 
 Important note (per user requirement):
 - We keep the current 50-ticker universe and the existing data-coverage strategy.
-- This module must NOT re-own schema logic; DDL lives in `src/db/migrate.py`.
+- This module must NOT re-own schema logic; DDL lives in `src/phase0/db/migrate.py`.
 
 `update_prices()` and `update_news()` remain optional. Many users will operate on
 an already-populated local DuckDB.
@@ -16,8 +16,8 @@ from datetime import datetime
 import duckdb
 import pandas as pd
 
-from src.db.migrate import ensure_schema, seed_default_universes
-from src.core.sentiment import LocalSentimentScorer
+from src.phase0.db.migrate import ensure_schema, seed_default_universes
+from src.phase0.core.sentiment import LocalSentimentScorer
 
 # Optional dependencies (keep ingestion decoupled from audit)
 try:

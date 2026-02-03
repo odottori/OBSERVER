@@ -20,8 +20,8 @@ from uuid import uuid4
 
 import pandas as pd
 
-from src.core.audit_engine import AuditEngine, BacktestConfig
-from src.db.audit_store import (
+from src.phase0.core.audit_engine import AuditEngine, BacktestConfig
+from src.phase0.db.audit_store import (
     start_audit_run,
     finish_audit_run,
     persist_trades,
@@ -740,7 +740,7 @@ class IntelligenceEngine:
                 # The runner enforces this gate before the audit starts; here we only
                 # disclose the observed table integrity state.
                 try:
-                    from src.tools.verify_ticker_mappings import check_ticker_mappings
+                    from src.phase0.tools.verify_ticker_mappings import check_ticker_mappings
 
                     mrep = check_ticker_mappings(self._engine.con, sample_limit=0, enable_warnings=False)
                     w(

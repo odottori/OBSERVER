@@ -4,8 +4,8 @@ from datetime import date, datetime, timezone
 import duckdb
 import pytest
 
-from src.db.migrate import ensure_schema, seed_default_universes
-from src.tools import verify_provenance
+from src.phase0.db.migrate import ensure_schema, seed_default_universes
+from src.phase0.tools import verify_provenance
 
 
 def _new_db_path(tmpdir: str) -> str:

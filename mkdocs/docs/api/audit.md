@@ -1,6 +1,6 @@
 # Audit API
 
-::: src.core.audit_engine
+::: src.phase0.core.audit_engine
 
 ::: src.db.audit_store
 

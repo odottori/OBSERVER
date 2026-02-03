@@ -1,13 +1,15 @@
-"""PHASE1 DataOps package.
+"""Legacy package import shim.
 
-This namespace hosts the *operational block* responsible for:
-- ingest (incremental)
-- calendar/halts data maintenance
-- data quality (halt-aware)
-- UI control room integration
+Canonical package:
+    - src.phase0.dataops
 
-It is intentionally decoupled from strategy/forecast/execution logic.
+This package remains temporarily to preserve stable imports during tranche moves.
 """
 
 from __future__ import annotations
 
+from src.compat.shims import warn_legacy_import as _warn_legacy_import
+
+_warn_legacy_import("src.dataops", "src.phase0.dataops")
+
+from src.phase0.dataops import *  # noqa: F401,F403

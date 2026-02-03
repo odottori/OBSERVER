@@ -1,6 +1,6 @@
 import duckdb
 
-from src.db.migrate import ensure_schema
+from src.phase0.db.migrate import ensure_schema
 
 
 def test_phase1_dataops_tables_exist_and_pk_work():

@@ -163,4 +163,4 @@ def test_writes_artifacts_and_updates_latest(tmp_path: Path) -> None:
 
 def test_streamlit_page_import_is_offline_and_optional_dependency() -> None:
     # Streamlit may not be installed in the test environment; the page must still be importable.
-    __import__("pages.06_Forecasts_Ranking")
+    __import__("src.phase2.pages.06_Forecasts_Ranking")

@@ -1,6 +1,6 @@
 ---
 docset_version: 1.2.5
-last_updated: 2026-01-30
+last_updated: 2026-02-02
 status: support
 ---
 
@@ -67,7 +67,7 @@ Questo registro fa da ponte tra:
 - **Phase**: PHASE0_FOUNDATION
 - **Livello**: RUN-GRADE
 - **Entrypoint**: `py scripts/sentinel.py migrate`
-- **Codice**: `src/db/migrate.py`
+- **Codice**: `src/phase0/db/migrate.py` (shim: `src/db/migrate.py`)
 - **Output**: schema tabelle core
 - **Gate minimi**: migrate + schema checks
 - **Gap derivati**: blocca ingestione/segnali/esecuzione se schema non stabile
@@ -83,7 +83,7 @@ Questo registro fa da ponte tra:
   - `py -m src.tools.dataops_sync_halts`
   - `py -m src.tools.dataops_import_closures`
   - `py -m src.tools.dataops_dq_prices`
-- **Codice**: `src/dataops/*`, `src/tools/dataops_*.py`, `config/dataops/*`, `pages/11_DataOps_Control_Room.py`
+- **Codice**: `src/phase0/dataops/*` (shim: `src/dataops/*`), `src/phase0/tools/dataops_*.py` (shim: `src/tools/dataops_*.py`), `config/dataops/*`, `src/phase2/pages/11_DataOps_Control_Room.py` (shim: `pages/11_DataOps_Control_Room.py`)
 - **Output**: `market_halts`, `ticker_halts`, `data_gaps`, `dq_runs`, `dq_findings`, `dq_metrics_daily`
 - **Gate minimi**: schema migrate + ingest offline + DQ halt-aware + test minimi
 - **Gap derivati**: blocca esecuzione/monitoring se dati prezzi instabili (dipende da `GAP-DATAOPS-HARDEN` se introdotto)
@@ -133,7 +133,7 @@ Questo registro fa da ponte tra:
 - **Phase**: PHASE0_FOUNDATION
 - **Livello**: RUN-GRADE
 - **Entrypoint**: (invocato da pipeline)
-- **Codice**: `src/core/audit_engine.py`, `src/db/audit_store.py`, `src/analyst_auditor.py`
+- **Codice**: `src/phase0/core/audit_engine.py` (shim: `src/core/audit_engine.py`), `src/phase0/db/audit_store.py` (shim: `src/db/audit_store.py`), `src/analyst_auditor.py`
 - **Output**: `audit_*`
 - **Gate minimi**: provenance/verify_run
 - **Gap derivati**: post-mortem/monitoring meno affidabili
@@ -203,7 +203,7 @@ Questo registro fa da ponte tra:
 - **Phase**: PHASE2_EXECUTION
 - **Livello**: TARGET (P1)
 - **Entrypoint**: (da creare)
-- **Codice**: `src/core/alert_lifecycle.py` (base)
+- **Codice**: `src/phase0/core/alert_lifecycle.py` (shim: `src/core/alert_lifecycle.py`) (base)
 - **Output**: notifiche
 - **Gate minimi**: alert rules
 - **Gap derivati**: `GAP-ALERTING`
@@ -223,7 +223,7 @@ Questo registro fa da ponte tra:
 - **Phase**: PHASE_UI
 - **Livello**: RUN-GRADE
 - **Entrypoint**: (streamlit)
-- **Codice**: `pages/*.py`
+- **Codice**: `src/phase2/pages/*.py` (shim: `pages/*.py`)
 - **Output**: —
 - **Gate minimi**: smoke manuale
 - **Gap derivati**: non bloccante, ma riduce costi operativi

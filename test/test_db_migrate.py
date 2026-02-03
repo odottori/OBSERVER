@@ -1,6 +1,6 @@
 import duckdb
 
-from src.db.migrate import ensure_schema, seed_default_universes
+from src.phase0.db.migrate import ensure_schema, seed_default_universes
 
 
 def test_schema_and_seed_idempotent():

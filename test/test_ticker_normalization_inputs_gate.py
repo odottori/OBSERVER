@@ -1,7 +1,7 @@
 import duckdb
 
-from src.db.migrate import ensure_schema
-from src.core.audit_engine import AuditEngine
+from src.phase0.db.migrate import ensure_schema
+from src.phase0.core.audit_engine import AuditEngine
 
 
 def test_verify_inputs_normalizes_single_suffix_dash_to_dot():

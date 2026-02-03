@@ -3,7 +3,7 @@ import json
 import duckdb
 import pandas as pd
 
-from src.db.migrate import ensure_schema
+from src.phase0.db.migrate import ensure_schema
 from src.intelligence_engine import IntelligenceEngine
 
 

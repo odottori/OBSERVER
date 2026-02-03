@@ -1,5 +1,5 @@
-from src.core.cost_model import CostModel
-from src.core.tax_model import ItalianTaxModel
+from src.phase0.core.cost_model import CostModel
+from src.phase0.core.tax_model import ItalianTaxModel
 
 
 def test_cost_model_round_trip():

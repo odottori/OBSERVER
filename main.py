@@ -15,7 +15,7 @@ Run:
 import os
 from uuid import uuid4
 
-from src.db.migrate import cli_migrate
+from src.phase0.db.migrate import cli_migrate
 from src.sentinel_alpha import SentinelAlpha
 from src.intelligence_engine import IntelligenceEngine
 

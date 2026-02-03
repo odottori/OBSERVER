@@ -5,8 +5,8 @@ from datetime import date, datetime, timezone
 import duckdb
 import pytest
 
-from src.db.migrate import ensure_schema
-from src.tools import verify_run
+from src.phase0.db.migrate import ensure_schema
+from src.phase0.tools import verify_run
 
 
 def _new_db_path(tmpdir: str) -> str:

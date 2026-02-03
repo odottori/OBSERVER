@@ -5,8 +5,8 @@ from datetime import date
 import duckdb
 import pandas as pd
 
-from src.db.migrate import ensure_schema
-from src.db.audit_store import start_audit_run, finish_audit_run, persist_trades, persist_equity, backfill_summary
+from src.phase0.db.migrate import ensure_schema
+from src.phase0.db.audit_store import start_audit_run, finish_audit_run, persist_trades, persist_equity, backfill_summary
 
 
 def test_audit_tables_and_persistence_roundtrip():

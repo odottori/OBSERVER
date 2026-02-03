@@ -8,7 +8,7 @@ import duckdb
 import pandas as pd
 import streamlit as st
 
-from src.db.migrate import cli_migrate
+from src.phase0.db.migrate import cli_migrate
 
 
 st.set_page_config(page_title="SENTINEL-ALPHA | Institutional Terminal", layout="wide")

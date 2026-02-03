@@ -32,8 +32,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--run-id", default=os.environ.get("SENTINEL_RUN_ID", ""))
     args = ap.parse_args(argv)
 
-    from src.db.connection import DbConfig, connect
-    from src.db.migrate import ensure_schema
+    from src.phase0.db.connection import DbConfig, connect
+    from src.phase0.db.migrate import ensure_schema
     from src.execution.paper_broker import execute_paper_broker
 
     run_id = (args.run_id or "").strip() or uuid4().hex

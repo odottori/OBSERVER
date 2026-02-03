@@ -2,8 +2,8 @@
 
 > GENERATED FILE — DO NOT EDIT  
 > Source of truth: `./docs/`  
-> Generated: 2026-01-26T19:26:14Z  
-> Fingerprint: 5954e6cfdf1c1076
+> Generated: 2026-02-02T18:44:50Z  
+> Fingerprint: 67428cc9a7202fde
 
 ## Sources
 - `docs/003_PDD_OBSERVER.md`
@@ -58,18 +58,28 @@
 ## Repo Inventory (auto)
 
 ### scripts/
+- `scripts/build_all_docs.py`
+- `scripts/build_master_md.py`
+- `scripts/docs_contract_check.py`
 - `scripts/execute.py`
+- `scripts/gen_mkdocs_views.py`
 - `scripts/guardian.py`
 - `scripts/guardian_next.py`
 - `scripts/guardian_ops.py`
 - `scripts/guardian_reset.py`
+- `scripts/make_ai_input_pack.py`
+- `scripts/make_phase2a_kickstart_pack.py`
 - `scripts/news_alpha.py`
 - `scripts/ops_reset.py`
 - `scripts/ops_run_session.py`
 - `scripts/pack_session.py`
 - `scripts/patch_persist_equity.py`
+- `scripts/phase01_dataops/_reference/EXEC_DataQuality_REFERENCE.py`
+- `scripts/phase01_dataops/_reference/EXEC_Download_REFERENCE.py`
 - `scripts/sentinel.py`
+- `scripts/serve_code_docs.py`
 - `scripts/setup.py`
+- `scripts/wi_log_collector.py`
 
 ### pages/
 - `pages/00_Decision_Briefing.py`
@@ -83,10 +93,13 @@
 - `pages/08_Lifecycle_Monitor.py`
 - `pages/09_Execution_Log.py`
 - `pages/10_Monitoring_TCA.py`
+- `pages/11_DataOps_Control_Room.py`
 
 ### src/
 - `src/__init__.py`
 - `src/analyst_auditor.py`
+- `src/compat/__init__.py`
+- `src/compat/shims.py`
 - `src/core/__init__.py`
 - `src/core/alert_lifecycle.py`
 - `src/core/audit_engine.py`
@@ -96,6 +109,13 @@
 - `src/core/ticker_normalize.py`
 - `src/data/__init__.py`
 - `src/data/price_backfill.py`
+- `src/dataops/__init__.py`
+- `src/dataops/closures_seed.py`
+- `src/dataops/common.py`
+- `src/dataops/dq_prices.py`
+- `src/dataops/halts_sync.py`
+- `src/dataops/paths.py`
+- `src/dataops/prices_ingest.py`
 - `src/db/__init__.py`
 - `src/db/audit_store.py`
 - `src/db/connection.py`
@@ -118,18 +138,12 @@
 - `src/news_alpha/run.py`
 - `src/news_alpha/sentiment.py`
 - `src/performance_analyzer.py`
-- `src/report_generator.py`
-- `src/risk/__init__.py`
-- `src/risk/risk_engine.py`
-- `src/sentinel_alpha.py`
-- `src/tools/__init__.py`
-- `src/tools/alert_lifecycle.py`
-- `src/tools/db_status.py`
-- `src/tools/forced_exits.py`
-- `src/tools/forecast_rankings.py`
-- `src/tools/ticker_mappings.py`
-- `src/tools/universe_membership.py`
-- `src/tools/verify_inputs.py`
-- `src/tools/verify_provenance.py`
-- `src/tools/verify_run.py`
-- `src/tools/verify_ticker_mappings.py`
+- `src/phase0/__init__.py`
+- `src/phase0/core/__init__.py`
+- `src/phase0/core/alert_lifecycle.py`
+- `src/phase0/core/audit_engine.py`
+- `src/phase0/core/cost_model.py`
+- `src/phase0/core/sentiment.py`
+- `src/phase0/core/tax_model.py`
+- `src/phase0/core/ticker_normalize.py`
+- `... (+60 more)`

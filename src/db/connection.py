@@ -1,27 +1,13 @@
-import os
-from dataclasses import dataclass
-import duckdb
+"""Legacy import shim.
 
+Canonical module:
+    - src.phase0.db.connection
+"""
 
-@dataclass(frozen=True)
-class DbConfig:
-    """DuckDB connection configuration."""
+from __future__ import annotations
 
-    db_path: str = os.path.join("data", "sentinel_alpha.db")
+from src.compat.shims import warn_legacy_import as _warn_legacy_import
 
+_warn_legacy_import("src.db.connection", "src.phase0.db.connection")
 
-def connect(cfg: DbConfig | None = None) -> duckdb.DuckDBPyConnection:
-    """Create a DuckDB connection.
-
-    Keeping this in a single place lets us standardize settings (threads, pragmas)
-    without scattering them across the codebase.
-    """
-
-    cfg = cfg or DbConfig()
-    con = duckdb.connect(database=cfg.db_path)
-    # Conservative defaults (can be tuned later)
-    try:
-        con.execute("PRAGMA enable_progress_bar=false")
-    except Exception:
-        pass
-    return con
+from src.phase0.db.connection import *  # noqa: F401,F403

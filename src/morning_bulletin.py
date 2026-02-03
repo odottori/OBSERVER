@@ -15,7 +15,7 @@ from datetime import datetime, timedelta
 
 import duckdb
 
-from src.db.migrate import ensure_schema
+from src.phase0.db.migrate import ensure_schema
 
 
 def generate_bulletin(days: int = 1, out_dir: str = "reports") -> str:

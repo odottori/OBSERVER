@@ -263,6 +263,8 @@ Creare una fase intermedia prima del refactor fisico:
 
 ## WI-0120 — Refactor fisico tranche 1: db
 
+**Status:** CLOSED (gates PASS — pytest 57 passed, 3 warnings; guardian PASS)
+
 ### DoD
 - Move fisico area db secondo Move Map.
 - Import shims attivi.
@@ -273,6 +275,8 @@ Creare una fase intermedia prima del refactor fisico:
 
 ### Evidence
 - `reports/pytest_WI-0120.log` + `reports/guardian_lint_WI-0120.log` + `reports/build_master_md_WI-0120.log` + `reports/import_smoke_WI-0120.log`
+- `reports/2026-01-31_WI-0120_db_move.md`
+- `reports/2026-01-31_WI-0120_CLOSE.md`
 
 ### Allowlist
 - `src/**/db/**` (solo area db) + `src/**/compat/**` (shims)
@@ -287,6 +291,8 @@ Creare una fase intermedia prima del refactor fisico:
 ---
 
 ## WI-0130 — Refactor fisico tranche 2: core
+
+**Status:** CLOSED (gates PASS — pytest 57 passed, 9 warnings; DeprecationWarning atteso: shims `src.core.*` → `src.phase0.core.*`)
 
 ### DoD
 - Move fisico area core secondo Move Map.
@@ -313,6 +319,8 @@ Creare una fase intermedia prima del refactor fisico:
 
 ## WI-0140 — Refactor fisico tranche 3: dataops
 
+**Status:** CLOSED (gates PASS — pytest PASS; DeprecationWarning atteso: shims `src.dataops.*` → `src.phase0.dataops.*`)
+
 ### DoD
 - Move fisico area dataops (incl. ingestion se ricade nell’area) secondo Move Map.
 - Import shims attivi.
@@ -338,6 +346,8 @@ Creare una fase intermedia prima del refactor fisico:
 
 ## WI-0150 — Refactor fisico tranche 4: tools
 
+
+**Status:** CLOSED (gates PASS — pytest PASS; DeprecationWarning atteso: shims `src.tools.*` → `src.phase0.tools.*`)
 ### DoD
 - Move fisico area tools secondo Move Map.
 - Import shims attivi.
@@ -363,6 +373,8 @@ Creare una fase intermedia prima del refactor fisico:
 
 ## WI-0160 — Refactor fisico tranche 5: pages
 
+**Status:** CLOSED (gates PASS — pytest PASS; DeprecationWarning atteso: shims pages legacy)
+
 ### DoD
 - Move fisico area pages secondo Move Map (package `src/**/pages/**` o root `pages/**`).
 - Import shims attivi.
@@ -373,7 +385,9 @@ Creare una fase intermedia prima del refactor fisico:
 
 ### Evidence
 - `reports/pytest_WI-0160.log` + `reports/guardian_lint_WI-0160.log` + `reports/build_master_md_WI-0160.log` + `reports/import_smoke_WI-0160.log`
+- `reports/2026-02-02_WI-0160_pages_move.md`
 
+- `reports/2026-02-02_WI-0160_CLOSE.md`
 ### Allowlist
 - `src/**/pages/**` e/o `pages/**` (solo area pages) + `src/**/compat/**` (shims)
 - `tests/**` (solo se serve aggiornare import test)
@@ -383,3 +397,284 @@ Creare una fase intermedia prima del refactor fisico:
 
 ### Blocklist
 - Move fuori area pages
+
+---
+
+## WI-0170 — Tooling: WI Log Collector (B)
+
+**Status:** CLOSED (gates PASS)
+
+### Scopo
+Creare un meccanismo stabile (1 comando) per controllare i log di un WI in `reports/`.
+
+Requisiti:
+- Modalità `normal`: attesi **7** log.
+- Modalità `close`: attesi **4** log.
+- Output per log: `OK` / `MISSING` / `EMPTY` + `HITS(n)` con linee (e numero riga).
+- Collector "B" (Python), invocabile in PowerShell (nessuna funzione PS).
+- Ogni run può scrivere un log del collector in `reports/`.
+
+### Deliverable
+- Nuovo comando:
+  - `py scripts/guardian.py collect --wi WI-XXXX --mode {normal|close}`
+
+### Allowlist
+- `scripts/guardian.py`
+- `scripts/wi_log_collector.py`
+- `tests/test_wi_log_collector.py`
+- `.doc/TODO.md`
+- `.doc/CURRENT_STATE.md`
+- `.doc/LOGBOOK.md`
+- `reports/2026-02-02_WI-0170_COLLECTOR.md`
+
+### Blocklist
+- `src/**`
+- `docs/**`
+
+### DoD
+- `guardian collect` disponibile e stabile.
+- Supporto UTF-16 (Out-File) nei log.
+- `pytest` PASS (aggiunta unit test).
+- Evidenza presente in `reports/`.
+
+### Gate (da eseguire su target machine)
+- `py -m pytest -q`
+
+### Evidence
+- `reports/2026-02-02_WI-0170_COLLECTOR.md`
+
+---
+
+## WI-0180 — Deprecation cleanup tranche A: callers `src.core.*` → `src.phase0.core.*`
+
+**Status:** OPEN (phase2)
+
+### Scopo
+Eliminare l'uso interno dei legacy shims `src.core.*` aggiornando i call sites a importare direttamente da `src.phase0.core.*`.
+
+### Deliverable
+- Aggiornati import in `src/**` e `test/**` da `src.core.*` a `src.phase0.core.*`.
+- Nuovo test di regressione: vieta import legacy da `src.core` fuori da `src/core/**`.
+- Update doc: `mkdocs/docs/api/audit.md` punta a `src.phase0.core.audit_engine`.
+- Evidenza: `reports/2026-02-02_WI-0180_DEPREC_CORE_CALLERS.md`.
+
+### Allowlist
+- `src/**` (solo file caller che importavano `src.core.*`)
+- `test/**`
+- `mkdocs/docs/api/audit.md`
+- `.doc/TODO.md`, `.doc/LOGBOOK.md`, `.doc/CURRENT_STATE.md`
+- `reports/2026-02-02_WI-0180_DEPREC_CORE_CALLERS.md`
+
+### Blocklist
+- rimozione shims `src/core/**` (resta per compat)
+- refactor/move fuori scope
+
+### DoD
+- `pytest -q` PASS.
+- Nessun `from|import src.core` fuori da `src/core/**` (enforced).
+- DeprecationWarning da `src.core.*` non più generabile dai call sites.
+
+### Gate
+- `py -m pytest -q`
+- (opzionale) `py scripts/guardian.py collect --wi WI-0180 --mode normal --write-log --pattern DeprecationWarning --pattern "\[DEPRECATED\]"`
+
+### Evidence
+- `reports/2026-02-02_WI-0180_DEPREC_CORE_CALLERS.md`
+
+
+---
+
+## WI-0190 — Deprecation cleanup tranche B: test imports `src.(db|tools|dataops)` → `src.phase0.*` + pages import
+
+**Status:** CLOSED (phase2; gates PASS)
+
+### Scopo
+Ridurre/azzerare le DeprecationWarning provenienti dai test aggiornando gli import legacy che passano dagli shim.
+
+### Deliverable
+- Aggiornati import in `test/**`:
+  - `src.db.*` → `src.phase0.db.*`
+  - `src.tools.*` → `src.phase0.tools.*`
+  - `src.dataops.*` → `src.phase0.dataops.*`
+- Aggiornato import pagina Streamlit in test: `pages.06_Forecasts_Ranking` → `src.phase2.pages.06_Forecasts_Ranking`.
+- Evidenza: `reports/2026-02-02_WI-0190_DEPREC_TEST_IMPORTS.md`.
+
+### Allowlist
+- `test/**`
+- `.doc/TODO.md`, `.doc/LOGBOOK.md`, `.doc/CURRENT_STATE.md`
+- `reports/2026-02-02_WI-0190_DEPREC_TEST_IMPORTS.md`
+
+### Blocklist
+- `src/**`
+- rimozione shims
+
+### DoD
+- `pytest -q` PASS.
+- `guardian collect --pattern DeprecationWarning` riduce/azzera hits lato test.
+
+### Gate
+- `py -m pytest -q`
+- `py scripts/guardian.py collect --wi WI-0190 --mode normal --write-log --pattern DeprecationWarning --pattern "\[DEPRECATED\]"`
+
+### Evidence
+- `reports/2026-02-02_WI-0190_DEPREC_TEST_IMPORTS.md`
+
+
+---
+
+## WI-0200 — Deprecation cleanup tranche C: internal imports `src.db.*` → `src.phase0.db.*`
+
+**Status:** CLOSED (gates PASS; residual warnings handled in WI-0210)
+
+### Scopo
+Eliminare le ultime `DeprecationWarning` provenienti dal codice runtime aggiornando gli import interni che passano dagli shim `src.db.*`.
+
+### Deliverable
+- Aggiornati import:
+  - `src/phase0/core/audit_engine.py`: `src.db.migrate` → `src.phase0.db.migrate`
+  - `src/intelligence_engine.py`: `src.db.audit_store` → `src.phase0.db.audit_store`
+- Evidenza: `reports/2026-02-02_WI-0200_DEPREC_PHASE0_DB_IMPORTS.md`.
+
+### Allowlist
+- `src/phase0/core/audit_engine.py`
+- `src/intelligence_engine.py`
+- `.doc/TODO.md`, `.doc/LOGBOOK.md`, `.doc/CURRENT_STATE.md`
+- `reports/2026-02-02_WI-0200_DEPREC_PHASE0_DB_IMPORTS.md`
+
+### Blocklist
+- rimozione shims `src/db/**` (resta per compat)
+- refactor/move fuori scope
+
+### DoD
+- `pytest -q` PASS.
+- `guardian collect --pattern DeprecationWarning` non mostra più hit per `src.db.*` dai call sites runtime.
+
+### Gate
+- `py -m pytest -q`
+- `py scripts/guardian.py collect --wi WI-0200 --mode normal --write-log --pattern DeprecationWarning --pattern "\[DEPRECATED\]"`
+
+### Evidence
+- `reports/2026-02-02_WI-0200_DEPREC_PHASE0_DB_IMPORTS.md`
+---
+
+## WI-0210 — Deprecation cleanup tranche D: runtime imports in ranking + sentinel
+
+**Status:** CLOSED (gates PASS; residual warnings moved to WI-0220)
+
+### Scopo
+Eliminare le `DeprecationWarning` residue emerse dai test (`pytest -q`) migrateando gli import runtime che passano ancora dagli shim `src.db.*` in moduli ad alto utilizzo.
+
+### Deliverable
+- Aggiornati import:
+  - `src/forecast/ranking.py`: `src.db.audit_store` → `src.phase0.db.audit_store`
+  - `src/sentinel_alpha.py`: `src.db.migrate` → `src.phase0.db.migrate`
+- Evidenza: `reports/2026-02-02_WI-0210_DEPREC_RUNTIME_IMPORTS_D.md`.
+
+### Allowlist
+- `src/forecast/ranking.py`
+- `src/sentinel_alpha.py`
+- `.doc/TODO.md`, `.doc/LOGBOOK.md`, `.doc/CURRENT_STATE.md`
+- `reports/2026-02-02_WI-0210_DEPREC_RUNTIME_IMPORTS_D.md`
+
+### Blocklist
+- rimozione shims `src/db/**` (resta per compat)
+- refactor/move fuori scope
+
+### DoD
+- `pytest -q` PASS.
+- `guardian collect --pattern DeprecationWarning` non mostra più hit per:
+  - `src/forecast/ranking.py` (audit_store)
+  - `src/sentinel_alpha.py` (migrate)
+
+### Gate
+- `py -m pytest -q`
+- `py scripts/guardian.py collect --wi WI-0210 --mode normal --write-log --pattern DeprecationWarning --pattern "\[DEPRECATED\]"`
+
+### Evidence
+- `reports/2026-02-02_WI-0210_DEPREC_RUNTIME_IMPORTS_D.md`
+
+
+---
+
+## WI-0220 — Deprecation cleanup tranche E: verify_ticker_mappings `src.db.*` → `src.phase0.db.*`
+
+**Status:** CLOSED (gates PASS)
+
+### Scopo
+Rimuovere le `DeprecationWarning` residue provenienti da `src/phase0/tools/verify_ticker_mappings.py` aggiornando l'ultimo import legacy che passa dagli shim `src.db.*`.
+
+### Deliverable
+- Aggiornato import:
+  - `src/phase0/tools/verify_ticker_mappings.py`: `src.db.migrate` → `src.phase0.db.migrate`
+- Evidenza: `reports/2026-02-02_WI-0220_DEPREC_VERIFY_TICKER_MAPPINGS.md`.
+
+### Allowlist
+- `src/phase0/tools/verify_ticker_mappings.py`
+- `.doc/TODO.md`, `.doc/LOGBOOK.md`, `.doc/CURRENT_STATE.md`
+- `reports/2026-02-02_WI-0220_DEPREC_VERIFY_TICKER_MAPPINGS.md`
+
+### Blocklist
+- rimozione shims `src/db/**` (resta per compat)
+- refactor/move fuori scope
+
+### DoD
+- `pytest -q` PASS.
+- `guardian collect --pattern DeprecationWarning` non mostra più hit per `src.db.*` provenienti da `verify_ticker_mappings`.
+
+### Gate
+- `py -m pytest -q`
+- `py scripts/guardian.py collect --wi WI-0220 --mode normal --write-log --pattern DeprecationWarning --pattern "\[DEPRECATED\]"`
+
+### Evidence
+- `reports/2026-02-02_WI-0220_DEPREC_VERIFY_TICKER_MAPPINGS.md`
+
+
+---
+
+## WI-0230 — Deprecation cleanup tranche F: UI + entrypoints `src.db|src.tools|src.dataops` → `src.phase0.*`
+
+**Status:** OPEN (phase2)
+
+### Scopo
+Eliminare import legacy che passano dagli shim da:
+- entrypoints/runtime: `app.py`, `main.py`, `scripts/execute.py`, `src/morning_bulletin.py`, `src/monitoring/__main__.py`, `src/intelligence_engine.py`
+- UI pages: `src/phase2/pages/*` (gates/audit/trades/datagaps/execution/tca/dataops)
+
+### Deliverable
+- Aggiornati import:
+  - `src.db.*` → `src.phase0.db.*`
+  - `src.tools.*` → `src.phase0.tools.*`
+  - `src.dataops.*` → `src.phase0.dataops.*`
+- Evidenza: `reports/2026-02-02_WI-0230_DEPREC_UI_ENTRYPOINTS.md`.
+
+### Allowlist
+- `app.py`
+- `main.py`
+- `scripts/execute.py`
+- `src/morning_bulletin.py`
+- `src/monitoring/__main__.py`
+- `src/intelligence_engine.py`
+- `src/phase2/pages/02_Gates_Data_Quality.py`
+- `src/phase2/pages/03_Audit_Runs.py`
+- `src/phase2/pages/04_Trades_Equity.py`
+- `src/phase2/pages/05_Data_Gaps_Backfill.py`
+- `src/phase2/pages/09_Execution_Log.py`
+- `src/phase2/pages/10_Monitoring_TCA.py`
+- `src/phase2/pages/11_DataOps_Control_Room.py`
+- `.doc/TODO.md`, `.doc/LOGBOOK.md`, `.doc/CURRENT_STATE.md`
+- `reports/2026-02-02_WI-0230_DEPREC_UI_ENTRYPOINTS.md`
+
+### Blocklist
+- rimozione shims `src/db/**`, `src/tools/**`, `src/dataops/**` (restano per compat)
+- refactor/move fuori scope
+
+### DoD
+- `pytest -q` PASS.
+- `guardian collect --pattern DeprecationWarning` non mostra hit per `src.db|src.tools|src.dataops` provenienti dai file in allowlist.
+
+### Gate
+- `py -m pytest -q`
+- `py scripts/guardian.py collect --wi WI-0230 --mode normal --write-log --pattern DeprecationWarning --pattern "\[DEPRECATED\]"`
+
+### Evidence
+- `reports/2026-02-02_WI-0230_DEPREC_UI_ENTRYPOINTS.md`

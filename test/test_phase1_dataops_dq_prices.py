@@ -2,8 +2,8 @@ from datetime import date
 
 import duckdb
 
-from src.db.migrate import ensure_schema
-from src.dataops.dq_prices import run_price_data_quality
+from src.phase0.db.migrate import ensure_schema
+from src.phase0.dataops.dq_prices import run_price_data_quality
 
 
 def _seed_metadata(con):

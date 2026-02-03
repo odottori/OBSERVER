@@ -2,8 +2,8 @@
 
 > GENERATED FILE — DO NOT EDIT  
 > Source of truth: `./docs/`  
-> Generated: 2026-01-26T19:26:14Z  
-> Fingerprint: 5954e6cfdf1c1076
+> Generated: 2026-02-02T18:44:50Z  
+> Fingerprint: 67428cc9a7202fde
 
 ## Sources
 - `docs/004_DDT_DATADICTIONARY.md`

@@ -4,8 +4,8 @@ import pandas as pd
 from datetime import datetime
 
 from src.sentinel_alpha import SentinelAlpha
-from src.db.migrate import ensure_schema
-from src.core.audit_engine import AuditEngine, BacktestConfig
+from src.phase0.db.migrate import ensure_schema
+from src.phase0.core.audit_engine import AuditEngine, BacktestConfig
 
 
 class MockSentinel(SentinelAlpha):
