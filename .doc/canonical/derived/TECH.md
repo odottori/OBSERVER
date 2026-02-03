@@ -2,7 +2,7 @@
 
 > GENERATED FILE — DO NOT EDIT  
 > Source of truth: `./docs/`  
-> Generated: 2026-02-03T08:17:59Z  
+> Generated: 2026-02-03T09:39:42Z  
 > Fingerprint: 8f69a1b61a0dd469
 
 ## Sources

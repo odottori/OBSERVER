@@ -76,7 +76,7 @@ Creare una fase intermedia prima del refactor fisico:
 
 ## Blocklist (must not touch)
 - `src/**`
-- `tests/**`
+- `test/**`
 - `mkdocs/**`
 - `docs/LATEX_zip/**`
 - `docs/*.pdf`
@@ -207,7 +207,7 @@ Creare una fase intermedia prima del refactor fisico:
 - `docs/012_REFACTOR_PLAN_VIRTUAL.md`, `reports/**`, `.doc/TODO.md`, `.doc/LOGBOOK.md`, `.doc/CURRENT_STATE.md`
 
 ### Blocklist
-- `src/**`, `tests/**` (no change)
+- `src/**`, `test/**` (no change)
 
 ---
 
@@ -234,7 +234,7 @@ Creare una fase intermedia prima del refactor fisico:
 - `docs/012_REFACTOR_PLAN_VIRTUAL.md`, `reports/**`, `.doc/TODO.md`, `.doc/LOGBOOK.md`, `.doc/CURRENT_STATE.md`
 
 ### Blocklist
-- `src/**`, `tests/**` (no change)
+- `src/**`, `test/**` (no change)
 
 ---
 
@@ -262,7 +262,7 @@ Creare una fase intermedia prima del refactor fisico:
 - `.doc/TODO.md`, `.doc/LOGBOOK.md`, `.doc/CURRENT_STATE.md`
 
 ### Blocklist
-- `src/**`, `tests/**`, `docs/**` (no change)
+- `src/**`, `test/**`, `docs/**` (no change)
 
 ---
 
@@ -289,7 +289,7 @@ Creare una fase intermedia prima del refactor fisico:
 
 ### Allowlist
 - `src/**/db/**` (solo area db) + `src/**/compat/**` (shims)
-- `tests/**` (solo se serve aggiornare import test)
+- `test/**` (solo se serve aggiornare import test)
 - docs canonici consentiti: `docs/010_MODULE_REGISTRY.md`, `docs/005_TRACEABILITY_MATRIX.md` (solo se in allowlist tranche)
 - `.doc/TODO.md`, `.doc/LOGBOOK.md`, `.doc/CURRENT_STATE.md`
 - `reports/**`
@@ -316,7 +316,7 @@ Creare una fase intermedia prima del refactor fisico:
 
 ### Allowlist
 - `src/**/core/**` (solo area core) + `src/**/compat/**` (shims)
-- `tests/**` (solo se serve aggiornare import test)
+- `test/**` (solo se serve aggiornare import test)
 - `.doc/TODO.md`, `.doc/LOGBOOK.md`, `.doc/CURRENT_STATE.md`
 - `reports/**`
 - docs canonici (solo se necessario): `docs/010_MODULE_REGISTRY.md`, `docs/005_TRACEABILITY_MATRIX.md`
@@ -343,7 +343,7 @@ Creare una fase intermedia prima del refactor fisico:
 
 ### Allowlist
 - `src/**/dataops/**` (+ `src/**/ingest/**` se presente) + `src/**/compat/**` (shims)
-- `tests/**` (solo se serve aggiornare import test)
+- `test/**` (solo se serve aggiornare import test)
 - `.doc/TODO.md`, `.doc/LOGBOOK.md`, `.doc/CURRENT_STATE.md`
 - `reports/**`
 - docs canonici (solo se necessario): `docs/010_MODULE_REGISTRY.md`, `docs/005_TRACEABILITY_MATRIX.md`
@@ -370,7 +370,7 @@ Creare una fase intermedia prima del refactor fisico:
 
 ### Allowlist
 - `src/**/tools/**` (solo area tools) + `src/**/compat/**` (shims)
-- `tests/**` (solo se serve aggiornare import test)
+- `test/**` (solo se serve aggiornare import test)
 - `.doc/TODO.md`, `.doc/LOGBOOK.md`, `.doc/CURRENT_STATE.md`
 - `reports/**`
 - docs canonici (solo se necessario): `docs/010_MODULE_REGISTRY.md`, `docs/005_TRACEABILITY_MATRIX.md`
@@ -399,7 +399,7 @@ Creare una fase intermedia prima del refactor fisico:
 - `reports/2026-02-02_WI-0160_CLOSE.md`
 ### Allowlist
 - `src/**/pages/**` e/o `pages/**` (solo area pages) + `src/**/compat/**` (shims)
-- `tests/**` (solo se serve aggiornare import test)
+- `test/**` (solo se serve aggiornare import test)
 - `.doc/TODO.md`, `.doc/LOGBOOK.md`, `.doc/CURRENT_STATE.md`
 - `reports/**`
 - docs canonici (solo se necessario): `docs/010_MODULE_REGISTRY.md`, `docs/005_TRACEABILITY_MATRIX.md`
@@ -430,7 +430,7 @@ Requisiti:
 ### Allowlist
 - `scripts/guardian.py`
 - `scripts/wi_log_collector.py`
-- `tests/test_wi_log_collector.py`
+- `test/test_wi_log_collector.py`
 - `.doc/TODO.md`
 - `.doc/CURRENT_STATE.md`
 - `.doc/LOGBOOK.md`
@@ -716,7 +716,7 @@ Consolidare un meccanismo stabile “1 comando” per eseguire e verificare la g
 - `docs/008_EVIDENCE_PACK.md`
 - `docs/010_MODULE_REGISTRY.md`
 - `.doc/_GUARDIAN/_GUARDIAN_workflow.md`
-- `tests/test_wi_gate_runner.py`
+- `test/test_wi_gate_runner.py`
 - `.doc/TODO.md`, `.doc/LOGBOOK.md`, `.doc/CURRENT_STATE.md`
 - `reports/2026-02-03_WI-0240_GATE_RUNNER.md`
 - `.doc/CANONICAL_LIBRARY.md`

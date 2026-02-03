@@ -60,7 +60,7 @@ Date: 2026-01-30
   - Added evidence record for planning milestone.
 
 Constraints respected:
-- No changes to `src/**` and `tests/**` (planning-only).
+- No changes to `src/**` and `test/**` (planning-only).
 
 
 ## Move Map final (WI-0111 — virtual)
@@ -76,4 +76,4 @@ Constraints respected:
   - Recorded WI-0111 DONE state (gates PASS) and evidence pointer (`reports/*_WI-0111.log`).
 
 Constraints respected:
-- No changes to `src/**` and `tests/**` (planning-only).
+- No changes to `src/**` and `test/**` (planning-only).

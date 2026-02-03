@@ -2174,7 +2174,7 @@ Se applicabile (raccomandati):
 ### Gate protocol + expected logs snapshot (WI-0114) — auto
 - Report: `reports/WI-0114_gates.md`
 - Naming: `reports/pytest_<WI>.log`, `reports/guardian_lint_<WI>.log`, `reports/build_master_md_<WI>.log` (if used)
-- Planning-only in WI-0114: no changes to `src/**` or `tests/**`.
+- Planning-only in WI-0114: no changes to `src/**` or `test/**`.
 <!-- WI-0114:END -->
 
 

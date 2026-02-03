@@ -68,7 +68,7 @@
 - `reports/guardian_lint_WI-0112.log`
 
 ### Blocklist respected
-- Nessun move/modifica in `src/**` e `tests/**` (plan-only).
+- Nessun move/modifica in `src/**` e `test/**` (plan-only).
 
 ## 2026-01-30 — WI-0113 (Rollback plan, virtual) — DONE
 - Gates executed: PASS (pytest/guardian) — logs: `reports/pytest_WI-0113.log`, `reports/guardian_lint_WI-0113.log`
@@ -82,7 +82,7 @@
 - `reports/guardian_lint_WI-0113.log`
 
 ### Blocklist
-- `src/**`, `tests/**` (no change)
+- `src/**`, `test/**` (no change)
 
 
 ## 2026-01-30 — WI-0114 (Gate protocol + expected logs, virtual) — DONE
@@ -97,14 +97,14 @@
 - `reports/guardian_lint_WI-0114.log`
 
 ### Blocklist
-- `src/**`, `tests/**` (no change)
+- `src/**`, `test/**` (no change)
 
 ## 2026-01-30 — WI-0115 (Skeleton tranche fisiche, TODO-only) — DONE
 - Gates executed: PASS (pytest/guardian) — logs: `reports/pytest_WI-0115.log`, `reports/guardian_lint_WI-0115.log`
 
 ### Outcome
 - Inserite tranche fisiche WI-0120..0160 come skeleton coerenti (DoD/Gate/Evidence/Allowlist/Blocklist) in `.doc/TODO.md`.
-- Nessuna modifica a `src/**`, `tests/**`, `docs/**` (plan-only).
+- Nessuna modifica a `src/**`, `test/**`, `docs/**` (plan-only).
 
 ### Evidence
 - `.doc/TODO.md` — sezione WI-0115 + tranche WI-0120..0160
@@ -112,7 +112,7 @@
 - `reports/guardian_lint_WI-0115.log`
 
 ### Blocklist
-- `src/**`, `tests/**`, `docs/**` (no change)
+- `src/**`, `test/**`, `docs/**` (no change)
 
 ## 2026-01-31 — WI-0120 (Refactor fisico tranche 1: db) — CLOSED (gates PASS)
 
@@ -261,7 +261,7 @@
 ### Allowlist
 - `scripts/guardian.py`
 - `scripts/wi_log_collector.py`
-- `tests/test_wi_log_collector.py`
+- `test/test_wi_log_collector.py`
 - `.doc/TODO.md`, `.doc/CURRENT_STATE.md`, `.doc/LOGBOOK.md`
 - `reports/2026-02-02_WI-0170_COLLECTOR.md`
 
