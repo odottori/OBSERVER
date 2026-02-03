@@ -52,7 +52,10 @@ def main() -> None:
             parts.append(read(sp))
             parts.append("\n\n---\n")
 
-    OUT.write_text("\n".join(parts).strip() + "\n", encoding="utf-8")
+    # EOL determinism: avoid CRLF/LF churn on Windows.
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    with OUT.open("w", encoding="utf-8", newline="\n") as f:
+        f.write("\n".join(parts).strip() + "\n")
     print(f"OK -> {OUT}")
 
 if __name__ == "__main__":

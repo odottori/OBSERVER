@@ -18,6 +18,10 @@ Questo documento elenca comandi “verificabili” per dimostrare che lo snapsho
 - Stato GUARDIAN: `py scripts/guardian.py status`
 - Lint docset: `py scripts/guardian.py lint`
 
+### CI (GitHub Actions)
+
+In CI la validazione è eseguita tramite **GUARDIAN gate** (mode=normal) con WI sintetico `WI-0000` e upload automatico di `reports/` come artifact.
+
 ## 2. Data layer (DuckDB)
 
 - Migrazione schema: `py -m src.db.migrate --db data/sentinel_alpha.db`
@@ -88,3 +92,9 @@ Validazione log (solo check, nessuna esecuzione):
   - Collector B è eseguito a fine gate con `--profile hardfail --fail-on-hits` (default).
 - `py scripts/guardian.py collect --wi WI-XXXX --mode normal|close --profile deprec --fail-on-hits`
   - Profilo `deprec` per rendere bloccanti warning legacy (se necessario).
+
+## Line endings (CRLF/LF) — stabilizzazione
+
+Se vedi warning Git tipo “CRLF will be replaced by LF” su file doc/canonici, esegui un gate WI (normal) per rigenerare e normalizzare i file, poi committa.
+
+- `py scripts/guardian.py gate --wi WI-XXXX --mode normal --write-collect-log`

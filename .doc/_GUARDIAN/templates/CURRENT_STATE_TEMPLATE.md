@@ -1,4 +1,4 @@
-# CURRENT_STATE — Stato corrente
+﻿# CURRENT_STATE — Stato corrente
 
 - Updated: {updated}
 

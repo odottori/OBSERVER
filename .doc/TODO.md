@@ -747,7 +747,7 @@ Consolidare un meccanismo stabile “1 comando” per eseguire e verificare la g
 
 ## WI-0260 — Tooling: Collector strict-hits + profiles (B)
 
-**Status:** OPEN
+**Status:** CLOSED (2026-02-03)
 
 ### Goal
 - Stabilizzare il collector (B) come gate: `HITS` può diventare *bloccante* (`--fail-on-hits`).
@@ -769,3 +769,67 @@ Consolidare un meccanismo stabile “1 comando” per eseguire e verificare la g
 - `reports/<gate>_WI-0260.log` (7)
 - `reports/wi_collect_WI-0260.log`
 - `reports/2026-02-03_WI-0260_COLLECTOR_STRICT.md`
+
+
+## WI-0270 — Stabilizzazione EOL doc-tooling (CRLF/LF)
+
+**Status:** CLOSED (2026-02-03)
+
+### Goal
+- Eliminare churn e warning Git “CRLF will be replaced by LF” su file doc/canonici generati da tooling (Windows).
+- Rendere deterministico l’output EOL (`LF`) per:
+  - `.doc/**` (sync/derive/next)
+  - `docs/OBSERVER_v1.2.5.md` (build master)
+  - mkdocs views generate (se usate)
+
+### Allowlist
+- `scripts/guardian_ops.py`
+- `scripts/guardian_next.py`
+- `scripts/build_master_md.py`
+- `scripts/gen_mkdocs_views.py`
+- `.doc/_GUARDIAN/_GUARDIAN_workflow.md`
+- `docs/008_EVIDENCE_PACK.md`
+- `.doc/TODO.md`
+- `.doc/CURRENT_STATE.md`
+- `.doc/LOGBOOK.md`
+- `reports/2026-02-03_WI-0270_EOL_STABILIZE.md`
+
+### Blocklist
+- `src/**`
+- `tests/**`
+- `pages/**`
+
+### Gate
+- `py scripts/guardian.py gate --wi WI-0270 --mode normal --write-collect-log`
+
+### Evidence
+- `reports/<gate>_WI-0270.log` (7)
+- `reports/wi_collect_WI-0270.log`
+- `reports/2026-02-03_WI-0270_EOL_STABILIZE.md`
+
+
+## WI-0280 — CI: GUARDIAN gate + reports artifact
+
+**Status:** CLOSED (2026-02-03)
+
+### Goal
+- Allineare GitHub Actions ai gate locali (1 comando) usando `scripts/guardian.py gate`.
+- Rendere CI *ripetibile* e verificabile via artifact `reports/`.
+- Stabilizzare runner legacy `main_test.py` (puntare a `tests/`).
+
+### Allowlist
+- `.github/workflows/ci.yml`
+- `main_test.py`
+- `docs/008_EVIDENCE_PACK.md`
+- `.doc/_GUARDIAN/_GUARDIAN_workflow.md`
+- `.doc/TODO.md`, `.doc/CURRENT_STATE.md`, `.doc/LOGBOOK.md`
+- `reports/2026-02-03_WI-0280_CI_GATE_ALIGN.md`
+
+### Gate
+- `py scripts/guardian.py gate --wi WI-0280 --mode normal --write-collect-log`
+- (CI) workflow: `python scripts/guardian.py gate --wi WI-0000 --mode normal --write-collect-log`
+
+### Evidence
+- `reports/<gate>_WI-0280.log` (7)
+- `reports/wi_collect_WI-0280.log`
+- `reports/2026-02-03_WI-0280_CI_GATE_ALIGN.md`

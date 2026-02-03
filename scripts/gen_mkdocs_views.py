@@ -49,7 +49,10 @@ def ensure_dir(p: Path) -> None:
 
 
 def write_file(path: Path, content: str) -> None:
-    path.write_text(content.strip() + "\n", encoding="utf-8")
+    # EOL determinism: avoid CRLF/LF churn on Windows.
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8", newline="\n") as f:
+        f.write(content.strip() + "\n")
 
 
 def module_page(mod_id: str, body: str) -> str:

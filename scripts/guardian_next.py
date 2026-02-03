@@ -40,7 +40,9 @@ def _read_text(path: Path) -> str:
 
 def _write_text(path: Path, content: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(content, encoding=DOC_ENCODING)
+    # EOL determinism: avoid CRLF/LF churn on Windows.
+    with path.open("w", encoding=DOC_ENCODING, newline="\n") as f:
+        f.write(content)
 
 
 def write_if_changed(path: Path, content: str, *, force: bool = False) -> bool:

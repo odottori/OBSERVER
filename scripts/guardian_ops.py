@@ -121,16 +121,22 @@ def write_text_if_changed(path: Path, content: str, encoding: str = "utf-8-sig")
     Anti-churn: write only if content differs.
     Returns True if file written/updated, False if no-op.
     """
+    # NOTE (EOL determinism): on Windows, text-mode writes translate "\n" -> "\r\n".
+    # To avoid CRLF/LF churn and Git warnings, we treat the *desired* file bytes as the
+    # source of truth and write with newline="\n".
+    desired_bytes = content.encode(encoding)
+
     if path.exists():
         try:
-            existing = path.read_text(encoding=encoding)
-            if existing == content:
+            existing_bytes = path.read_bytes()
+            if existing_bytes == desired_bytes:
                 return False
         except Exception:
             # If unreadable, overwrite (rare)
             pass
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(content, encoding=encoding)
+    with path.open("w", encoding=encoding, newline="\n") as f:
+        f.write(content)
     return True
 
 

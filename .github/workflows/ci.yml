@@ -1,4 +1,4 @@
-name: CI
+name: CI (GUARDIAN gate)
 
 on:
   push:
@@ -12,14 +12,14 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  tests:
-    name: Tests (Python ${{ matrix.python-version }})
+  gate:
+    name: Gate (Python ${{ matrix.python-version }})
     runs-on: ubuntu-latest
     timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.14"]
+        python-version: ["3.11", "3.12"]
 
     steps:
       - name: Checkout
@@ -35,11 +35,15 @@ jobs:
         run: |
           python -m pip install --upgrade pip setuptools wheel
           if [ -f requirements.txt ]; then python -m pip install -r requirements.txt; fi
+          python -m pip install pytest duckdb pandas numpy
 
-      - name: Compile all (syntax check)
+      - name: Run GUARDIAN gate (normal)
         run: |
-          python -m compileall .
+          python scripts/guardian.py gate --wi WI-0000 --mode normal --write-collect-log
 
-      - name: Run test suite
-        run: |
-          python main_test.py
+      - name: Upload reports artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports-${{ matrix.python-version }}
+          path: reports/

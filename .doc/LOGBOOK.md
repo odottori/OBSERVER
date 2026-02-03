@@ -416,7 +416,34 @@
 - Strict gate: `pytest -W error::DeprecationWarning` PASS.
 
 
-## 2026-02-03 — WI-0260
+## 2026-02-03 — WI-0250 (Test suite layout: unify under tests/) — CLOSED (gates PASS)
 
-- Tooling: Collector B profiles + strict-hits default in gate runner.
-- Goal: stabilizzare segnali hard-fail nei log (no falsi positivi su CMD/DRY-RUN).
+### Outcome
+- Razionalizzato layout test (`test/` vs `tests/`) e collezione pytest in modo consistente.
+
+
+## 2026-02-03 — WI-0260 (Tooling: Collector B profiles + strict-hits) — CLOSED (gates PASS)
+
+### Outcome
+- Collector B: profili (`hardfail|deprec|none`) + `--fail-on-hits` per rendere bloccanti i pattern.
+- Anti-false-positive: righe `CMD:` / `DRY-RUN:` escluse dal matcher.
+
+
+## 2026-02-03 — WI-0270 (Stabilizzazione EOL doc-tooling) — CLOSED (gates PASS)
+
+### Goal
+- Eliminare warning Git “CRLF will be replaced by LF” sui file doc/canonici generati da tooling su Windows.
+- Output deterministico: scrittura sempre con `LF` per `.doc/**`, `docs/OBSERVER_*.md` e generatori mkdocs views.
+
+### Outcome
+- Stabilizzato EOL (LF) sui generatori doc/canonici per ridurre churn cross-platform.
+
+
+## 2026-02-03 — WI-0280 (CI: GUARDIAN gate + reports artifact) — CLOSED (gates PASS)
+
+### Goal
+- Allineare GitHub Actions ai gate locali (`scripts/guardian.py gate`) e caricare `reports/` come artifact.
+
+### Outcome
+- Workflow CI aggiornato: esegue `guardian.py gate` (mode=normal) e pubblica `reports/`.
+- `main_test.py` riallineato al layout test standard (`tests/`).

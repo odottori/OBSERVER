@@ -38,6 +38,20 @@ Vedi `./.doc/_GUARDIAN/_GUARDIAN_MANUAL.md`.
 Note:
 - Le righe `CMD:` e `DRY-RUN:` sono ignorate dal matcher per evitare falsi positivi.
 
+### CI (GitHub Actions)
+
+- Il workflow CI esegue `py scripts/guardian.py gate` in modalità **normal** su Linux con WI sintetico `WI-0000`.
+- I log/evidenze prodotti (`reports/`) vengono caricati come artifact.
+
+### Line endings (CRLF/LF) — stabilizzazione
+
+Obiettivo: evitare warning Git e churn (Windows vs Linux) sui file doc/canonici.
+
+- Repo-level: `.gitattributes` + `.editorconfig` definiscono EOL deterministico.
+- Tooling: gli script che generano `.doc/**` e `docs/OBSERVER_*.md` scrivono sempre con `LF`.
+
+Se vedi ancora warning tipo “CRLF will be replaced by LF”, rigenera i canonici con i gate WI (es. `gate --mode normal`) e committa i file aggiornati.
+
 ### 1) Librarian — `py scripts/guardian_ops.py sync`
 Scopo: aggiornare la libreria dei canonici operativi in `./.doc/canonical/project/` a partire dai canonici progetto in `./docs/`.
 

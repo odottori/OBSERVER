@@ -21,6 +21,10 @@ Repo canonico operativo: `OBSERVER_v1.2.5_PHASE1_FINAL`
 - WI-0220 (Deprecation cleanup tranche E: verify_ticker_mappings imports): **CLOSED** (gates PASS).
 - WI-0230 (Deprecation cleanup tranche F: UI + entrypoints imports): **CLOSED** (gates PASS; strict DeprecationWarning gate PASS).
 - WI-0240 (Tooling: one-command WI gate runner B + doc alignment): **CLOSED** (phase2).
+- WI-0250 (Test suite layout: unify under tests/): **CLOSED** (gates PASS).
+- WI-0260 (Tooling: Collector strict-hits + profiles): **CLOSED** (gates PASS).
+- WI-0270 (Stabilizzazione EOL doc-tooling): **CLOSED** (gates PASS).
+- WI-0280 (CI: GUARDIAN gate + reports artifact): **CLOSED** (gates PASS).
 
 ## Governance attiva
 - Refactor fisico consentito **solo tranche-by-tranche** (1 tranche = 1 WI) con `pytest` sempre PASS.
@@ -29,10 +33,9 @@ Repo canonico operativo: `OBSERVER_v1.2.5_PHASE1_FINAL`
 - Gate deprecation hard: usare `py -m pytest -q -W error::DeprecationWarning` come baseline.
 
 ## Workstream corrente
-### WI-0240 — Tooling: one-command WI gate runner (B) + doc alignment
-- Status: CLOSED
-- Goal: introdurre `py scripts/guardian.py gate --wi WI-XXXX --mode normal|close` con logging standard in `reports/` + integrazione Collector B.
-- Evidence: `reports/2026-02-03_WI-0240_GATE_RUNNER.md`, `reports/2026-02-03_WI-0240_CLOSE.md`
+### Stabilizzazione (post-move) — baseline
+- CI allineata ai gate locali via `scripts/guardian.py gate`.
+- Gate: `py scripts/guardian.py gate --wi WI-0280 --mode normal --write-collect-log`
 
 
 ### WI-0115 — Skeleton tranche fisiche (TODO-only)
