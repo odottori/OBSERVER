@@ -4,7 +4,7 @@ Questo file è **generato** da GUARDIAN (`sync`/`derive`).
 Non modificare manualmente.
 
 
-- Updated: 2026-02-03T09:39:42Z
+- Updated: 2026-02-03T09:43:13Z
 - Mode: **single source-of-truth** (`docs/`), no mirror copies in `.doc/`
 - Project docs fingerprint: `8f69a1b61a0dd469`
 
@@ -19,9 +19,9 @@ Non modificare manualmente.
 - `docs/009_GAP_REGISTER.md`  (sha256: `b06881f167cb3a57`)
 
 ## Derived operational library (generated)
-- `.doc/canonical/derived/DDT.md`  (sha256: `2994012298783550`)
-- `.doc/canonical/derived/PROJ.md`  (sha256: `7539e7b383cbe01b`)
-- `.doc/canonical/derived/TECH.md`  (sha256: `edaae870f0dbda01`)
+- `.doc/canonical/derived/DDT.md`  (sha256: `8b595f661695389d`)
+- `.doc/canonical/derived/PROJ.md`  (sha256: `37f4695d0a293726`)
+- `.doc/canonical/derived/TECH.md`  (sha256: `9bbd9f7efea124a4`)
 
 ## Notes
 - Edit canonicals only in `docs/`.
