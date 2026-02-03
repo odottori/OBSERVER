@@ -80,3 +80,11 @@ Il repo supporta una gate suite "per WI" con logging standardizzato in `reports/
 Validazione log (solo check, nessuna esecuzione):
 - `py scripts/guardian.py collect --wi WI-XXXX --mode normal`
 - `py scripts/guardian.py collect --wi WI-XXXX --mode close`
+
+
+## WI Discipline — Gate + Collector (strict)
+
+- `py scripts/guardian.py gate --wi WI-XXXX --mode normal|close --write-collect-log`
+  - Collector B è eseguito a fine gate con `--profile hardfail --fail-on-hits` (default).
+- `py scripts/guardian.py collect --wi WI-XXXX --mode normal|close --profile deprec --fail-on-hits`
+  - Profilo `deprec` per rendere bloccanti warning legacy (se necessario).

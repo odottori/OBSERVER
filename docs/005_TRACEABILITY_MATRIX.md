@@ -193,3 +193,9 @@ Questo cluster rappresenta la fase “delivery” Phase2:
 - **Coverage 100% sui componenti rilevanti**: runner, pipeline, data layer, UI, strumenti, tooling operativo.
 - **Zero voci fantasma**: nulla è descritto come “presente” se non esiste nello snapshot.
 - **Verifiche ripetibili**: per ogni runner esiste almeno un comando `--help` o `status` che conferma l’installazione.
+
+### WI-0260 — Collector strict-hits profiles
+
+- Requirement: Collector B supports profiles (`hardfail|deprec|none`) and strict-hits gate.
+- Implementation: `scripts/wi_log_collector.py`, `scripts/wi_gate_runner.py`, `scripts/guardian.py`.
+- Verification: `tests/test_wi_log_collector.py`, `tests/test_wi_gate_runner.py`.

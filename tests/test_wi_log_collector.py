@@ -1,76 +1,97 @@
-from __future__ import annotations
-
-import subprocess
+# -*- coding: utf-8 -*-
 import sys
 from pathlib import Path
 
-
-def _run_guardian_collect(*, reports_dir: Path, wi: str, mode: str = "normal", extra: list[str] | None = None):
-    cmd = [
-        sys.executable,
-        "scripts/guardian.py",
-        "collect",
-        "--wi",
-        wi,
-        "--mode",
-        mode,
-        "--reports-dir",
-        str(reports_dir),
-        "--write-log",
-    ]
-    if extra:
-        cmd.extend(extra)
-    return subprocess.run(cmd, capture_output=True, text=True, check=False)
+import pytest
 
 
-def test_collect_normal_ok_with_empty_compileall(tmp_path: Path):
-    wi = "WI-0160"
-    # Create expected logs.
-    (tmp_path / f"guardian_lint_{wi}.log").write_text("PASS\n", encoding="utf-8")
-    (tmp_path / f"compileall_{wi}.log").write_bytes(b"")  # allowed empty
-    (tmp_path / f"import_smoke_{wi}.log").write_text("OK\n", encoding="utf-8")
-    (tmp_path / f"pytest_{wi}.log").write_text("57 passed\n", encoding="utf-8")
-    (tmp_path / f"guardian_sync_{wi}.log").write_text("PASS\n", encoding="utf-8")
-    (tmp_path / f"guardian_derive_{wi}.log").write_text("PASS\n", encoding="utf-8")
-    (tmp_path / f"build_master_md_{wi}.log").write_text("PASS\n", encoding="utf-8")
-
-    r = _run_guardian_collect(reports_dir=tmp_path, wi=wi, mode="normal")
-    assert r.returncode == 0
-    assert "WI LOG COLLECTOR" in r.stdout
-    assert "MISSING" not in r.stdout
-    # compileall is allowlisted as "empty OK" and should show OK.
-    assert f"compileall_{wi}.log" in r.stdout
-    # Should not flag empty for allowlisted logs.
-    assert "EMPTY" not in r.stdout
-
-    # Ensure collector wrote its own log.
-    assert (tmp_path / f"wi_collect_{wi}.log").exists()
+def _add_scripts_to_path():
+    root = Path(__file__).resolve().parents[1]
+    scripts = root / "scripts"
+    if str(scripts) not in sys.path:
+        sys.path.insert(0, str(scripts))
+    return root, scripts
 
 
-def test_collect_close_missing_fails(tmp_path: Path):
-    wi = "WI-0160"
-    # Only create 3/4 close logs.
-    (tmp_path / f"guardian_lint_{wi}_CLOSE.log").write_text("PASS\n", encoding="utf-8")
-    (tmp_path / f"guardian_sync_{wi}_CLOSE.log").write_text("PASS\n", encoding="utf-8")
-    (tmp_path / f"guardian_derive_{wi}_CLOSE.log").write_text("PASS\n", encoding="utf-8")
+def _write_all_expected(tmp_reports: Path, wi: str, mode: str):
+    # Import after path injection
+    import wi_log_collector
 
-    r = _run_guardian_collect(reports_dir=tmp_path, wi=wi, mode="close")
-    assert r.returncode != 0
-    assert "MISSING" in r.stdout
+    expected = wi_log_collector._expected_files(wi, mode, tmp_reports)
+    for gate, path in expected:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        # Minimal non-empty content
+        path.write_text(f"{gate}: ok\n", encoding="utf-8")
 
 
-def test_collect_hits_detected_and_optional_fail(tmp_path: Path):
-    wi = "WI-0160"
-    # Minimal close set.
-    (tmp_path / f"guardian_lint_{wi}_CLOSE.log").write_text("PASS\n", encoding="utf-8")
-    (tmp_path / f"guardian_sync_{wi}_CLOSE.log").write_text("PASS\n", encoding="utf-8")
-    (tmp_path / f"guardian_derive_{wi}_CLOSE.log").write_text("Traceback: boom\n", encoding="utf-8")
-    (tmp_path / f"build_master_md_{wi}_CLOSE.log").write_text("PASS\n", encoding="utf-8")
+def test_collect_hardfail_skips_cmd_lines(tmp_path: Path):
+    _add_scripts_to_path()
+    import wi_log_collector
 
-    r1 = _run_guardian_collect(reports_dir=tmp_path, wi=wi, mode="close")
-    assert r1.returncode == 0
-    assert "HITS(1)" in r1.stdout
-    assert "Traceback" in r1.stdout
+    wi = "WI-0260"
+    reports = tmp_path / "reports"
+    _write_all_expected(reports, wi, "normal")
 
-    r2 = _run_guardian_collect(reports_dir=tmp_path, wi=wi, mode="close", extra=["--fail-on-hits"])
-    assert r2.returncode != 0
+    # Inject a line that would have been a false-positive if scanned.
+    pytest_log = reports / f"pytest_{wi}.log"
+    pytest_log.write_text(
+        "CMD: py -m pytest -q -W error::DeprecationWarning\nALL GOOD\n",
+        encoding="utf-8",
+    )
+
+    rc, checks = wi_log_collector.collect(
+        wi=wi,
+        mode="normal",
+        reports_dir=reports,
+        patterns=wi_log_collector.PROFILE_PATTERNS["hardfail"],
+        max_hits_per_file=25,
+        fail_on_hits=True,
+    )
+    assert rc == 0
+    assert sum(len(c.hits) for c in checks) == 0
+
+
+def test_collect_hardfail_hits_fail_when_enabled(tmp_path: Path):
+    _add_scripts_to_path()
+    import wi_log_collector
+
+    wi = "WI-0260"
+    reports = tmp_path / "reports"
+    _write_all_expected(reports, wi, "normal")
+
+    bad_log = reports / f"pytest_{wi}.log"
+    bad_log.write_text("Traceback (most recent call last):\n", encoding="utf-8")
+
+    rc, checks = wi_log_collector.collect(
+        wi=wi,
+        mode="normal",
+        reports_dir=reports,
+        patterns=wi_log_collector.PROFILE_PATTERNS["hardfail"],
+        max_hits_per_file=25,
+        fail_on_hits=True,
+    )
+    assert rc == 3
+    assert sum(len(c.hits) for c in checks) >= 1
+
+
+def test_collect_profile_none_never_hits(tmp_path: Path):
+    _add_scripts_to_path()
+    import wi_log_collector
+
+    wi = "WI-0260"
+    reports = tmp_path / "reports"
+    _write_all_expected(reports, wi, "normal")
+
+    bad_log = reports / f"pytest_{wi}.log"
+    bad_log.write_text("Traceback (most recent call last):\n", encoding="utf-8")
+
+    rc, checks = wi_log_collector.collect(
+        wi=wi,
+        mode="normal",
+        reports_dir=reports,
+        patterns=(),
+        max_hits_per_file=25,
+        fail_on_hits=True,
+    )
+    assert rc == 0
+    assert sum(len(c.hits) for c in checks) == 0

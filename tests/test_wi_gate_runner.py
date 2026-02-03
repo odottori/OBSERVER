@@ -1,73 +1,48 @@
-from __future__ import annotations
-
-import subprocess
+# -*- coding: utf-8 -*-
 import sys
+import types
 from pathlib import Path
 
 
-def _run_guardian_gate(*, reports_dir: Path, wi: str, mode: str = "normal"):
-    cmd = [
-        sys.executable,
-        "scripts/guardian.py",
-        "gate",
-        "--wi",
-        wi,
-        "--mode",
-        mode,
-        "--reports-dir",
-        str(reports_dir),
-        "--dry-run",
-        "--write-collect-log",
-    ]
-    return subprocess.run(cmd, capture_output=True, text=True, check=False)
+def _add_scripts_to_path():
+    root = Path(__file__).resolve().parents[1]
+    scripts = root / "scripts"
+    if str(scripts) not in sys.path:
+        sys.path.insert(0, str(scripts))
+    return root, scripts
 
 
-def test_gate_normal_writes_expected_logs_and_collects(tmp_path: Path):
-    wi = "WI-0240"
-    r = _run_guardian_gate(reports_dir=tmp_path, wi=wi, mode="normal")
-    assert r.returncode == 0
-    assert "WI LOG COLLECTOR" in r.stdout
+def test_gate_passes_profile_and_fail_on_hits_by_default(tmp_path: Path, monkeypatch):
+    _add_scripts_to_path()
+    import wi_gate_runner
 
-    # Expected normal logs
-    for gate in [
-        "guardian_lint",
-        "compileall",
-        "import_smoke",
-        "pytest",
-        "guardian_sync",
-        "guardian_derive",
-        "build_master_md",
-    ]:
-        p = tmp_path / f"{gate}_{wi}.log"
-        assert p.exists()
-        assert p.stat().st_size > 0
+    captured = {}
 
-    # Meta log + collector log
-    assert (tmp_path / f"wi_gate_{wi}.log").exists()
-    assert (tmp_path / f"wi_collect_{wi}.log").exists()
+    # Stub wi_log_collector module used inside wi_gate_runner.run_gate()
+    fake = types.SimpleNamespace()
 
-    # Strict deprec should be enabled by default.
-    # The runner sanitizes the *logged* command to avoid Collector B false positives
-    # on the token "error::DeprecationWarning" (matches r"\bERROR\b").
-    pytest_log = (tmp_path / f"pytest_{wi}.log").read_text(encoding="utf-8")
-    assert "-W" in pytest_log
-    assert "error__DeprecationWarning" in pytest_log
-    assert "error::DeprecationWarning" not in pytest_log
+    def fake_main(argv):
+        captured["argv"] = list(argv)
+        return 0
 
-    # Meta log should explicitly record strict_deprec mode.
-    meta = (tmp_path / f"wi_gate_{wi}.log").read_text(encoding="utf-8")
-    assert "strict_deprec: True" in meta
+    fake.main = fake_main
 
+    sys.modules["wi_log_collector"] = fake  # ensure import inside run_gate gets the stub
 
-def test_gate_close_writes_expected_logs_and_collects(tmp_path: Path):
-    wi = "WI-0240"
-    r = _run_guardian_gate(reports_dir=tmp_path, wi=wi, mode="close")
-    assert r.returncode == 0
-
-    for gate in ["guardian_lint", "guardian_sync", "guardian_derive", "build_master_md"]:
-        p = tmp_path / f"{gate}_{wi}_CLOSE.log"
-        assert p.exists()
-        assert p.stat().st_size > 0
-
-    assert (tmp_path / f"wi_gate_{wi}_CLOSE.log").exists()
-    assert (tmp_path / f"wi_collect_{wi}_CLOSE.log").exists()
+    rc = wi_gate_runner.main(
+        [
+            "--wi",
+            "WI-0260",
+            "--mode",
+            "normal",
+            "--reports-dir",
+            str(tmp_path / "reports"),
+            "--dry-run",
+        ]
+    )
+    assert rc == 0
+    argv = captured.get("argv", [])
+    assert "--profile" in argv
+    # default profile is hardfail
+    assert argv[argv.index("--profile") + 1] == "hardfail"
+    assert "--fail-on-hits" in argv

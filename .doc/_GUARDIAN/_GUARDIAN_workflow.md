@@ -28,6 +28,16 @@ Vedi `./.doc/_GUARDIAN/_GUARDIAN_MANUAL.md`.
   - Next prompt (p0): testo integrale.
   - Comandi: `py scripts/guardian.py status|lint|sync|derive|programme|next|gate|collect`
 
+### WI Discipline (Gate + Collector B)
+
+- Gate (1 comando, scrive logs in `reports/`):
+  - `py scripts/guardian.py gate --wi WI-XXXX --mode normal|close --write-collect-log`
+- Collector B (check logs + pattern scan):
+  - `py scripts/guardian.py collect --wi WI-XXXX --mode normal|close --profile hardfail|deprec|none [--fail-on-hits]`
+
+Note:
+- Le righe `CMD:` e `DRY-RUN:` sono ignorate dal matcher per evitare falsi positivi.
+
 ### 1) Librarian — `py scripts/guardian_ops.py sync`
 Scopo: aggiornare la libreria dei canonici operativi in `./.doc/canonical/project/` a partire dai canonici progetto in `./docs/`.
 

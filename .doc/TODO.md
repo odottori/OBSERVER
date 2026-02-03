@@ -743,3 +743,29 @@ Consolidare un meccanismo stabile “1 comando” per eseguire e verificare la g
 ### Evidence
 - `reports/2026-02-03_WI-0240_GATE_RUNNER.md`
 - `reports/2026-02-03_WI-0240_CLOSE.md`
+
+
+## WI-0260 — Tooling: Collector strict-hits + profiles (B)
+
+**Status:** OPEN
+
+### Goal
+- Stabilizzare il collector (B) come gate: `HITS` può diventare *bloccante* (`--fail-on-hits`).
+- Profili: `hardfail|deprec|none`.
+- Anti-false-positive: ignorare righe runner `CMD:` / `DRY-RUN:`.
+
+### Allowlist
+- `scripts/wi_log_collector.py`
+- `scripts/wi_gate_runner.py`
+- `scripts/guardian.py`
+- `tests/test_wi_log_collector.py`
+- `tests/test_wi_gate_runner.py`
+- Docs/canonici: `.doc/_GUARDIAN/_GUARDIAN_workflow.md`, `docs/003_PDD_OBSERVER.md`, `docs/008_EVIDENCE_PACK.md`, `docs/010_MODULE_REGISTRY.md`, `docs/005_TRACEABILITY_MATRIX.md`
+
+### Gate
+- `py scripts/guardian.py gate --wi WI-0260 --mode normal --write-collect-log`
+
+### Evidence
+- `reports/<gate>_WI-0260.log` (7)
+- `reports/wi_collect_WI-0260.log`
+- `reports/2026-02-03_WI-0260_COLLECTOR_STRICT.md`

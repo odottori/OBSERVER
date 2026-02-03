@@ -240,3 +240,16 @@ Questo registro fa da ponte tra:
 - **Output**: —
 - **Gate minimi**: smoke manuale
 - **Gap derivati**: non bloccante, ma riduce costi operativi
+
+
+### MOD-WI-COLLECTOR-STRICT
+
+- Scope: tooling
+- Entry: `py scripts/guardian.py collect` (profiles + strict-hits)
+- Files: `scripts/wi_log_collector.py`
+
+### MOD-WI-GATE-RUNNER-STRICT
+
+- Scope: tooling
+- Entry: `py scripts/guardian.py gate` (default collector strict-hits)
+- Files: `scripts/wi_gate_runner.py`

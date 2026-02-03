@@ -23,11 +23,44 @@ from typing import List, Optional, Sequence, Tuple
 
 
 DEFAULT_PATTERNS: Tuple[str, ...] = (
+    # Backward-compatible default: hard-fail patterns.
+    # Prefer using --profile hardfail|deprec|none.
     r"\bTRACEBACK\b",
+    r"\[EXCEPTION\]",
     r"\bEXCEPTION\b",
+    r"\bASSERTIONERROR\b",
+    r"\bIMPORTERROR\b",
+    r"\bMODULENOTFOUNDERROR\b",
+    r"=+\s+(FAILURES|ERRORS)\s+=+",
     r"\bERROR\b",
     r"\bFAILED\b",
     r"\bFAIL\b",
+)
+
+
+PROFILE_PATTERNS: dict[str, Tuple[str, ...]] = {
+    "hardfail": (
+        r"\bTRACEBACK\b",
+        r"\[EXCEPTION\]",
+        r"\bEXCEPTION\b",
+        r"\bASSERTIONERROR\b",
+        r"\bIMPORTERROR\b",
+        r"\bMODULENOTFOUNDERROR\b",
+        r"=+\s+(FAILURES|ERRORS)\s+=+",
+        r"\bERROR\b",
+        r"\bFAILED\b",
+        r"\bFAIL\b",
+    ),
+    "deprec": (
+        r"DeprecationWarning",
+        r"\[DEPRECATED\]",
+    ),
+    "none": (),
+}
+
+SKIP_HIT_PREFIXES: Tuple[str, ...] = (
+    "CMD:",
+    "DRY-RUN:",
 )
 
 
@@ -117,6 +150,9 @@ def _read_text(path: Path) -> str:
 def _iter_hits(text: str, rx: re.Pattern[str], max_hits: int) -> Tuple[LogHit, ...]:
     hits: List[LogHit] = []
     for i, line in enumerate(text.splitlines(), start=1):
+        # Avoid false positives from runner metadata.
+        if line.startswith(SKIP_HIT_PREFIXES):
+            continue
         if rx.search(line):
             hits.append(LogHit(lineno=i, line=line.rstrip("\n")))
             if len(hits) >= max_hits:
@@ -147,7 +183,11 @@ def collect(
     max_hits_per_file: int,
     fail_on_hits: bool,
 ) -> Tuple[int, Tuple[LogCheck, ...]]:
-    rx = re.compile("|".join(f"(?:{p})" for p in patterns), flags=re.IGNORECASE)
+    rx: Optional[re.Pattern[str]]
+    if patterns:
+        rx = re.compile("|".join(f"(?:{p})" for p in patterns), flags=re.IGNORECASE)
+    else:
+        rx = None
 
     checks: List[LogCheck] = []
     missing = 0
@@ -176,7 +216,7 @@ def collect(
                 empty_bad += 1
             continue
 
-        hits = _iter_hits(text, rx, max_hits_per_file)
+        hits = _iter_hits(text, rx, max_hits_per_file) if rx is not None else ()
         hits_total += len(hits)
         checks.append(LogCheck(gate=gate, path=path, status="OK", hits=hits))
 
@@ -207,10 +247,16 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     p.add_argument("--mode", choices=["normal", "close"], default="normal")
     p.add_argument("--reports-dir", default="reports", help="Reports directory (default: reports)")
     p.add_argument(
+        "--profile",
+        choices=["hardfail", "deprec", "none"],
+        default="hardfail",
+        help="Pattern profile (default: hardfail)",
+    )
+    p.add_argument(
         "--pattern",
         action="append",
-        default=list(DEFAULT_PATTERNS),
-        help="Regex pattern to count as HIT (repeatable)",
+        default=[],
+        help="Extra regex pattern to count as HIT (repeatable)",
     )
     p.add_argument("--max-hits", type=int, default=25, help="Max hits per file (default: 25)")
     p.add_argument("--fail-on-hits", action="store_true", help="Non-zero exit if any HIT")
@@ -231,11 +277,15 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     reports_dir = Path(args.reports_dir)
     reports_dir.mkdir(parents=True, exist_ok=True)
 
+    patterns_used: List[str] = list(PROFILE_PATTERNS.get(args.profile, ()))
+    if args.pattern:
+        patterns_used.extend(list(args.pattern))
+
     rc, checks = collect(
         wi=wi,
         mode=args.mode,
         reports_dir=reports_dir,
-        patterns=args.pattern,
+        patterns=patterns_used,
         max_hits_per_file=max(1, int(args.max_hits)),
         fail_on_hits=bool(args.fail_on_hits),
     )
@@ -258,6 +308,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                     f"# WI Log Collector (B) — {wi}",
                     "",
                     f"Mode: `{args.mode}`",
+                    "",
+                    f"Profile: `{args.profile}`",
+                    "",
+                    f"Fail on hits: `{bool(args.fail_on_hits)}`",
                     "",
                     "```",
                     header.strip(),

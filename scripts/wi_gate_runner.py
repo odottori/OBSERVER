@@ -161,6 +161,8 @@ def run_gate(
     reports_dir: Path,
     strict_deprec: bool,
     dry_run: bool,
+    collect_profile: str,
+    collect_fail_on_hits: bool,
     collect_patterns: Optional[List[str]],
     write_collect_log: bool,
 ) -> int:
@@ -197,6 +199,8 @@ def run_gate(
             f"started: {ts}",
             f"strict_deprec: {strict_deprec}",
             f"dry_run: {dry_run}",
+            f"collect_profile: {collect_profile}",
+            f"collect_fail_on_hits: {collect_fail_on_hits}",
             "",
             "steps:",
             *[f"- {x}" for x in summary_lines],
@@ -210,6 +214,9 @@ def run_gate(
         import wi_log_collector
 
         args: List[str] = ["--wi", wi, "--mode", mode, "--reports-dir", str(reports_dir)]
+        args += ["--profile", collect_profile]
+        if collect_fail_on_hits:
+            args.append("--fail-on-hits")
         if write_collect_log:
             args.append("--write-log")
         if collect_patterns:
@@ -242,6 +249,19 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         action="store_true",
         help="Do not execute commands; just write stub logs (for CI/unit tests).",
     )
+
+    p.add_argument(
+        "--collect-profile",
+        choices=["hardfail", "deprec", "none"],
+        default="hardfail",
+        help="Collector profile (default: hardfail)",
+    )
+    p.add_argument(
+        "--no-collect-fail-on-hits",
+        action="store_true",
+        help="Do not fail the overall gate if Collector B finds HITS",
+    )
+
     p.add_argument(
         "--collect-pattern",
         action="append",
@@ -273,6 +293,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             reports_dir=reports_dir,
             strict_deprec=strict_deprec,
             dry_run=bool(args.dry_run),
+            collect_profile=str(args.collect_profile),
+            collect_fail_on_hits=not bool(args.no_collect_fail_on_hits),
             collect_patterns=list(args.collect_pattern) if args.collect_pattern else None,
             write_collect_log=bool(args.write_collect_log),
         )

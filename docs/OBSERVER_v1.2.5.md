@@ -1317,6 +1317,12 @@ Questo cluster rappresenta la fase “delivery” Phase2:
 - **Zero voci fantasma**: nulla è descritto come “presente” se non esiste nello snapshot.
 - **Verifiche ripetibili**: per ogni runner esiste almeno un comando `--help` o `status` che conferma l’installazione.
 
+### WI-0260 — Collector strict-hits profiles
+
+- Requirement: Collector B supports profiles (`hardfail|deprec|none`) and strict-hits gate.
+- Implementation: `scripts/wi_log_collector.py`, `scripts/wi_gate_runner.py`, `scripts/guardian.py`.
+- Verification: `tests/test_wi_log_collector.py`, `tests/test_wi_gate_runner.py`.
+
 
 ---
 
@@ -1545,6 +1551,14 @@ Il repo supporta una gate suite "per WI" con logging standardizzato in `reports/
 Validazione log (solo check, nessuna esecuzione):
 - `py scripts/guardian.py collect --wi WI-XXXX --mode normal`
 - `py scripts/guardian.py collect --wi WI-XXXX --mode close`
+
+
+## WI Discipline — Gate + Collector (strict)
+
+- `py scripts/guardian.py gate --wi WI-XXXX --mode normal|close --write-collect-log`
+  - Collector B è eseguito a fine gate con `--profile hardfail --fail-on-hits` (default).
+- `py scripts/guardian.py collect --wi WI-XXXX --mode normal|close --profile deprec --fail-on-hits`
+  - Profilo `deprec` per rendere bloccanti warning legacy (se necessario).
 
 
 ---
@@ -1941,6 +1955,19 @@ Questo registro fa da ponte tra:
 - **Output**: —
 - **Gate minimi**: smoke manuale
 - **Gap derivati**: non bloccante, ma riduce costi operativi
+
+
+### MOD-WI-COLLECTOR-STRICT
+
+- Scope: tooling
+- Entry: `py scripts/guardian.py collect` (profiles + strict-hits)
+- Files: `scripts/wi_log_collector.py`
+
+### MOD-WI-GATE-RUNNER-STRICT
+
+- Scope: tooling
+- Entry: `py scripts/guardian.py gate` (default collector strict-hits)
+- Files: `scripts/wi_gate_runner.py`
 
 
 ---

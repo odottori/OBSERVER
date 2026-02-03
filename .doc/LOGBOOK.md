@@ -414,3 +414,9 @@
 - Gate runner PASS in modalità normal (7 log) e close (4 log).
 - Collector B: HITS(0) su tutti i log WI-0240 (normal + close).
 - Strict gate: `pytest -W error::DeprecationWarning` PASS.
+
+
+## 2026-02-03 — WI-0260
+
+- Tooling: Collector B profiles + strict-hits default in gate runner.
+- Goal: stabilizzare segnali hard-fail nei log (no falsi positivi su CMD/DRY-RUN).
