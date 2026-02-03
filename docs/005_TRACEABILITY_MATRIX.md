@@ -1,6 +1,6 @@
 # Traceability Matrix (Repo -> Docset) — v1.2.5
 
-Build date: 2026-02-02
+Build date: 2026-02-03
 
 ## Scopo
 
@@ -167,6 +167,8 @@ Questo cluster rappresenta la fase “delivery” Phase2:
 | scripts/guardian.py | CLI entrypoint GUARDIAN (direct mode) | IMPLEMENTATO | 003§7 (Ops); 008 | `py scripts/guardian.py --help` |
 | scripts/guardian_ops.py | Ops: init/sync/lint/derive/status (non-distruttivo) | IMPLEMENTATO | 003§7 (Ops); 008 | `py scripts/guardian.py status` |
 | scripts/guardian_next.py | Executor: genera CURRENT_STATE da TODO; ripresa crash | IMPLEMENTATO | 003§7 (Ops); 008 | `py scripts/guardian.py next` |
+| scripts/wi_gate_runner.py | One-command gate suite per WI (writes reports logs) | IMPLEMENTATO | 003§2.1; 008§8.1; 010 (MOD-GUARDIAN-DOCOPS) | `py scripts/guardian.py gate --wi WI-XXXX --mode normal` |
+| scripts/wi_log_collector.py | Collector (B): check log presence/emptiness + hit patterns | IMPLEMENTATO | 008§8.1; 010 (MOD-GUARDIAN-DOCOPS) | `py scripts/guardian.py collect --wi WI-XXXX --mode normal` |
 | scripts/guardian_reset.py | Utility: reset/backup GUARDIAN (ops) | IMPLEMENTATO | 003§7 (Ops); 008 | `py scripts/guardian_reset.py --help` |
 | .doc/TODO.md | Backlog WI (source operativa) | IMPLEMENTATO | (Ops) | `py scripts/guardian.py next` |
 | .doc/CURRENT_STATE.md | Stato corrente + p0 | IMPLEMENTATO | (Ops) | `type .doc/CURRENT_STATE.md` |

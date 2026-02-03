@@ -30,7 +30,7 @@ Ogni WI che tocca codice o docs deve usare gates ripetibili (minimo):
 
 - **G0 Baseline**: `py -m pytest` (no-op check) + `py scripts/guardian.py lint`
 - **G1 Import smoke**: `py -m compileall -q src` (se applicabile) + `py -c "import <pkg_root>; print('OK')"`
-- **G2 Pytest**: `py -m pytest -q`
+- **G2 Pytest**: `py -m pytest -q -W error::DeprecationWarning`
 - **G3 Docs**: `py scripts/build_master_md.py`
 
 Naming log (per WI):
@@ -38,6 +38,9 @@ Naming log (per WI):
 - `reports/guardian_lint_<WI>.log`
 - `reports/build_master_md_<WI>.log`
 - `reports/import_smoke_<WI>.log` (se usato)
+
+Nota (preferred): per i WI standard usare il one-command runner:
+- `py scripts/guardian.py gate --wi WI-XXXX --mode normal` (scrive 7 log + esegue `collect`)
 
 ---
 
@@ -119,6 +122,12 @@ Creare una fase intermedia prima del refactor fisico:
 
 ### Allowlist
 - `docs/012_REFACTOR_PLAN_VIRTUAL.md`, `reports/**`, `.doc/TODO.md`, `.doc/LOGBOOK.md`, `.doc/CURRENT_STATE.md`, `.doc/LOGBOOK.md`
+- `.doc/CANONICAL_LIBRARY.md`
+- `.doc/canonical/derived/DDT.md`
+- `.doc/canonical/derived/PROJ.md`
+- `.doc/canonical/derived/TECH.md`
+- `docs/OBSERVER_v1.2.5.md`
+- `reports/2026-02-03_WI-0240_CLOSE.md`
 
 ### Blocklist
 - `src/**` (no move)
@@ -633,7 +642,7 @@ Rimuovere le `DeprecationWarning` residue provenienti da `src/phase0/tools/verif
 
 ## WI-0230 — Deprecation cleanup tranche F: UI + entrypoints `src.db|src.tools|src.dataops` → `src.phase0.*`
 
-**Status:** OPEN (phase2)
+**Status:** CLOSED (gates PASS; strict DeprecationWarning gate PASS)
 
 ### Scopo
 Eliminare import legacy che passano dagli shim da:
@@ -673,8 +682,64 @@ Eliminare import legacy che passano dagli shim da:
 - `guardian collect --pattern DeprecationWarning` non mostra hit per `src.db|src.tools|src.dataops` provenienti dai file in allowlist.
 
 ### Gate
-- `py -m pytest -q`
+- `py -m pytest -q -W error::DeprecationWarning`
 - `py scripts/guardian.py collect --wi WI-0230 --mode normal --write-log --pattern DeprecationWarning --pattern "\[DEPRECATED\]"`
 
 ### Evidence
 - `reports/2026-02-02_WI-0230_DEPREC_UI_ENTRYPOINTS.md`
+
+
+---
+
+## WI-0240 — Tooling: one-command WI gate runner (B) + doc alignment
+
+**Status:** CLOSED (phase2)
+
+### Scopo
+Consolidare un meccanismo stabile “1 comando” per eseguire e verificare la gate suite di un WI:
+- scrive i log attesi in `reports/` (normal: 7 log; close: 4 log)
+- integra `collector B` per check presence/emptiness + pattern hits
+- default: `pytest` con gate strict `DeprecationWarning` (warning → error)
+
+### Deliverable
+- Nuovo runner: `py scripts/guardian.py gate --wi WI-XXXX --mode normal|close`
+- Docset aggiornato con riferimenti (PDD/Evidence/Traceability/Module Registry)
+- Unit test (dry-run) per garantire naming e log non-vuoti
+- Evidenza: `reports/2026-02-03_WI-0240_GATE_RUNNER.md`
+- `reports/2026-02-03_WI-0240_CLOSE.md`
+
+### Allowlist
+- `scripts/guardian.py`
+- `scripts/wi_gate_runner.py`
+- `docs/003_PDD_OBSERVER.md`
+- `docs/005_TRACEABILITY_MATRIX.md`
+- `docs/008_EVIDENCE_PACK.md`
+- `docs/010_MODULE_REGISTRY.md`
+- `.doc/_GUARDIAN/_GUARDIAN_workflow.md`
+- `tests/test_wi_gate_runner.py`
+- `.doc/TODO.md`, `.doc/LOGBOOK.md`, `.doc/CURRENT_STATE.md`
+- `reports/2026-02-03_WI-0240_GATE_RUNNER.md`
+- `.doc/CANONICAL_LIBRARY.md`
+- `.doc/canonical/derived/DDT.md`
+- `.doc/canonical/derived/PROJ.md`
+- `.doc/canonical/derived/TECH.md`
+- `reports/2026-02-03_WI-0240_CLOSE.md`
+
+### Blocklist
+- Nessun refactor fisico in blocco
+- Nessuna modifica a `src/**` (fuori scope)
+
+### DoD
+- `py scripts/guardian.py gate --wi WI-0240 --mode normal` crea tutti i log attesi e termina con exit code 0 se PASS.
+- `py scripts/guardian.py gate --wi WI-0240 --mode close` crea 4 log `_CLOSE` e termina con exit code 0 se PASS.
+- `py -m pytest -q -W error::DeprecationWarning` PASS (61 passed atteso nello snapshot corrente).
+- Collector B su WI-0240: HITS(0) su tutti i log (normal + close).
+- Documentazione aggiornata: cross-reference coerenti (PDD/Evidence/Traceability/Module Registry).
+
+### Gate
+- `py scripts/guardian.py gate --wi WI-0240 --mode normal --write-collect-log`
+- `py -m pytest -q -W error::DeprecationWarning`
+
+### Evidence
+- `reports/2026-02-03_WI-0240_GATE_RUNNER.md`
+- `reports/2026-02-03_WI-0240_CLOSE.md`

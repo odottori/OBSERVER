@@ -421,11 +421,11 @@ Solo dopo stabilizzazione execution/risk/monitoring.
 doc_id: 003_PDD_OBSERVER
 docset_version: 1.2.5
 status: canonical
-last_updated: 2026-01-26
+last_updated: 2026-02-03
 ---
 # PDD — OBSERVER 2.0 (Design Document) v1.2.5
 
-Build date: 2026-01-26
+Build date: 2026-02-03
 
 ## 1. Design intent
 
@@ -445,6 +445,8 @@ OBSERVER adotta un’impostazione **auditability-first**:
 - `scripts/execute.py`: execution runner (paper-first)
 - `scripts/ops_run_session.py` / `scripts/pack_session.py`: workflow e packaging deterministico
 - `scripts/guardian.py`: governance documentale (direct mode)
+  - `py scripts/guardian.py gate --wi WI-XXXX --mode normal|close`: gate suite con log in `reports/` (Collector B integrato)
+  - `py scripts/guardian.py collect --wi WI-XXXX --mode normal|close`: validazione presenza/emptiness log WI
 
 ### 2.2 Application layer (`src/`)
 - `src/db/*`: schema owner + connection + audit store
@@ -1121,7 +1123,7 @@ Equity curve giornaliera per run: equity, cash, investito, numero posizioni e ta
 
 # Traceability Matrix (Repo -> Docset) — v1.2.5
 
-Build date: 2026-02-02
+Build date: 2026-02-03
 
 ## Scopo
 
@@ -1288,6 +1290,8 @@ Questo cluster rappresenta la fase “delivery” Phase2:
 | scripts/guardian.py | CLI entrypoint GUARDIAN (direct mode) | IMPLEMENTATO | 003§7 (Ops); 008 | `py scripts/guardian.py --help` |
 | scripts/guardian_ops.py | Ops: init/sync/lint/derive/status (non-distruttivo) | IMPLEMENTATO | 003§7 (Ops); 008 | `py scripts/guardian.py status` |
 | scripts/guardian_next.py | Executor: genera CURRENT_STATE da TODO; ripresa crash | IMPLEMENTATO | 003§7 (Ops); 008 | `py scripts/guardian.py next` |
+| scripts/wi_gate_runner.py | One-command gate suite per WI (writes reports logs) | IMPLEMENTATO | 003§2.1; 008§8.1; 010 (MOD-GUARDIAN-DOCOPS) | `py scripts/guardian.py gate --wi WI-XXXX --mode normal` |
+| scripts/wi_log_collector.py | Collector (B): check log presence/emptiness + hit patterns | IMPLEMENTATO | 008§8.1; 010 (MOD-GUARDIAN-DOCOPS) | `py scripts/guardian.py collect --wi WI-XXXX --mode normal` |
 | scripts/guardian_reset.py | Utility: reset/backup GUARDIAN (ops) | IMPLEMENTATO | 003§7 (Ops); 008 | `py scripts/guardian_reset.py --help` |
 | .doc/TODO.md | Backlog WI (source operativa) | IMPLEMENTATO | (Ops) | `py scripts/guardian.py next` |
 | .doc/CURRENT_STATE.md | Stato corrente + p0 | IMPLEMENTATO | (Ops) | `type .doc/CURRENT_STATE.md` |
@@ -1459,15 +1463,14 @@ Scopo: ridurre divergenze doc-vs-code riportando i **default** e le costanti “
 
 ## 008_EVIDENCE_PACK.md
 
----
 doc_id: 008_EVIDENCE_PACK
 docset_version: 1.2.5
 status: canonical
-last_updated: 2026-01-26
+last_updated: 2026-02-03
 ---
 # Evidence Pack — v1.2.5
 
-Build date: 2026-01-26
+Build date: 2026-02-03
 
 Questo documento elenca comandi “verificabili” per dimostrare che lo snapshot è eseguibile e coerente.
 
@@ -1475,7 +1478,8 @@ Questo documento elenca comandi “verificabili” per dimostrare che lo snapsho
 
 ## 1. Sanity checks
 
-- Test suite: `py -m pytest`
+- Test suite (baseline): `py -m pytest`
+- Test suite (strict deprecation gate): `py -m pytest -q -W error::DeprecationWarning`
 - Stato GUARDIAN: `py scripts/guardian.py status`
 - Lint docset: `py scripts/guardian.py lint`
 
@@ -1530,6 +1534,17 @@ Artefatti attesi:
 
 - Sync canonici: `py scripts/guardian.py sync --clean`
 - Derive brief: `py scripts/guardian.py derive`
+
+### 8.1 Gate suite per Work Item (one-command)
+
+Il repo supporta una gate suite "per WI" con logging standardizzato in `reports/`.
+
+- **Normal (7 log)**: `py scripts/guardian.py gate --wi WI-XXXX --mode normal`
+- **Close (4 log)**: `py scripts/guardian.py gate --wi WI-XXXX --mode close`
+
+Validazione log (solo check, nessuna esecuzione):
+- `py scripts/guardian.py collect --wi WI-XXXX --mode normal`
+- `py scripts/guardian.py collect --wi WI-XXXX --mode close`
 
 
 ---
@@ -1686,7 +1701,7 @@ Riferimento scenari: `docs/use_cases/SCENARI_APPLICATIVI_v1.2.5.md`
 
 ---
 docset_version: 1.2.5
-last_updated: 2026-02-02
+last_updated: 2026-02-03
 status: support
 ---
 
@@ -1717,6 +1732,7 @@ Questo registro fa da ponte tra:
 
 ## Indice moduli (cliccabile)
 - [MOD-INFRA-BASE](#mod-infra-base)
+- [MOD-GUARDIAN-DOCOPS](#mod-guardian-docops)
 - [MOD-DB-SCHEMA](#mod-db-schema)
 - [MOD-DATAOPS](#mod-dataops)
 - [MOD-OPS-RUN-SESSION](#mod-ops-run-session)
@@ -1793,6 +1809,18 @@ Questo registro fa da ponte tra:
 - **Output**: `reports/*` + DB
 - **Gate minimi**: `py scripts/sentinel.py test`
 - **Gap derivati**: aumenta errore umano se non c’è “one-command ops”
+
+### MOD-GUARDIAN-DOCOPS
+- **Dominio**: Governance / Tooling operativo
+- **Phase**: PHASE0_FOUNDATION
+- **Livello**: RUN-GRADE
+- **Entrypoint**:
+  - `py scripts/guardian.py gate --wi WI-XXXX --mode normal|close`
+  - `py scripts/guardian.py collect --wi WI-XXXX --mode normal|close`
+- **Codice**: `scripts/guardian.py`, `scripts/wi_gate_runner.py`, `scripts/wi_log_collector.py`
+- **Output**: log standardizzati in `reports/` (`*_WI-XXXX.log`) + summary `wi_gate_*`, `wi_collect_*`
+- **Gate minimi**: `py scripts/guardian.py gate --wi WI-XXXX --mode normal` (include strict deprecation gate)
+- **Gap derivati**: senza disciplina logs → evidence fragile / drift non osservabile
 
 ### MOD-NEWS-ALPHA
 - **Dominio**: Data+Signal

@@ -1,6 +1,6 @@
 ---
 docset_version: 1.2.5
-last_updated: 2026-02-02
+last_updated: 2026-02-03
 status: support
 ---
 
@@ -31,6 +31,7 @@ Questo registro fa da ponte tra:
 
 ## Indice moduli (cliccabile)
 - [MOD-INFRA-BASE](#mod-infra-base)
+- [MOD-GUARDIAN-DOCOPS](#mod-guardian-docops)
 - [MOD-DB-SCHEMA](#mod-db-schema)
 - [MOD-DATAOPS](#mod-dataops)
 - [MOD-OPS-RUN-SESSION](#mod-ops-run-session)
@@ -107,6 +108,18 @@ Questo registro fa da ponte tra:
 - **Output**: `reports/*` + DB
 - **Gate minimi**: `py scripts/sentinel.py test`
 - **Gap derivati**: aumenta errore umano se non c’è “one-command ops”
+
+### MOD-GUARDIAN-DOCOPS
+- **Dominio**: Governance / Tooling operativo
+- **Phase**: PHASE0_FOUNDATION
+- **Livello**: RUN-GRADE
+- **Entrypoint**:
+  - `py scripts/guardian.py gate --wi WI-XXXX --mode normal|close`
+  - `py scripts/guardian.py collect --wi WI-XXXX --mode normal|close`
+- **Codice**: `scripts/guardian.py`, `scripts/wi_gate_runner.py`, `scripts/wi_log_collector.py`
+- **Output**: log standardizzati in `reports/` (`*_WI-XXXX.log`) + summary `wi_gate_*`, `wi_collect_*`
+- **Gate minimi**: `py scripts/guardian.py gate --wi WI-XXXX --mode normal` (include strict deprecation gate)
+- **Gap derivati**: senza disciplina logs → evidence fragile / drift non osservabile
 
 ### MOD-NEWS-ALPHA
 - **Dominio**: Data+Signal

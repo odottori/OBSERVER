@@ -26,7 +26,7 @@ Vedi `./.doc/_GUARDIAN/_GUARDIAN_MANUAL.md`.
 - Rispondi asciutto:
   - Guardian 2.0 attivo. Stand-by.
   - Next prompt (p0): testo integrale.
-  - Comandi: `py scripts/guardian.py status|lint|sync|derive|programme|next`
+  - Comandi: `py scripts/guardian.py status|lint|sync|derive|programme|next|gate|collect`
 
 ### 1) Librarian — `py scripts/guardian_ops.py sync`
 Scopo: aggiornare la libreria dei canonici operativi in `./.doc/canonical/project/` a partire dai canonici progetto in `./docs/`.
@@ -65,7 +65,15 @@ Scopo: recovery / rigenerazione lenta del backlog quando `TODO` non è eseguibil
 ### 5) Librarian — `py scripts/guardian_ops.py derive`
 Scopo: generare canonici operativi compatti (PROJ/TECH/DDT) in `./.doc/canonical/derived/`.
 
+
+### 6) Ops — Gate suite per WI (one-command)
+Scopo: eseguire i gate standard *per Work Item* e generare i log attesi in `reports/`.
+
+- Normal (7 log): `py scripts/guardian.py gate --wi WI-XXXX --mode normal`
+- Close (4 log): `py scripts/guardian.py gate --wi WI-XXXX --mode close`
+
+Validazione logs (senza esecuzione): `py scripts/guardian.py collect --wi WI-XXXX --mode normal|close`
+
 Regole:
-- Non modificare `docs/`.
-- Scrivere solo in `.doc/canonical/derived/` e (se utile) aggiornare l'indice in `CANONICAL_LIBRARY.md`.
-- Se nessun delta: `OK` (zero scritture).
+- Il gate runner esegue controlli e scrive **solo log** in `reports/` (naming standardizzato per WI).
+- La validazione con `collect` non esegue comandi esterni: legge solo i log presenti.

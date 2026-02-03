@@ -1,6 +1,6 @@
 # CURRENT_STATE — OBSERVER
 
-Date: 2026-02-02
+Date: 2026-02-03
 Repo canonico operativo: `OBSERVER_v1.2.5_PHASE1_FINAL`
 
 ## Snapshot
@@ -18,18 +18,21 @@ Repo canonico operativo: `OBSERVER_v1.2.5_PHASE1_FINAL`
 - WI-0180 (Deprecation cleanup tranche A: src.core callers): **CLOSED** (gates PASS).
 - WI-0200 (Deprecation cleanup tranche C: internal `src.db` imports): **CLOSED** (scope met; residual warnings in tranche D).
 - WI-0210 (Deprecation cleanup tranche D: runtime imports ranking+sentinel): **CLOSED** (gates PASS; residual warnings moved to tranche E).
-- WI-0220 (Deprecation cleanup tranche E: verify_ticker_mappings imports): **OPEN** (phase2).
+- WI-0220 (Deprecation cleanup tranche E: verify_ticker_mappings imports): **CLOSED** (gates PASS).
+- WI-0230 (Deprecation cleanup tranche F: UI + entrypoints imports): **CLOSED** (gates PASS; strict DeprecationWarning gate PASS).
+- WI-0240 (Tooling: one-command WI gate runner B + doc alignment): **CLOSED** (phase2).
 
 ## Governance attiva
 - Refactor fisico consentito **solo tranche-by-tranche** (1 tranche = 1 WI) con `pytest` sempre PASS.
 - Update canonici solo quando esplicitamente in allowlist del WI corrente.
 - Evidenze e log in `reports/` per ogni WI.
+- Gate deprecation hard: usare `py -m pytest -q -W error::DeprecationWarning` come baseline.
 
 ## Workstream corrente
-### WI-0220 — Deprecation cleanup tranche E (verify_ticker_mappings imports)
-- Status: OPEN
-- Goal: rimuovere le DeprecationWarning residue provenienti da `src/phase0/tools/verify_ticker_mappings.py` migrando `src.db.migrate` → `src.phase0.db.migrate`.
-- Evidence (da produrre): `reports/2026-02-02_WI-0220_DEPREC_VERIFY_TICKER_MAPPINGS.md`
+### WI-0240 — Tooling: one-command WI gate runner (B) + doc alignment
+- Status: CLOSED
+- Goal: introdurre `py scripts/guardian.py gate --wi WI-XXXX --mode normal|close` con logging standard in `reports/` + integrazione Collector B.
+- Evidence: `reports/2026-02-03_WI-0240_GATE_RUNNER.md`, `reports/2026-02-03_WI-0240_CLOSE.md`
 
 
 ### WI-0115 — Skeleton tranche fisiche (TODO-only)
@@ -88,6 +91,7 @@ Repo canonico operativo: `OBSERVER_v1.2.5_PHASE1_FINAL`
 5. WI-0210 — Deprecation cleanup tranche D: runtime imports ranking+sentinel
 6. WI-0220 — Deprecation cleanup tranche E: verify_ticker_mappings imports
 7. WI-0230 — Deprecation cleanup tranche F: UI + entrypoints imports
+8. WI-0240 — Tooling: one-command WI gate runner (B)
 
 ### Tranche fisiche (DOPO WI-0107)
 - WI-0120 — Refactor tranche: `db` (physical)

@@ -2,8 +2,8 @@
 
 > GENERATED FILE — DO NOT EDIT  
 > Source of truth: `./docs/`  
-> Generated: 2026-02-02T18:44:50Z  
-> Fingerprint: 67428cc9a7202fde
+> Generated: 2026-02-03T08:17:59Z  
+> Fingerprint: 8f69a1b61a0dd469
 
 ## Sources
 - `docs/003_PDD_OBSERVER.md`
@@ -19,6 +19,8 @@
 - `scripts/execute.py`: execution runner (paper-first)
 - `scripts/ops_run_session.py` / `scripts/pack_session.py`: workflow e packaging deterministico
 - `scripts/guardian.py`: governance documentale (direct mode)
+  - `py scripts/guardian.py gate --wi WI-XXXX --mode normal|close`: gate suite con log in `reports/` (Collector B integrato)
+  - `py scripts/guardian.py collect --wi WI-XXXX --mode normal|close`: validazione presenza/emptiness log WI
 
 ### 2.2 Application layer (`src/`)
 - `src/db/*`: schema owner + connection + audit store
@@ -53,6 +55,8 @@
 - `scripts/execute.py`: execution runner (paper-first)
 - `scripts/ops_run_session.py` / `scripts/pack_session.py`: workflow e packaging deterministico
 - `scripts/guardian.py`: governance documentale (direct mode)
+  - `py scripts/guardian.py gate --wi WI-XXXX --mode normal|close`: gate suite con log in `reports/` (Collector B integrato)
+  - `py scripts/guardian.py collect --wi WI-XXXX --mode normal|close`: validazione presenza/emptiness log WI
 
 
 ## Repo Inventory (auto)
@@ -79,6 +83,7 @@
 - `scripts/sentinel.py`
 - `scripts/serve_code_docs.py`
 - `scripts/setup.py`
+- `scripts/wi_gate_runner.py`
 - `scripts/wi_log_collector.py`
 
 ### pages/

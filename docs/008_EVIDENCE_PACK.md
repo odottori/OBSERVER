@@ -1,12 +1,11 @@
----
 doc_id: 008_EVIDENCE_PACK
 docset_version: 1.2.5
 status: canonical
-last_updated: 2026-01-26
+last_updated: 2026-02-03
 ---
 # Evidence Pack — v1.2.5
 
-Build date: 2026-01-26
+Build date: 2026-02-03
 
 Questo documento elenca comandi “verificabili” per dimostrare che lo snapshot è eseguibile e coerente.
 
@@ -14,7 +13,8 @@ Questo documento elenca comandi “verificabili” per dimostrare che lo snapsho
 
 ## 1. Sanity checks
 
-- Test suite: `py -m pytest`
+- Test suite (baseline): `py -m pytest`
+- Test suite (strict deprecation gate): `py -m pytest -q -W error::DeprecationWarning`
 - Stato GUARDIAN: `py scripts/guardian.py status`
 - Lint docset: `py scripts/guardian.py lint`
 
@@ -69,3 +69,14 @@ Artefatti attesi:
 
 - Sync canonici: `py scripts/guardian.py sync --clean`
 - Derive brief: `py scripts/guardian.py derive`
+
+### 8.1 Gate suite per Work Item (one-command)
+
+Il repo supporta una gate suite "per WI" con logging standardizzato in `reports/`.
+
+- **Normal (7 log)**: `py scripts/guardian.py gate --wi WI-XXXX --mode normal`
+- **Close (4 log)**: `py scripts/guardian.py gate --wi WI-XXXX --mode close`
+
+Validazione log (solo check, nessuna esecuzione):
+- `py scripts/guardian.py collect --wi WI-XXXX --mode normal`
+- `py scripts/guardian.py collect --wi WI-XXXX --mode close`

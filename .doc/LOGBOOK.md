@@ -373,7 +373,7 @@
 - `guardian collect --wi WI-0220 --mode normal --write-log --pattern DeprecationWarning --pattern "\[DEPRECATED\]"`
 
 
-## 2026-02-02 — WI-0230 (Deprecation cleanup tranche F: UI + entrypoints imports) — OPEN
+## 2026-02-02 — WI-0230 (Deprecation cleanup tranche F: UI + entrypoints imports) — CLOSED (gates PASS; strict DeprecationWarning gate PASS)
 
 ### Outcome (intended)
 - Eliminare import legacy che passano dagli shim (evitare `DeprecationWarning`) in:
@@ -387,8 +387,30 @@
 - `guardian lint`
 - `compileall -q`
 - import smoke
-- `pytest -q`
+- `pytest -q -W error::DeprecationWarning`
 - `guardian sync --clean`
 - `guardian derive`
 - `build_master_md`
 - `guardian collect --wi WI-0230 --mode normal --write-log --pattern DeprecationWarning --pattern "\[DEPRECATED\]"`
+
+
+## 2026-02-03 — WI-0240 (Tooling: one-command WI gate runner B + doc alignment) — CLOSED
+
+### Outcome (intended)
+- Consolidare un comando unico per eseguire i gate per WI con logging standardizzato in `reports/`.
+- Integrare il Collector (B) per verificare: presence/emptiness + pattern hits.
+- Aggiornare la documentazione canonica (PDD/Evidence/Traceability/Module Registry) con cross reference coerenti.
+
+### Evidence
+- `reports/2026-02-03_WI-0240_GATE_RUNNER.md`
+- `reports/2026-02-03_WI-0240_CLOSE.md`
+
+### Gates (eseguiti su target machine)
+- `py scripts/guardian.py gate --wi WI-0240 --mode normal --write-collect-log`
+- `py scripts/guardian.py gate --wi WI-0240 --mode close --write-collect-log`
+- `py -m pytest -q -W error::DeprecationWarning`
+
+### Outcome (actual)
+- Gate runner PASS in modalità normal (7 log) e close (4 log).
+- Collector B: HITS(0) su tutti i log WI-0240 (normal + close).
+- Strict gate: `pytest -W error::DeprecationWarning` PASS.

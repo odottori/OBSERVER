@@ -2,11 +2,11 @@
 doc_id: 003_PDD_OBSERVER
 docset_version: 1.2.5
 status: canonical
-last_updated: 2026-01-26
+last_updated: 2026-02-03
 ---
 # PDD — OBSERVER 2.0 (Design Document) v1.2.5
 
-Build date: 2026-01-26
+Build date: 2026-02-03
 
 ## 1. Design intent
 
@@ -26,6 +26,8 @@ OBSERVER adotta un’impostazione **auditability-first**:
 - `scripts/execute.py`: execution runner (paper-first)
 - `scripts/ops_run_session.py` / `scripts/pack_session.py`: workflow e packaging deterministico
 - `scripts/guardian.py`: governance documentale (direct mode)
+  - `py scripts/guardian.py gate --wi WI-XXXX --mode normal|close`: gate suite con log in `reports/` (Collector B integrato)
+  - `py scripts/guardian.py collect --wi WI-XXXX --mode normal|close`: validazione presenza/emptiness log WI
 
 ### 2.2 Application layer (`src/`)
 - `src/db/*`: schema owner + connection + audit store

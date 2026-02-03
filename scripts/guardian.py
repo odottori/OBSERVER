@@ -36,6 +36,7 @@ Commands:
   status               Print current GUARDIAN operational status.
   programme            Write a short operational plan into CURRENT_STATE.md.
   next                 Generate/update p0 in .doc/CURRENT_STATE.md from .doc/TODO.md.
+  gate                 Run the WI gate suite (writes reports/*_<WI>[_CLOSE].log) + collector.
   collect              Check expected logs for a WI in reports/ (collector B).
   help                 Show this message.
 """
@@ -83,6 +84,12 @@ def main(argv: Optional[List[str]] = None) -> int:
 
         # wi_log_collector expects argv like: ["--wi", "WI-0160", "--mode", "normal"]
         return int(wi_log_collector.main(rest))
+
+    if cmd == "gate":
+        import wi_gate_runner
+
+        # wi_gate_runner expects argv like: ["--wi", "WI-0240", "--mode", "normal"]
+        return int(wi_gate_runner.main(rest))
 
     sys.stderr.write(f"ERROR: Unknown command '{cmd}'.\n\n")
     _print_usage()
