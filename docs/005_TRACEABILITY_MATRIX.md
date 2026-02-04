@@ -169,6 +169,7 @@ Questo cluster rappresenta la fase “delivery” Phase2:
 | scripts/guardian_next.py | Executor: genera CURRENT_STATE da TODO; ripresa crash | IMPLEMENTATO | 003§7 (Ops); 008 | `py scripts/guardian.py next` |
 | scripts/wi_gate_runner.py | One-command gate suite per WI (writes reports logs) | IMPLEMENTATO | 003§2.1; 008§8.1; 010 (MOD-GUARDIAN-DOCOPS) | `py scripts/guardian.py gate --wi WI-XXXX --mode normal` |
 | scripts/wi_log_collector.py | Collector (B): check log presence/emptiness + hit patterns | IMPLEMENTATO | 008§8.1; 010 (MOD-GUARDIAN-DOCOPS) | `py scripts/guardian.py collect --wi WI-XXXX --mode normal` |
+| scripts/doc_integrity_check.py | Tool: docs-check (validate markdown links/anchors) | IMPLEMENTATO | 003§2.1; 008§8.1; 010 (MOD-GUARDIAN-DOCOPS) | `py scripts/guardian.py docs-check --mode warn` |
 | scripts/guardian_reset.py | Utility: reset/backup GUARDIAN (ops) | IMPLEMENTATO | 003§7 (Ops); 008 | `py scripts/guardian_reset.py --help` |
 | .doc/TODO.md | Backlog WI (source operativa) | IMPLEMENTATO | (Ops) | `py scripts/guardian.py next` |
 | .doc/CURRENT_STATE.md | Stato corrente + p0 | IMPLEMENTATO | (Ops) | `type .doc/CURRENT_STATE.md` |

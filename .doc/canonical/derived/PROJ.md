@@ -2,8 +2,8 @@
 
 > GENERATED FILE — DO NOT EDIT  
 > Source of truth: `./docs/`  
-> Generated: 2026-02-03T15:25:19Z  
-> Fingerprint: ea89b52c938441b1
+> Generated: 2026-02-04T07:14:17Z  
+> Fingerprint: 3ca08cf18ee7e88f
 
 ## Sources
 - `docs/001_PROJECT_OVERVIEW.md`

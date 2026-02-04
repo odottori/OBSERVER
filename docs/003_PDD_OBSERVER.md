@@ -28,6 +28,7 @@ OBSERVER adotta un’impostazione **auditability-first**:
 - `scripts/guardian.py`: governance documentale (direct mode)
   - `py scripts/guardian.py gate --wi WI-XXXX --mode normal|close`: gate suite con log in `reports/` (Collector B integrato)
   - `py scripts/guardian.py collect --wi WI-XXXX --mode normal|close`: validazione presenza/emptiness log WI
+  - `py scripts/guardian.py docs-check --mode warn|hard`: check offline integrità link/anchors (log: `reports/docs_check_<WI>.log`)
 
 ### 2.2 Application layer (`src/`)
 - `src/db/*`: schema owner + connection + audit store

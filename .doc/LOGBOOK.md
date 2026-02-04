@@ -447,3 +447,15 @@
 ### Outcome
 - Workflow CI aggiornato: esegue `guardian.py gate` (mode=normal) e pubblica `reports/`.
 - `main_test.py` riallineato al layout test standard (`tests/`).
+
+## 2026-02-03 — WI-0290 (Docs integrity check: warn) — CLOSED (gates PASS)
+
+### Goal
+- Introdurre un check offline su link/anchors markdown in `docs/` e `.doc/`.
+- Integrare il check nel gate runner senza cambiare il contratto log del Collector B (7 log normal, 4 log close).
+- Default: warn (non blocca), promuovibile a hard in tranche dedicata.
+
+### Outcome
+- Nuovo comando: `py scripts/guardian.py docs-check --mode warn|hard`.
+- Gate runner: scrive `reports/docs_check_<WI>[_CLOSE].log` (warn default).
+

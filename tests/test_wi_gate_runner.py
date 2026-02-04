@@ -1,48 +1,87 @@
-# -*- coding: utf-8 -*-
+import subprocess
 import sys
-import types
 from pathlib import Path
 
 
-def _add_scripts_to_path():
-    root = Path(__file__).resolve().parents[1]
-    scripts = root / "scripts"
-    if str(scripts) not in sys.path:
-        sys.path.insert(0, str(scripts))
-    return root, scripts
+def _run(cmd, cwd: Path) -> subprocess.CompletedProcess:
+    return subprocess.run(cmd, cwd=str(cwd), capture_output=True, text=True)
 
 
-def test_gate_passes_profile_and_fail_on_hits_by_default(tmp_path: Path, monkeypatch):
-    _add_scripts_to_path()
-    import wi_gate_runner
+def test_gate_normal_writes_expected_logs_and_collects(tmp_path: Path):
+    wi = "WI-0240"
 
-    captured = {}
-
-    # Stub wi_log_collector module used inside wi_gate_runner.run_gate()
-    fake = types.SimpleNamespace()
-
-    def fake_main(argv):
-        captured["argv"] = list(argv)
-        return 0
-
-    fake.main = fake_main
-
-    sys.modules["wi_log_collector"] = fake  # ensure import inside run_gate gets the stub
-
-    rc = wi_gate_runner.main(
+    # Use dry-run so tests don't depend on DuckDB or external tooling.
+    cp = _run(
         [
+            sys.executable,
+            "scripts/guardian.py",
+            "gate",
             "--wi",
-            "WI-0260",
+            wi,
             "--mode",
             "normal",
             "--reports-dir",
-            str(tmp_path / "reports"),
+            str(tmp_path),
             "--dry-run",
-        ]
+            "--write-collect-log",
+        ],
+        cwd=Path.cwd(),
     )
-    assert rc == 0
-    argv = captured.get("argv", [])
-    assert "--profile" in argv
-    # default profile is hardfail
-    assert argv[argv.index("--profile") + 1] == "hardfail"
-    assert "--fail-on-hits" in argv
+    assert cp.returncode == 0, (cp.stdout, cp.stderr)
+
+    # Gate logs (contract: 7)
+    expected = [
+        tmp_path / f"guardian_lint_{wi}.log",
+        tmp_path / f"compileall_{wi}.log",
+        tmp_path / f"import_smoke_{wi}.log",
+        tmp_path / f"pytest_{wi}.log",
+        tmp_path / f"guardian_sync_{wi}.log",
+        tmp_path / f"guardian_derive_{wi}.log",
+        tmp_path / f"build_master_md_{wi}.log",
+    ]
+    for lp in expected:
+        assert lp.exists(), f"missing {lp.name}"
+        assert lp.stat().st_size > 0, f"empty {lp.name}"
+
+    # Extra (non-collector) logs
+    assert (tmp_path / f"docs_check_{wi}.log").exists()
+    assert (tmp_path / f"wi_gate_{wi}.log").exists()
+    assert (tmp_path / f"wi_collect_{wi}.log").exists()
+
+
+def test_gate_close_writes_expected_logs_and_collects(tmp_path: Path):
+    wi = "WI-0240"
+
+    cp = _run(
+        [
+            sys.executable,
+            "scripts/guardian.py",
+            "gate",
+            "--wi",
+            wi,
+            "--mode",
+            "close",
+            "--reports-dir",
+            str(tmp_path),
+            "--dry-run",
+            "--write-collect-log",
+        ],
+        cwd=Path.cwd(),
+    )
+    assert cp.returncode == 0, (cp.stdout, cp.stderr)
+
+    # Gate logs (contract: 4)
+    expected = [
+        tmp_path / f"guardian_lint_{wi}_CLOSE.log",
+        tmp_path / f"guardian_sync_{wi}_CLOSE.log",
+        tmp_path / f"guardian_derive_{wi}_CLOSE.log",
+        tmp_path / f"build_master_md_{wi}_CLOSE.log",
+    ]
+    for lp in expected:
+        assert lp.exists(), f"missing {lp.name}"
+        assert lp.stat().st_size > 0, f"empty {lp.name}"
+
+    # Extra (non-collector) logs
+    assert (tmp_path / f"docs_check_{wi}_CLOSE.log").exists()
+    assert (tmp_path / f"wi_gate_{wi}_CLOSE.log").exists()
+    assert (tmp_path / f"wi_collect_{wi}_CLOSE.log").exists()

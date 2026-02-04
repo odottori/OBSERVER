@@ -116,8 +116,9 @@ Questo registro fa da ponte tra:
 - **Entrypoint**:
   - `py scripts/guardian.py gate --wi WI-XXXX --mode normal|close`
   - `py scripts/guardian.py collect --wi WI-XXXX --mode normal|close`
-- **Codice**: `scripts/guardian.py`, `scripts/wi_gate_runner.py`, `scripts/wi_log_collector.py`
-- **Output**: log standardizzati in `reports/` (`*_WI-XXXX.log`) + summary `wi_gate_*`, `wi_collect_*`
+  - `py scripts/guardian.py docs-check --mode warn|hard`
+- **Codice**: `scripts/guardian.py`, `scripts/wi_gate_runner.py`, `scripts/wi_log_collector.py`, `scripts/doc_integrity_check.py`
+- **Output**: log standardizzati in `reports/` (`*_WI-XXXX.log`) + summary `wi_gate_*`, `wi_collect_*` + docs log `docs_check_*`
 - **Gate minimi**: `py scripts/guardian.py gate --wi WI-XXXX --mode normal` (include strict deprecation gate)
 - **Gap derivati**: senza disciplina logs → evidence fragile / drift non osservabile
 

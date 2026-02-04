@@ -85,6 +85,10 @@ Validazione log (solo check, nessuna esecuzione):
 - `py scripts/guardian.py collect --wi WI-XXXX --mode normal`
 - `py scripts/guardian.py collect --wi WI-XXXX --mode close`
 
+Doc integrity check (links/anchors, offline):
+- `py scripts/guardian.py docs-check --mode warn|hard`
+- Il gate runner scrive anche `reports/docs_check_<WI>[_CLOSE].log` (default: warn)
+
 
 ## WI Discipline — Gate + Collector (strict)
 

@@ -2,8 +2,8 @@
 
 > GENERATED FILE — DO NOT EDIT  
 > Source of truth: `./docs/`  
-> Generated: 2026-02-03T15:25:19Z  
-> Fingerprint: ea89b52c938441b1
+> Generated: 2026-02-04T07:14:17Z  
+> Fingerprint: 3ca08cf18ee7e88f
 
 ## Sources
 - `docs/003_PDD_OBSERVER.md`
@@ -21,6 +21,7 @@
 - `scripts/guardian.py`: governance documentale (direct mode)
   - `py scripts/guardian.py gate --wi WI-XXXX --mode normal|close`: gate suite con log in `reports/` (Collector B integrato)
   - `py scripts/guardian.py collect --wi WI-XXXX --mode normal|close`: validazione presenza/emptiness log WI
+  - `py scripts/guardian.py docs-check --mode warn|hard`: check offline integrità link/anchors (log: `reports/docs_check_<WI>.log`)
 
 ### 2.2 Application layer (`src/`)
 - `src/db/*`: schema owner + connection + audit store
@@ -57,6 +58,7 @@
 - `scripts/guardian.py`: governance documentale (direct mode)
   - `py scripts/guardian.py gate --wi WI-XXXX --mode normal|close`: gate suite con log in `reports/` (Collector B integrato)
   - `py scripts/guardian.py collect --wi WI-XXXX --mode normal|close`: validazione presenza/emptiness log WI
+  - `py scripts/guardian.py docs-check --mode warn|hard`: check offline integrità link/anchors (log: `reports/docs_check_<WI>.log`)
 
 
 ## Repo Inventory (auto)
@@ -64,6 +66,7 @@
 ### scripts/
 - `scripts/build_all_docs.py`
 - `scripts/build_master_md.py`
+- `scripts/doc_integrity_check.py`
 - `scripts/docs_contract_check.py`
 - `scripts/execute.py`
 - `scripts/gen_mkdocs_views.py`

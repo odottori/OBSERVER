@@ -123,6 +123,35 @@ def _run_subprocess(argv: Sequence[str], log_path: Path) -> int:
             return 99
 
 
+
+
+def _run_docs_check(*, wi: str, mode: str, reports_dir: Path, dry_run: bool, docs_check_mode: str, docs_paths: Sequence[str]) -> int:
+    """Run docs-check and write a dedicated log in reports/.
+
+    This log is intentionally *not* part of the Collector B expected set, so it
+    does not alter the WI log count contract (7 normal, 4 close).
+    """
+    suffix = "" if mode == "normal" else "_CLOSE"
+    lp = reports_dir / f"docs_check_{wi}{suffix}.log"
+
+    py = sys.executable
+    argv: List[str] = [py, "scripts/guardian.py", "docs-check", "--mode", docs_check_mode]
+    for pth in docs_paths:
+        argv += ["--paths", str(pth)]
+
+    ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    header = f"[{ts}] WI={wi} mode={mode} gate=docs_check"
+    _write_stub_log(lp, header, [f"CMD: {_format_cmd_for_log(argv)}"])
+
+    if dry_run:
+        _append_footer(lp, ["DRY-RUN: command not executed.", "EXIT CODE: 0"])
+        return 0
+
+    rc = _run_subprocess(argv, lp)
+    _append_footer(lp, [f"EXIT CODE: {rc}"])
+    return int(rc)
+
+
 def plan_steps(*, mode: str, strict_deprec: bool) -> Tuple[GateStep, ...]:
     py = sys.executable
 
@@ -165,6 +194,9 @@ def run_gate(
     collect_fail_on_hits: bool,
     collect_patterns: Optional[List[str]],
     write_collect_log: bool,
+    docs_check_mode: str,
+    docs_paths: Optional[List[str]],
+    docs_check_enabled: bool,
 ) -> int:
     reports_dir.mkdir(parents=True, exist_ok=True)
     ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -190,6 +222,19 @@ def run_gate(
             rc = step_rc
             break
 
+
+
+    # Docs integrity check (non-blocking in warn mode)
+    if docs_check_enabled and rc == 0:
+        _ = _run_docs_check(
+            wi=wi,
+            mode=mode,
+            reports_dir=reports_dir,
+            dry_run=dry_run,
+            docs_check_mode=docs_check_mode,
+            docs_paths=docs_paths if docs_paths else ["docs", ".doc"],
+        )
+
     # Meta log (always non-empty)
     meta = reports_dir / f"wi_gate_{wi}{'' if mode=='normal' else '_CLOSE'}.log"
     _write_stub_log(
@@ -201,6 +246,9 @@ def run_gate(
             f"dry_run: {dry_run}",
             f"collect_profile: {collect_profile}",
             f"collect_fail_on_hits: {collect_fail_on_hits}",
+            f"docs_check_enabled: {docs_check_enabled}",
+            f"docs_check_mode: {docs_check_mode}",
+            f"docs_paths: {docs_paths if docs_paths else ['docs', '.doc']}",
             "",
             "steps:",
             *[f"- {x}" for x in summary_lines],
@@ -274,6 +322,25 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         help="Also write Collector B output into reports/wi_collect_<WI>[_CLOSE].log",
     )
 
+
+    p.add_argument(
+        "--no-docs-check",
+        action="store_true",
+        help="Disable docs integrity check step.",
+    )
+    p.add_argument(
+        "--docs-check-mode",
+        choices=["warn", "hard"],
+        default="warn",
+        help="Docs integrity check mode (default: warn)",
+    )
+    p.add_argument(
+        "--docs-path",
+        action="append",
+        default=None,
+        help="Doc paths to scan (repeatable). Default: docs and .doc",
+    )
+
     args = p.parse_args(list(argv) if argv is not None else None)
 
     try:
@@ -297,6 +364,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             collect_fail_on_hits=not bool(args.no_collect_fail_on_hits),
             collect_patterns=list(args.collect_pattern) if args.collect_pattern else None,
             write_collect_log=bool(args.write_collect_log),
+            docs_check_mode=str(args.docs_check_mode),
+            docs_paths=list(args.docs_path) if args.docs_path else None,
+            docs_check_enabled=not bool(args.no_docs_check),
         )
     )
 

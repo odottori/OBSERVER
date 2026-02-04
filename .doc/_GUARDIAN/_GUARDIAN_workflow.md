@@ -34,6 +34,9 @@ Vedi `./.doc/_GUARDIAN/_GUARDIAN_MANUAL.md`.
   - `py scripts/guardian.py gate --wi WI-XXXX --mode normal|close --write-collect-log`
 - Collector B (check logs + pattern scan):
   - `py scripts/guardian.py collect --wi WI-XXXX --mode normal|close --profile hardfail|deprec|none [--fail-on-hits]`
+- Doc integrity check (links/anchors, offline):
+  - `py scripts/guardian.py docs-check --mode warn|hard`
+  - il gate runner scrive anche `reports/docs_check_<WI>[_CLOSE].log` (default: warn)
 
 Note:
 - Le righe `CMD:` e `DRY-RUN:` sono ignorate dal matcher per evitare falsi positivi.

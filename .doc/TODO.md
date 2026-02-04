@@ -833,3 +833,38 @@ Consolidare un meccanismo stabile “1 comando” per eseguire e verificare la g
 - `reports/<gate>_WI-0280.log` (7)
 - `reports/wi_collect_WI-0280.log`
 - `reports/2026-02-03_WI-0280_CI_GATE_ALIGN.md`
+
+## WI-0290 — Docs integrity check (warn)
+
+**Status:** CLOSED (2026-02-03)
+
+### Goal
+- Aggiungere un controllo offline di integrità doc (`Markdown` links + anchors) con output ripetibile.
+- Integrare il check nel gate runner senza modificare il contratto Collector B (7/4 log).
+- Default: **warn** (non blocca), pronta promozione a **hard** in WI successivo.
+
+### Allowlist
+- `scripts/doc_integrity_check.py` (NEW)
+- `scripts/guardian.py`
+- `scripts/wi_gate_runner.py`
+- `tests/test_wi_gate_runner.py`
+- `tests/test_doc_integrity_check.py` (NEW)
+- `.doc/_GUARDIAN/_GUARDIAN_workflow.md`
+- `.doc/TODO.md`, `.doc/CURRENT_STATE.md`, `.doc/LOGBOOK.md`
+- `docs/003_PDD_OBSERVER.md`
+- `docs/005_TRACEABILITY_MATRIX.md`
+- `docs/008_EVIDENCE_PACK.md`
+- `docs/010_MODULE_REGISTRY.md`
+- `docs/OBSERVER_v1.2.5.md`
+- `reports/2026-02-03_WI-0290_DOCS_CHECK_WARN.md`
+
+### Gate
+- `py scripts/guardian.py gate --wi WI-0290 --mode normal --write-collect-log`
+- (docs-only) `py scripts/guardian.py docs-check --mode warn`
+
+### Expected logs
+- Standard 7/4 WI logs + meta/collect logs
+- Extra (non-Collector): `reports/docs_check_WI-0290[_CLOSE].log`
+
+### Evidence
+- `reports/2026-02-03_WI-0290_DOCS_CHECK_WARN.md`

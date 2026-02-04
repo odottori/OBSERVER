@@ -447,6 +447,7 @@ OBSERVER adotta un’impostazione **auditability-first**:
 - `scripts/guardian.py`: governance documentale (direct mode)
   - `py scripts/guardian.py gate --wi WI-XXXX --mode normal|close`: gate suite con log in `reports/` (Collector B integrato)
   - `py scripts/guardian.py collect --wi WI-XXXX --mode normal|close`: validazione presenza/emptiness log WI
+  - `py scripts/guardian.py docs-check --mode warn|hard`: check offline integrità link/anchors (log: `reports/docs_check_<WI>.log`)
 
 ### 2.2 Application layer (`src/`)
 - `src/db/*`: schema owner + connection + audit store
@@ -1292,6 +1293,7 @@ Questo cluster rappresenta la fase “delivery” Phase2:
 | scripts/guardian_next.py | Executor: genera CURRENT_STATE da TODO; ripresa crash | IMPLEMENTATO | 003§7 (Ops); 008 | `py scripts/guardian.py next` |
 | scripts/wi_gate_runner.py | One-command gate suite per WI (writes reports logs) | IMPLEMENTATO | 003§2.1; 008§8.1; 010 (MOD-GUARDIAN-DOCOPS) | `py scripts/guardian.py gate --wi WI-XXXX --mode normal` |
 | scripts/wi_log_collector.py | Collector (B): check log presence/emptiness + hit patterns | IMPLEMENTATO | 008§8.1; 010 (MOD-GUARDIAN-DOCOPS) | `py scripts/guardian.py collect --wi WI-XXXX --mode normal` |
+| scripts/doc_integrity_check.py | Tool: docs-check (validate markdown links/anchors) | IMPLEMENTATO | 003§2.1; 008§8.1; 010 (MOD-GUARDIAN-DOCOPS) | `py scripts/guardian.py docs-check --mode warn` |
 | scripts/guardian_reset.py | Utility: reset/backup GUARDIAN (ops) | IMPLEMENTATO | 003§7 (Ops); 008 | `py scripts/guardian_reset.py --help` |
 | .doc/TODO.md | Backlog WI (source operativa) | IMPLEMENTATO | (Ops) | `py scripts/guardian.py next` |
 | .doc/CURRENT_STATE.md | Stato corrente + p0 | IMPLEMENTATO | (Ops) | `type .doc/CURRENT_STATE.md` |
@@ -1555,6 +1557,10 @@ Il repo supporta una gate suite "per WI" con logging standardizzato in `reports/
 Validazione log (solo check, nessuna esecuzione):
 - `py scripts/guardian.py collect --wi WI-XXXX --mode normal`
 - `py scripts/guardian.py collect --wi WI-XXXX --mode close`
+
+Doc integrity check (links/anchors, offline):
+- `py scripts/guardian.py docs-check --mode warn|hard`
+- Il gate runner scrive anche `reports/docs_check_<WI>[_CLOSE].log` (default: warn)
 
 
 ## WI Discipline — Gate + Collector (strict)
@@ -1841,8 +1847,9 @@ Questo registro fa da ponte tra:
 - **Entrypoint**:
   - `py scripts/guardian.py gate --wi WI-XXXX --mode normal|close`
   - `py scripts/guardian.py collect --wi WI-XXXX --mode normal|close`
-- **Codice**: `scripts/guardian.py`, `scripts/wi_gate_runner.py`, `scripts/wi_log_collector.py`
-- **Output**: log standardizzati in `reports/` (`*_WI-XXXX.log`) + summary `wi_gate_*`, `wi_collect_*`
+  - `py scripts/guardian.py docs-check --mode warn|hard`
+- **Codice**: `scripts/guardian.py`, `scripts/wi_gate_runner.py`, `scripts/wi_log_collector.py`, `scripts/doc_integrity_check.py`
+- **Output**: log standardizzati in `reports/` (`*_WI-XXXX.log`) + summary `wi_gate_*`, `wi_collect_*` + docs log `docs_check_*`
 - **Gate minimi**: `py scripts/guardian.py gate --wi WI-XXXX --mode normal` (include strict deprecation gate)
 - **Gap derivati**: senza disciplina logs → evidence fragile / drift non osservabile
 
