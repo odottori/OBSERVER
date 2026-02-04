@@ -26,6 +26,7 @@ Repo canonico operativo: `OBSERVER_v1.2.5_PHASE1_FINAL`
 - WI-0270 (Stabilizzazione EOL doc-tooling): **CLOSED** (gates PASS).
 - WI-0280 (CI: GUARDIAN gate + reports artifact): **CLOSED** (gates PASS).
 - WI-0290 (Docs integrity check warn): **CLOSED** (gates PASS; docs-check integrated).
+- WI-0300 (Docs integrity check hard): **CLOSED** (docs-check promoted to hardfail in gate).
 
 ## Governance attiva
 - Refactor fisico consentito **solo tranche-by-tranche** (1 tranche = 1 WI) con `pytest` sempre PASS.

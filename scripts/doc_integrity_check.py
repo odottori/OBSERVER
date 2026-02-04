@@ -251,8 +251,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     ap.add_argument(
         "--mode",
         choices=["warn", "hard"],
-        default="warn",
-        help="warn: never fail; hard: fail on broken links/anchors",
+        default="hard",
+        help="warn: never fail; hard: fail on broken links/anchors (default: hard)",
     )
     ap.add_argument(
         "--repo-root",

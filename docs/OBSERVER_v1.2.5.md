@@ -1560,7 +1560,7 @@ Validazione log (solo check, nessuna esecuzione):
 
 Doc integrity check (links/anchors, offline):
 - `py scripts/guardian.py docs-check --mode warn|hard`
-- Il gate runner scrive anche `reports/docs_check_<WI>[_CLOSE].log` (default: warn)
+- Il gate runner scrive anche `reports/docs_check_<WI>[_CLOSE].log` (default: hard)
 
 
 ## WI Discipline — Gate + Collector (strict)

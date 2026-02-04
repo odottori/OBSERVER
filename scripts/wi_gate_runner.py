@@ -224,9 +224,9 @@ def run_gate(
 
 
 
-    # Docs integrity check (non-blocking in warn mode)
+    # Docs integrity check (blocking only in hard mode)
     if docs_check_enabled and rc == 0:
-        _ = _run_docs_check(
+        docs_rc = _run_docs_check(
             wi=wi,
             mode=mode,
             reports_dir=reports_dir,
@@ -234,6 +234,8 @@ def run_gate(
             docs_check_mode=docs_check_mode,
             docs_paths=docs_paths if docs_paths else ["docs", ".doc"],
         )
+        if docs_check_mode == "hard" and int(docs_rc) != 0:
+            rc = int(docs_rc)
 
     # Meta log (always non-empty)
     meta = reports_dir / f"wi_gate_{wi}{'' if mode=='normal' else '_CLOSE'}.log"
@@ -331,8 +333,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     p.add_argument(
         "--docs-check-mode",
         choices=["warn", "hard"],
-        default="warn",
-        help="Docs integrity check mode (default: warn)",
+        default="hard",
+        help="Docs integrity check mode (default: hard)",
     )
     p.add_argument(
         "--docs-path",

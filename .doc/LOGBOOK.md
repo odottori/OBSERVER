@@ -450,6 +450,17 @@
 
 ## 2026-02-03 — WI-0290 (Docs integrity check: warn) — CLOSED (gates PASS)
 
+## 2026-02-03 — WI-0300 (Docs integrity check: hard) — CLOSED (gates PASS)
+
+- Promosso `docs-check` da `warn` a `hard` nel gate runner: link/anchor rotti ora bloccano il gate.
+- Default aggiornati: `guardian gate` usa `--docs-check-mode hard`; `guardian docs-check` default `hard`.
+- Canonici/docset aggiornati per riflettere il nuovo gate.
+
+Commands:
+- `py scripts/guardian.py gate --wi WI-0300 --mode close --write-collect-log`
+- `py scripts/guardian.py gate --wi WI-0300 --mode normal --write-collect-log`
+
+
 ### Goal
 - Introdurre un check offline su link/anchors markdown in `docs/` e `.doc/`.
 - Integrare il check nel gate runner senza cambiare il contratto log del Collector B (7 log normal, 4 log close).

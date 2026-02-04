@@ -95,7 +95,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     if cmd == "docs-check":
         import doc_integrity_check
 
-        # doc_integrity_check expects argv like: ["--mode", "warn"]
+        # doc_integrity_check expects argv like: ["--mode", "hard"]  (default: hard)
         return int(doc_integrity_check.main(rest))
 
     sys.stderr.write(f"ERROR: Unknown command '{cmd}'.\n\n")

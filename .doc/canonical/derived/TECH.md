@@ -2,8 +2,8 @@
 
 > GENERATED FILE — DO NOT EDIT  
 > Source of truth: `./docs/`  
-> Generated: 2026-02-04T07:14:17Z  
-> Fingerprint: 3ca08cf18ee7e88f
+> Generated: 2026-02-04T08:50:12Z  
+> Fingerprint: 3bd239facfb5bf71
 
 ## Sources
 - `docs/003_PDD_OBSERVER.md`

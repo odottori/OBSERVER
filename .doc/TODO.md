@@ -868,3 +868,17 @@ Consolidare un meccanismo stabile “1 comando” per eseguire e verificare la g
 
 ### Evidence
 - `reports/2026-02-03_WI-0290_DOCS_CHECK_WARN.md`
+
+## WI-0300 — Docs integrity check (hard)
+
+**Goal:** promuovere `docs-check` da modalità `warn` a **gate hardfail** (exit != 0) nel gate runner.
+
+**Allowlist:** scripts/doc_integrity_check.py, scripts/wi_gate_runner.py, scripts/guardian.py, docset (.doc/*, docs/*), reports/*.
+
+**Gates:**
+- `py scripts/guardian.py gate --wi WI-0300 --mode close --write-collect-log`
+- `py scripts/guardian.py gate --wi WI-0300 --mode normal --write-collect-log`
+
+**Evidence:** `reports/2026-02-03_WI-0300_DOCS_CHECK_HARD.md`
+
+Status: **CLOSED**
