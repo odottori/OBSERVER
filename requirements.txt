@@ -9,7 +9,7 @@ streamlit>=1.31
 matplotlib>=3.7
 
 # Optional ingestion
-requests>=2.31
+requests>=2.33.1
 yfinance>=0.2.33
 
 # Testing
