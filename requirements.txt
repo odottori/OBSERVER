@@ -5,7 +5,7 @@ duckdb>=1.0
 tabulate>=0.9
 
 # UI
-streamlit>=1.31
+streamlit>=1.56.0
 matplotlib>=3.7
 
 # Optional ingestion
